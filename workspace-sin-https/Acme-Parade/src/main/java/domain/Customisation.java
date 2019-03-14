@@ -29,6 +29,7 @@ public class Customisation extends DomainEntity {
 	public List<String>			spamWords;
 	public String				phoneNumberCountryCode;
 	public List<String>			messagePriorities;
+	public List<String>			creditCardMakes;
 
 
 	public enum negativeWords {   //En principio no hace falta
@@ -129,6 +130,15 @@ public class Customisation extends DomainEntity {
 
 	public void setMessagePriorities(final List<String> messagePriorities) {
 		this.messagePriorities = messagePriorities;
+	}
+
+	@ElementCollection(targetClass = String.class)
+	public List<String> getCreditCardMakes() {
+		return this.creditCardMakes;
+	}
+
+	public void setCreditCardMakes(final List<String> creditCardMakes) {
+		this.creditCardMakes = creditCardMakes;
 	}
 
 }
