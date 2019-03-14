@@ -46,7 +46,7 @@
 					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.procession.list" /></a></li>	
 					<li><a href="members/brotherhood/list.do"><spring:message code="master.page.members.list" /></a></li>	
 					<li><a href="enrolements/brotherhood/list.do"><spring:message code="master.page.enrolements.list" /></a></li>	
-									
+					<li><a href="history/brotherhood/showHistory.do"><spring:message code="master.page.history" /></a></li>	
 				</ul>
 			</li>
 		</security:authorize>

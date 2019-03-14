@@ -47,7 +47,6 @@ public class BrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView edit() {
 		ModelAndView res;
-		final Brotherhood brotherhood;
 
 		Authority authority;
 		Collection<Authority> authorities;

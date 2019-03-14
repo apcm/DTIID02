@@ -6,26 +6,13 @@
        
 <tiles-definitions>
 
-	<definition name="procession/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar procesión" />
-		<put-attribute name="body" value="/views/procession/edit.jsp" />
-	</definition>
-	<definition name="procession/brotherhood/list" extends="master.page">	
-		<put-attribute name="title" value="Lista de procesiones" />
-		<put-attribute name="body" value="/views/procession/list.jsp" />
-	</definition>
-		<definition name="procession/list" extends="master.page">	
-		<put-attribute name="title" value="Lista de procesiones" />
-		<put-attribute name="body" value="/views/procession/list.jsp" />
+	<definition name="legalRecord/brotherhood/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar legal record" />
+		<put-attribute name="body" value="/views/legalRecord/editLegalRecord.jsp" />
 	</definition>
 	
-	<definition name="procession/brotherhood/list" extends="master.page">	
-		<put-attribute name="title" value="Lista de procesiones" />
-		<put-attribute name="body" value="/views/procession/list.jsp" />
-	</definition>
-	
-	<definition name="procession/create" extends="master.page">	
-		<put-attribute name="title" value="Crear procesión" />
-		<put-attribute name="body" value="/views/procession/edit.jsp" />
+	<definition name="legalRecord/brotherhood/create" extends="master.page">	
+		<put-attribute name="title" value="Crear legal record" />
+		<put-attribute name="body" value="/views/legalRecord/editLegalRecord.jsp" />
 	</definition>
 </tiles-definitions>      

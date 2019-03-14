@@ -41,6 +41,7 @@
 		<value>/views/box/messages</value>
 		<value>/views/message/messages</value>
 		<value>/views/socialprofile/messages</value>
+		<value>/views/record/messages</value>
 
 	</util:list>
 
