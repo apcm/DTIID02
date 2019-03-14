@@ -30,6 +30,8 @@ public class Customisation extends DomainEntity {
 	public String				phoneNumberCountryCode;
 	public List<String>			messagePriorities;
 	public List<String>			creditCardMakes;
+	public Double				fare;
+	public Integer				vatPercentage;
 
 
 	public enum negativeWords {   //En principio no hace falta
@@ -139,6 +141,26 @@ public class Customisation extends DomainEntity {
 
 	public void setCreditCardMakes(final List<String> creditCardMakes) {
 		this.creditCardMakes = creditCardMakes;
+	}
+
+	public Double getFare() {
+		return this.fare;
+	}
+
+	@Min(value = 0)
+	//Esto puede dar fallos porque es un Long y no un double.
+	public void setFare(final Double fare) {
+		this.fare = fare;
+	}
+
+	@Min(value = 0L)
+	@Max(value = 100)
+	public Integer getVatPercentage() {
+		return this.vatPercentage;
+	}
+
+	public void setVatPercentage(final Integer vatPercentage) {
+		this.vatPercentage = vatPercentage;
 	}
 
 }
