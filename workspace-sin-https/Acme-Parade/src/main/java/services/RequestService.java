@@ -15,7 +15,7 @@ import org.springframework.validation.Validator;
 import repositories.RequestRepository;
 import domain.Brotherhood;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Service
@@ -99,7 +99,7 @@ public class RequestService {
 
 	}
 
-	public Collection<Request> findByBrotherhood(final Procession p) {
+	public Collection<Request> findByBrotherhood(final Parade p) {
 		return this.requestRepository.findRequestByProcessionId(p.getId());
 	}
 
@@ -107,7 +107,7 @@ public class RequestService {
 		return this.requestRepository.findRequestByProcessionId(processionId);
 	}
 
-	public Collection<Integer> suggestPosition(final Procession p) {
+	public Collection<Integer> suggestPosition(final Parade p) {
 		final List<Integer> li = new ArrayList<>();
 		li.add(0);
 		li.add(0);
@@ -122,7 +122,7 @@ public class RequestService {
 		return li;
 	}
 
-	public Boolean checkPosition(final Collection<Integer> li, final Procession p) {
+	public Boolean checkPosition(final Collection<Integer> li, final Parade p) {
 		final List<Integer> li1 = new ArrayList<>(li);
 		final Integer row = li1.get(0);
 		final Integer column = li1.get(1);

@@ -26,7 +26,7 @@ import domain.Brotherhood;
 import domain.Enrolement;
 import domain.Finder;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Service
@@ -53,8 +53,8 @@ public class ProcessionService {
 		super();
 	}
 
-	public Procession create() {
-		final Procession res = new Procession();
+	public Parade create() {
+		final Parade res = new Parade();
 
 		res.setDepartureDate(new Date());
 		res.setDescription("");
@@ -65,7 +65,7 @@ public class ProcessionService {
 		return res;
 	}
 
-	public Procession save(final Procession proc) {
+	public Parade save(final Parade proc) {
 
 		Brotherhood res;
 
@@ -73,7 +73,7 @@ public class ProcessionService {
 		proc.setBrotherhood(res);
 
 		if (proc.getId() != 0) {
-			final Procession procOld = this.processionRepository.findOne(proc.getId());
+			final Parade procOld = this.processionRepository.findOne(proc.getId());
 			//Assert.isTrue(!procOld.getFinalMode());
 
 			final Collection<Request> reqs = this.requestRepository.findByProcessionId(proc.getId());
@@ -89,7 +89,7 @@ public class ProcessionService {
 		}
 		return this.processionRepository.save(proc);
 	}
-	public void delete(final Procession proc) {
+	public void delete(final Parade proc) {
 		Assert.isTrue(!proc.getFinalMode());
 
 		final Collection<Request> reqs = this.requestRepository.findByProcessionId(proc.getId());
@@ -100,23 +100,23 @@ public class ProcessionService {
 		this.processionRepository.delete(proc);
 	}
 
-	public Collection<Procession> findAll() {
+	public Collection<Parade> findAll() {
 		return this.processionRepository.findAll();
 	}
 
-	public Procession findOne(final int processionId) {
+	public Parade findOne(final int processionId) {
 		return this.processionRepository.findOne(processionId);
 	}
 
-	public Collection<Procession> findByBrotherhoodId(final int brotherhoodId) {
+	public Collection<Parade> findByBrotherhoodId(final int brotherhoodId) {
 		return this.processionRepository.findByBrotherhoodId(brotherhoodId);
 	}
 
-	public Collection<Procession> findAllFinalMode() {
+	public Collection<Parade> findAllFinalMode() {
 		return this.processionRepository.findAllFinalMode();
 	}
-	public List<Procession> findByMemberId(final Member member) {
-		final List<Procession> lp = new ArrayList<>();
+	public List<Parade> findByMemberId(final Member member) {
+		final List<Parade> lp = new ArrayList<>();
 		for (final Enrolement e : member.getEnrolements())
 			lp.addAll(this.processionRepository.findByEnrolementIdApproved(e.getId()));
 
@@ -124,21 +124,21 @@ public class ProcessionService {
 
 	}
 
-	public Collection<Procession> findAllFinalModeRequests() {
+	public Collection<Parade> findAllFinalModeRequests() {
 		final Date today = Calendar.getInstance().getTime();
 		return this.processionRepository.findAllFinalModeRequests(today);
 	}
 
-	public Procession findByRequestId(final Integer requestId) {
+	public Parade findByRequestId(final Integer requestId) {
 		return this.processionRepository.findByRequestId(requestId);
 	}
 
-	public Collection<Procession> findByBrotherhood(final Brotherhood b) {
+	public Collection<Parade> findByBrotherhood(final Brotherhood b) {
 		return this.processionRepository.findByBrotherhoodId(b.getId());
 
 	}
 
-	public Procession findOne(final Procession p1) {
+	public Parade findOne(final Parade p1) {
 		return this.processionRepository.findOne(p1.getId());
 	}
 
@@ -149,34 +149,34 @@ public class ProcessionService {
 		return user.getAuthorities().contains(a);
 	}
 
-	public Collection<Procession> findProcessionsByKeyworkd(final String keyword) {
+	public Collection<Parade> findProcessionsByKeyworkd(final String keyword) {
 		Assert.isTrue(this.checkMember());
 		return this.processionRepository.findProcessionsByKeyword("%" + keyword + "%");
 	}
 
-	public Collection<Procession> findProcessionsByArea(final int id) {
+	public Collection<Parade> findProcessionsByArea(final int id) {
 		Assert.isTrue(this.checkMember());
 		return this.processionRepository.findProcessionsByAreaId(id);
 	}
 
-	public Collection<Procession> findProcessionsByMinimumDate(final Date minDate) {
+	public Collection<Parade> findProcessionsByMinimumDate(final Date minDate) {
 		Assert.isTrue(this.checkMember());
 		return this.processionRepository.findProcessionsByMinimumDate(minDate);
 	}
 
-	public Collection<Procession> findProcessionsByMaximumDate(final Date maxDate) {
+	public Collection<Parade> findProcessionsByMaximumDate(final Date maxDate) {
 		Assert.isTrue(this.checkMember());
 		return this.processionRepository.findProcessionsByMaximumDate(maxDate);
 	}
 
-	public Collection<Procession> findProcessionsByDateRange(final Date minDate, final Date maxDate) {
+	public Collection<Parade> findProcessionsByDateRange(final Date minDate, final Date maxDate) {
 		Assert.isTrue(this.checkMember());
 		return this.processionRepository.findProcessionsByDateRange(minDate, maxDate);
 	}
 
-	public Set<Procession> finderResults(final Finder finder) {
+	public Set<Parade> finderResults(final Finder finder) {
 		Assert.isTrue(this.checkMember());
-		final Set<Procession> results = new HashSet<>();
+		final Set<Parade> results = new HashSet<>();
 
 		if (finder.getKeyword() != null && finder.getKeyword() != "")
 			results.addAll(this.findProcessionsByKeyworkd(finder.getKeyword()));
@@ -203,8 +203,8 @@ public class ProcessionService {
 	private Validator	validator;
 
 
-	public Procession reconstruct(final Procession pro, final BindingResult binding) {
-		Procession res;
+	public Parade reconstruct(final Parade pro, final BindingResult binding) {
+		Parade res;
 
 		//Check authority
 		final Authority a = new Authority();

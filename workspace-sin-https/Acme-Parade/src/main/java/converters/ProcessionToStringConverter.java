@@ -5,14 +5,14 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Procession;
+import domain.Parade;
 
 @Component
 @Transactional
-public class ProcessionToStringConverter implements Converter<Procession, String> {
+public class ProcessionToStringConverter implements Converter<Parade, String> {
 
 	@Override
-	public String convert(final Procession procession) {
+	public String convert(final Parade procession) {
 		String res;
 
 		if (procession == null)

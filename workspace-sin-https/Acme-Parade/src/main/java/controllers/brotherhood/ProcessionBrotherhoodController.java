@@ -21,7 +21,7 @@ import services.FloatService;
 import services.ProcessionService;
 import controllers.AbstractController;
 import domain.Brotherhood;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
 @RequestMapping("/procession")
@@ -43,7 +43,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 		final Brotherhood bro = this.brotherhoodService.findByPrincipal();
 
-		final Collection<Procession> processions = this.processionService.findByBrotherhoodId(bro.getId());
+		final Collection<Parade> processions = this.processionService.findByBrotherhoodId(bro.getId());
 		final List<Boolean> finalModes = new ArrayList<>();
 		finalModes.add(true);
 		finalModes.add(false);
@@ -61,9 +61,9 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 
 	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute final Procession procession, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute final Parade procession, final BindingResult binding) {
 		ModelAndView result;
-		Procession procMod;
+		Parade procMod;
 		try {
 			Assert.notNull(procession.getDescription());
 			Assert.isTrue(procession.getDescription() != "");
@@ -96,7 +96,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/brotherhood/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView res;
-		Procession procession;
+		Parade procession;
 
 		procession = this.processionService.create();
 
@@ -108,7 +108,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int processionId) {
 		ModelAndView result;
-		Procession procession;
+		Parade procession;
 		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 
 		procession = this.processionService.findOne(processionId);
@@ -120,7 +120,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Procession procession, final BindingResult binding) {
+	public ModelAndView delete(final Parade procession, final BindingResult binding) {
 		ModelAndView result;
 
 		try {
@@ -133,7 +133,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final Procession procession) {
+	protected ModelAndView createEditModelAndView(final Parade procession) {
 		ModelAndView result;
 
 		result = this.createEditModelAndView(procession, null);
@@ -142,7 +142,7 @@ public class ProcessionBrotherhoodController extends AbstractController {
 
 	}
 
-	protected ModelAndView createEditModelAndView(final Procession procession, final String message) {
+	protected ModelAndView createEditModelAndView(final Parade procession, final String message) {
 		ModelAndView result;
 		final Brotherhood bro = this.brotherhoodService.findByPrincipal();
 		final Collection<domain.Float> floats = this.floatService.findByBrotherhoodId(bro.getId());

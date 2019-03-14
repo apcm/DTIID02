@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ProcessionService;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
 @RequestMapping("/procession")
@@ -25,7 +25,7 @@ public class ProcessionController extends AbstractController {
 	public ModelAndView list(@RequestParam final int brotherhoodId) {
 		final ModelAndView res;
 
-		final Collection<Procession> processions = this.processionService.findByBrotherhoodId(brotherhoodId);
+		final Collection<Parade> processions = this.processionService.findByBrotherhoodId(brotherhoodId);
 
 		res = new ModelAndView("procession/list");
 		res.addObject("requestURI", "procession/list.do");

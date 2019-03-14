@@ -20,7 +20,7 @@ import services.ProcessionService;
 import services.RequestService;
 import controllers.AbstractController;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Controller
@@ -55,7 +55,7 @@ public class RequestMemberController extends AbstractController {
 	@RequestMapping(value = "/show", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam final int requestId) {
 		final ModelAndView res;
-		final Procession p;
+		final Parade p;
 		final Request r;
 
 		p = this.processionService.findByRequestId(requestId);
@@ -124,8 +124,8 @@ public class RequestMemberController extends AbstractController {
 		ModelAndView res;
 		res = new ModelAndView("requests/edit");
 		final Member member = this.memberService.findOnePrincipal();
-		final List<Procession> lp = new ArrayList<>(this.processionService.findAllFinalModeRequests());
-		final List<Procession> lp2 = this.processionService.findByMemberId(member);
+		final List<Parade> lp = new ArrayList<>(this.processionService.findAllFinalModeRequests());
+		final List<Parade> lp2 = this.processionService.findByMemberId(member);
 
 		lp.retainAll(lp2);
 

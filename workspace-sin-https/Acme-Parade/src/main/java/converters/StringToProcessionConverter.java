@@ -8,19 +8,19 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import repositories.ProcessionRepository;
-import domain.Procession;
+import domain.Parade;
 
 @Component
 @Transactional
-public class StringToProcessionConverter implements Converter<String, Procession> {
+public class StringToProcessionConverter implements Converter<String, Parade> {
 
 	@Autowired
 	ProcessionRepository	processionRepository;
 
 
 	@Override
-	public Procession convert(final String text) {
-		Procession res;
+	public Parade convert(final String text) {
+		Parade res;
 		int id;
 
 		try {

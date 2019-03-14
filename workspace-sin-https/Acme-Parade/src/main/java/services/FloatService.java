@@ -17,7 +17,7 @@ import security.Authority;
 import security.UserAccount;
 import domain.Brotherhood;
 import domain.Float;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -73,9 +73,9 @@ public class FloatService {
 	public void delete(final Float f) {
 		Assert.notNull(f);
 		//Si alguna procesión en draftMode saca el paso, se le quita.
-		final Collection<Procession> process = this.processionService.findAllFinalMode();
+		final Collection<Parade> process = this.processionService.findAllFinalMode();
 
-		for (final Procession pro : process)
+		for (final Parade pro : process)
 			if (pro.getFloats().contains(f)) {
 				final Collection<domain.Float> floats = pro.getFloats();
 				floats.remove(f);
