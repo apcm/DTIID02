@@ -15,7 +15,7 @@ import services.DashboardService;
 import controllers.AbstractController;
 import domain.Brotherhood;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Controller
 @RequestMapping("/dashboard/administrator")
@@ -55,7 +55,7 @@ public class DashboardAdministratorController extends AbstractController {
 			statusList.add((String) o[2]);
 		}
 
-		final Collection<Procession> processionsOrganizedIn30Days = this.dashboardService.processionsOrganizedIn30Days();
+		final Collection<Parade> processionsOrganizedIn30Days = this.dashboardService.processionsOrganizedIn30Days();
 
 		final List<Double> requestRatio = this.dashboardService.requestRatio();
 

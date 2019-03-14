@@ -18,7 +18,7 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -80,11 +80,11 @@ public class DashboardService {
 	}
 
 	//12.3.5
-	public Collection<Procession> processionsOrganizedIn30Days() {
+	public Collection<Parade> processionsOrganizedIn30Days() {
 		Assert.isTrue(this.checkAdmin());
-		final List<Procession> processions = new ArrayList<Procession>(this.processionService.findAll());
-		final List<Procession> processionsQ = new ArrayList<Procession>(processions);
-		for (final Procession p : processions) {
+		final List<Parade> processions = new ArrayList<Parade>(this.processionService.findAll());
+		final List<Parade> processionsQ = new ArrayList<Parade>(processions);
+		for (final Parade p : processions) {
 			final long diffInMillies = Math.abs(p.getDepartureDate().getTime() - Calendar.getInstance().getTime().getTime());
 			final long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			if (diff >= 30)

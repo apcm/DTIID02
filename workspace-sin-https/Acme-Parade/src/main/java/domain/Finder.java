@@ -71,7 +71,7 @@ public class Finder extends DomainEntity {
 
 	//Relaciones
 	private Area					area;
-	private Collection<Procession>	processions;
+	private Collection<Parade>	processions;
 
 
 	@ManyToOne(optional = true)
@@ -84,11 +84,11 @@ public class Finder extends DomainEntity {
 	}
 
 	@ManyToMany
-	public Collection<Procession> getProcessions() {
+	public Collection<Parade> getProcessions() {
 		return this.processions;
 	}
 
-	public void setProcessions(final Collection<Procession> processions) {
+	public void setProcessions(final Collection<Parade> processions) {
 		this.processions = processions;
 	}
 

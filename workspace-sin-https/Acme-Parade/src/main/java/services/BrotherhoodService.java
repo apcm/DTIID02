@@ -27,7 +27,7 @@ import domain.Brotherhood;
 import domain.Customisation;
 import domain.Enrolement;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 import domain.SocialProfile;
 import forms.BrotherhoodForm;
@@ -201,7 +201,7 @@ public class BrotherhoodService {
 
 	}
 
-	public void checkBrotherhoodOwnsProcession(final Procession p) {
+	public void checkBrotherhoodOwnsProcession(final Parade p) {
 		final Brotherhood b = this.findOnePrincipal();
 		Assert.isTrue(p.getBrotherhood().getId() == b.getId());
 

@@ -8,42 +8,42 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import domain.Procession;
+import domain.Parade;
 
 @Repository
-public interface ProcessionRepository extends JpaRepository<Procession, Integer> {
+public interface ProcessionRepository extends JpaRepository<Parade, Integer> {
 
 	@Query("select p from Procession p where p.brotherhood.id = ?1")
-	Collection<Procession> findByBrotherhoodId(int brotherhoodId);
+	Collection<Parade> findByBrotherhoodId(int brotherhoodId);
 
 	@Query("select p from Request r join r.procession p where r.id=?1")
-	Procession findByRequestId(Integer requestId);
+	Parade findByRequestId(Integer requestId);
 
 	@Query("select p from Procession p where p.finalMode='1'")
-	Collection<Procession> findAllFinalMode();
+	Collection<Parade> findAllFinalMode();
 
 	//Finder
 	@Query("select p from Procession p where p.title like %?1% or p.description like %?1%")
-	Collection<Procession> findProcessionsByKeyword(String keyword);
+	Collection<Parade> findProcessionsByKeyword(String keyword);
 
 	@Query("select p from Procession p where p.brotherhood.area.id=?1")
-	Collection<Procession> findProcessionsByAreaId(int id);
+	Collection<Parade> findProcessionsByAreaId(int id);
 
 	@Query("select p from Procession p where p.departureDate > ?1")
-	Collection<Procession> findProcessionsByMinimumDate(Date minDate);
+	Collection<Parade> findProcessionsByMinimumDate(Date minDate);
 
 	@Query("select p from Procession p where p.departureDate < ?1")
-	Collection<Procession> findProcessionsByMaximumDate(Date maxDate);
+	Collection<Parade> findProcessionsByMaximumDate(Date maxDate);
 
 	@Query("select p from Procession p where p.departureDate between ?1 and ?2")
-	Collection<Procession> findProcessionsByDateRange(Date min, Date max);
+	Collection<Parade> findProcessionsByDateRange(Date min, Date max);
 	
 	@Query("select p from Procession p join p.brotherhood.enrolements e where e.id=?1")
-	Collection<Procession> findByEnrolementId(int id);
+	Collection<Parade> findByEnrolementId(int id);
 
 	@Query("select p from Procession p join p.brotherhood.enrolements e where e.id=?1 and e.status='APPROVED'")
-	Collection<Procession> findByEnrolementIdApproved(int id);
+	Collection<Parade> findByEnrolementIdApproved(int id);
 	
 	@Query("select p from Procession p where p.finalMode='1' and p.departureDate>=?1")
-	Collection<Procession> findAllFinalModeRequests(Date today);
+	Collection<Parade> findAllFinalModeRequests(Date today);
 }

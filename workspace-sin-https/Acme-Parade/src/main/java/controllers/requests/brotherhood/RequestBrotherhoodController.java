@@ -18,7 +18,7 @@ import services.MemberService;
 import services.ProcessionService;
 import services.RequestService;
 import controllers.AbstractController;
-import domain.Procession;
+import domain.Parade;
 import domain.Request;
 
 @Controller
@@ -41,10 +41,10 @@ public class RequestBrotherhoodController extends AbstractController {
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView show(@RequestParam final int processionId) {
 		final ModelAndView res;
-		final Procession p;
+		final Parade p;
 
 		final Collection<Request> requests = this.requestService.findByProcessionId(processionId);
-		final Procession p1 = new Procession();
+		final Parade p1 = new Parade();
 		p1.setId(processionId);
 		p = this.processionService.findOne(p1);
 

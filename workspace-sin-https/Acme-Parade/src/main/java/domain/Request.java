@@ -58,15 +58,15 @@ public class Request extends DomainEntity {
 
 	//------------Relationships------------
 
-	private Procession	procession;
+	private Parade	procession;
 
 
 	@ManyToOne
-	public Procession getProcession() {
+	public Parade getProcession() {
 		return this.procession;
 	}
 
-	public void setProcession(final Procession procession) {
+	public void setProcession(final Parade procession) {
 		this.procession = procession;
 	}
 

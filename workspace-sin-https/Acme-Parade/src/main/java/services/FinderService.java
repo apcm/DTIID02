@@ -23,7 +23,7 @@ import security.UserAccount;
 import domain.Customisation;
 import domain.Finder;
 import domain.Member;
-import domain.Procession;
+import domain.Parade;
 
 @Service
 @Transactional
@@ -56,7 +56,7 @@ public class FinderService {
 	public Finder create() {
 		Finder res;
 		res = new Finder();
-		res.setProcessions(new HashSet<Procession>());
+		res.setProcessions(new HashSet<Parade>());
 		return res;
 	}
 
@@ -83,8 +83,8 @@ public class FinderService {
 			Assert.isTrue(principal.getFinder().getId() == finder.getId());
 			if (finder.getStartDate() != null && finder.getEndDate() != null)
 				Assert.isTrue(finder.getStartDate().before(finder.getEndDate()));
-			final Set<Procession> results = this.processionService.finderResults(finder);
-			for (final Procession p : results)
+			final Set<Parade> results = this.processionService.finderResults(finder);
+			for (final Parade p : results)
 				if (p.getFinalMode() == false)
 					results.remove(p);
 			res.setProcessions(results);
@@ -106,7 +106,7 @@ public class FinderService {
 		res.setKeyword("");
 		res.setStartDate(null);
 		res.setMoment(Calendar.getInstance().getTime());
-		res.setProcessions(new HashSet<Procession>());
+		res.setProcessions(new HashSet<Parade>());
 		return this.repository.save(res);
 	}
 	//Check cached hours
