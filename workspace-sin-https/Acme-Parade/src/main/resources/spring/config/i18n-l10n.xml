@@ -42,7 +42,7 @@
 		<value>/views/message/messages</value>
 		<value>/views/socialprofile/messages</value>
 		<value>/views/record/messages</value>
-
+		<value>/views/chapter/messages</value>
 	</util:list>
 
 </beans>

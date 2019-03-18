@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,8 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AreaRepository;
+import repositories.ChapterRepository;
 import domain.Area;
 import domain.Brotherhood;
+import domain.Chapter;
 
 @Service
 @Transactional
@@ -24,6 +27,9 @@ public class AreaService {
 	//Services
 	@Autowired
 	private BrotherhoodService	brotherhoodService;
+
+	@Autowired
+	private ChapterRepository	chapterRepository;
 
 
 	//Simple CRUD Methods
@@ -61,6 +67,17 @@ public class AreaService {
 		Assert.isTrue(id != 0);
 		return this.areaRepository.getParadeArea(id);
 
+	}
+
+	public Collection<Area> findNotAssigned() {
+		final List<Area> allAreas = new ArrayList<>(this.areaRepository.findAll());
+		final List<Area> assignedAreas = new ArrayList<>();
+		final List<Chapter> allChapters = this.chapterRepository.findAll();
+		for (final Chapter c : allChapters)
+			if (c.getArea() != null)
+				assignedAreas.add(c.getArea());
+		allAreas.removeAll(assignedAreas);
+		return allAreas;
 	}
 
 }

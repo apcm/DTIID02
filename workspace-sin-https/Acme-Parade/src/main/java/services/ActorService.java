@@ -168,51 +168,59 @@ public class ActorService {
 
 		return res;
 	}
-	public Collection<Box> createPredefinedBoxes(){
-		Collection<Box> result = new ArrayList<Box>();
+	public Collection<Box> createPredefinedBoxes() {
+		final Collection<Box> result = new ArrayList<Box>();
 		//Creo las cajas predeterminadas del sistema
-		Box inbox = new Box();
+		final Box inbox = new Box();
 		inbox.setDescendants(new ArrayList<Box>());
 		inbox.setMessages(new ArrayList<Message>());
 		inbox.setName("in box");
 		inbox.setPredefined(true);
-		Box inbox1 = mbs.saveInitial(inbox);
+		final Box inbox1 = this.mbs.saveInitial(inbox);
 		result.add(inbox1);
-		
-		Box notificationbox = new Box();
+
+		final Box notificationbox = new Box();
 		notificationbox.setDescendants(new ArrayList<Box>());
 		notificationbox.setMessages(new ArrayList<Message>());
 		notificationbox.setName("notification box");
 		notificationbox.setPredefined(true);
-		Box notificationbox1 = mbs.saveInitial(notificationbox);
+		final Box notificationbox1 = this.mbs.saveInitial(notificationbox);
 		result.add(notificationbox1);
-		
-		Box outbox = new Box();
+
+		final Box outbox = new Box();
 		outbox.setDescendants(new ArrayList<Box>());
 		outbox.setMessages(new ArrayList<Message>());
 		outbox.setName("out box");
 		outbox.setPredefined(true);
-		Box outbox1 = mbs.saveInitial(outbox);
+		final Box outbox1 = this.mbs.saveInitial(outbox);
 		result.add(outbox1);
-		
-		Box trashbox = new Box();
+
+		final Box trashbox = new Box();
 		trashbox.setDescendants(new ArrayList<Box>());
 		trashbox.setMessages(new ArrayList<Message>());
 		trashbox.setName("trash box");
 		trashbox.setPredefined(true);
-		Box trashbox1 = mbs.saveInitial(trashbox);
+		final Box trashbox1 = this.mbs.saveInitial(trashbox);
 		result.add(trashbox1);
-		
-		Box spambox = new Box();
+
+		final Box spambox = new Box();
 		spambox.setDescendants(new ArrayList<Box>());
 		spambox.setMessages(new ArrayList<Message>());
 		spambox.setName("spam box");
 		spambox.setPredefined(true);
-		Box spambox1 = mbs.saveInitial(spambox);
+		final Box spambox1 = this.mbs.saveInitial(spambox);
 		result.add(spambox1);
-		
+
 		return result;
 	}
-	
-	
+
+	public boolean checkChapter() {
+		boolean res;
+		final Authority a = new Authority();
+		final UserAccount user = LoginService.getPrincipal();
+		a.setAuthority(Authority.CHAPTER);
+		res = user.getAuthorities().contains(a);
+		return res;
+	}
+
 }
