@@ -10,6 +10,6 @@ import domain.Area;
 @Repository
 public interface AreaRepository extends JpaRepository<Area, Integer> {
 
-	@Query("select p.brotherhood.area from Procession p where p.id = ?1")
-	Area getProcessionArea(int id);
+	@Query("select p.brotherhood.area from Parade p where p.id = ?1")
+	Area getParadeArea(int id);
 }

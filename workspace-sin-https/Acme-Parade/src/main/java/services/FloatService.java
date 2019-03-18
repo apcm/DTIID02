@@ -12,7 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import repositories.FloatRepository;
-import repositories.ProcessionRepository;
+import repositories.ParadeRepository;
 import security.Authority;
 import security.UserAccount;
 import domain.Brotherhood;
@@ -25,16 +25,16 @@ public class FloatService {
 
 	//Managed repository
 	@Autowired
-	private FloatRepository			floatRepository;
+	private FloatRepository		floatRepository;
 
 	@Autowired
-	private BrotherhoodService		brotherhoodService;
+	private BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	private ProcessionRepository	processionRepository;
+	private ParadeRepository	paradeRepository;
 
 	@Autowired
-	private ProcessionService		processionService;
+	private ParadeService		paradeService;
 
 
 	//Simple CRUD Methods
@@ -73,21 +73,21 @@ public class FloatService {
 	public void delete(final Float f) {
 		Assert.notNull(f);
 		//Si alguna procesión en draftMode saca el paso, se le quita.
-		final Collection<Parade> process = this.processionService.findAllFinalMode();
+		final Collection<Parade> process = this.paradeService.findAllFinalMode();
 
 		for (final Parade pro : process)
 			if (pro.getFloats().contains(f)) {
 				final Collection<domain.Float> floats = pro.getFloats();
 				floats.remove(f);
 				pro.setFloats(floats);
-				this.processionService.save(pro);
+				this.paradeService.save(pro);
 			}
 
-		//		for (final Procession p : procs) {
+		//		for (final Parade p : procs) {
 		//			final Collection<domain.Float> floats = p.getFloats();
 		//			floats.remove(f);
 		//			p.setFloats(floats);
-		//			this.processionService.save(p);
+		//			this.paradeService.save(p);
 		//		}
 
 		this.floatRepository.delete(f);
@@ -122,7 +122,7 @@ public class FloatService {
 			//			res.setDescription(flo.getDescription());
 			//			res.setTitle(flo.getTitle());
 			//			res.setPictures(flo.getPictures());
-			
+
 		}
 		this.validator.validate(res, binding);
 		return res;

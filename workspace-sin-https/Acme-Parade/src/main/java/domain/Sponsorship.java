@@ -20,8 +20,8 @@ public class Sponsorship extends DomainEntity {
 	private String				banner;
 	private Boolean				isActive;
 	private String				targetURL;
-	private CreditCard			creditCard;
 	private Collection<Parade>	parades;
+	private CreditCard			creditCard;
 
 
 	@NotBlank
@@ -34,16 +34,6 @@ public class Sponsorship extends DomainEntity {
 		this.targetURL = targetURL;
 	}
 
-	@NotNull
-	@ManyToOne(optional = false)
-	public CreditCard getCreditCard() {
-		return this.creditCard;
-	}
-
-	public void setCreditCard(final CreditCard creditCard) {
-		this.creditCard = creditCard;
-	}
-
 	@NotBlank
 	public String getBanner() {
 		return this.banner;
@@ -51,6 +41,10 @@ public class Sponsorship extends DomainEntity {
 
 	public void setBanner(final String banner) {
 		this.banner = banner;
+	}
+
+	public void setIsActive(final Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	@NotNull
@@ -70,5 +64,13 @@ public class Sponsorship extends DomainEntity {
 	public void setParades(final Collection<Parade> parades) {
 		this.parades = parades;
 	}
+	@NotNull
+	@ManyToOne(optional = false)
+	public CreditCard getCreditCard() {
+		return this.creditCard;
+	}
 
+	public void setCreditCard(final CreditCard creditCard) {
+		this.creditCard = creditCard;
+	}
 }

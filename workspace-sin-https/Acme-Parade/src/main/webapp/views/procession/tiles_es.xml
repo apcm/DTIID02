@@ -6,13 +6,23 @@
        
 <tiles-definitions>
 
-	<definition name="legalRecord/brotherhood/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar legal record" />
-		<put-attribute name="body" value="/views/legalRecord/editLegalRecord.jsp" />
+	<definition name="parade/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de desfiles" />
+		<put-attribute name="body" value="/views/parade/list.jsp" />
+	</definition>
+
+	<definition name="parade/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar desfile" />
+		<put-attribute name="body" value="/views/parade/edit.jsp" />
 	</definition>
 	
-	<definition name="legalRecord/brotherhood/create" extends="master.page">	
-		<put-attribute name="title" value="Crear legal record" />
-		<put-attribute name="body" value="/views/legalRecord/editLegalRecord.jsp" />
+	<definition name="parade/brotherhood/list" extends="master.page">	
+		<put-attribute name="title" value="Lista de desfiles" />
+		<put-attribute name="body" value="/views/parade/list.jsp" />
+	</definition>
+	
+	<definition name="parade/create" extends="master.page">	
+		<put-attribute name="title" value="Crear desfile" />
+		<put-attribute name="body" value="/views/parade/edit.jsp" />
 	</definition>
 </tiles-definitions>      

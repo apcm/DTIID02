@@ -34,7 +34,7 @@
 	
 	<h3><spring:message code="finder.results"/></h3>
 	<br/>
-	<jstl:forEach var = "result" items="${finder.processions}">
+	<jstl:forEach var = "result" items="${finder.parades}">
 		<jstl:out value="${result.title}"/>
 		<br/>
 	</jstl:forEach>

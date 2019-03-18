@@ -33,7 +33,7 @@ public class FinderService {
 	private FinderRepository		repository;
 
 	@Autowired
-	private ProcessionService		processionService;
+	private ParadeService			paradeService;
 
 	@Autowired
 	private CustomisationService	customisationService;
@@ -56,7 +56,7 @@ public class FinderService {
 	public Finder create() {
 		Finder res;
 		res = new Finder();
-		res.setProcessions(new HashSet<Parade>());
+		res.setParades(new HashSet<Parade>());
 		return res;
 	}
 
@@ -83,11 +83,11 @@ public class FinderService {
 			Assert.isTrue(principal.getFinder().getId() == finder.getId());
 			if (finder.getStartDate() != null && finder.getEndDate() != null)
 				Assert.isTrue(finder.getStartDate().before(finder.getEndDate()));
-			final Set<Parade> results = this.processionService.finderResults(finder);
+			final Set<Parade> results = this.paradeService.finderResults(finder);
 			for (final Parade p : results)
 				if (p.getFinalMode() == false)
 					results.remove(p);
-			res.setProcessions(results);
+			res.setParades(results);
 			res.setMoment(Calendar.getInstance().getTime());
 		}
 		return this.repository.save(res);
@@ -106,7 +106,7 @@ public class FinderService {
 		res.setKeyword("");
 		res.setStartDate(null);
 		res.setMoment(Calendar.getInstance().getTime());
-		res.setProcessions(new HashSet<Parade>());
+		res.setParades(new HashSet<Parade>());
 		return this.repository.save(res);
 	}
 	//Check cached hours

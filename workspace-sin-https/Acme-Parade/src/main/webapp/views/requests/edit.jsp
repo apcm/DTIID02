@@ -20,19 +20,19 @@
 	<jstl:out value="${errors }"/>
 	<p style="color:red;"> <jstl:out value="${error }"/></p>
 	
-	<h2><form:label path="procession">
-			<spring:message code="request.procession"/>:
+	<h2><form:label path="parade">
+			<spring:message code="request.parade"/>:
 		</form:label></h2>
-		<form:select path="procession">
-			<form:options items="${listProcessions}" itemLabel="title" itemValue="id"/>								 		
+		<form:select path="parade">
+			<form:options items="${listParades}" itemLabel="title" itemValue="id"/>								 		
 		</form:select>
-		<form:errors cssClass="error" path="procession"/>
+		<form:errors cssClass="error" path="parade"/>
 	
 	<br/>
 	<br/>
 	</jstl:if>
 	<jstl:if test="${brotherhoodView==true}">
-	<form:hidden path="procession"/>
+	<form:hidden path="parade"/>
 	
 	<jstl:if test="${status=='APPROVED'}">
 	<form:label path="rowPosition"><spring:message code="request.row"/></form:label>

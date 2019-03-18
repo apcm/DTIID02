@@ -26,14 +26,14 @@ public class RequestService {
 	public RequestRepository	requestRepository;
 
 	@Autowired
-	public ProcessionService	processionService;
+	public ParadeService		paradeService;
 
 	@Autowired
 	public BrotherhoodService	brotherhoodService;
 
 	@Autowired
 	public MemberService		memberService;
-	
+
 	@Autowired
 	private Validator			validator;
 
@@ -54,8 +54,8 @@ public class RequestService {
 		Request res;
 
 		final Member m = this.memberService.findOnePrincipal();
-		if (this.requestRepository.existRequest(m.getId(), r.getProcession().getId()) != null) {
-			final Request r1 = this.requestRepository.existRequest(m.getId(), r.getProcession().getId());
+		if (this.requestRepository.existRequest(m.getId(), r.getParade().getId()) != null) {
+			final Request r1 = this.requestRepository.existRequest(m.getId(), r.getParade().getId());
 			return this.updateRequest(r1);
 		}
 		Assert.isTrue(r.getStatus().contains("PENDING"));
@@ -76,7 +76,7 @@ public class RequestService {
 		Request res = this.requestRepository.save(r1);
 		if (res.getStatus().contains("REJECTED")) {
 			final Request r = new Request();
-			r.setProcession(res.getProcession());
+			r.setParade(res.getParade());
 			r.setId(res.getId());
 			r.setVersion(res.getVersion());
 			r.setStatus("PENDING");
@@ -93,18 +93,18 @@ public class RequestService {
 		final Request res = new Request();
 		res.setId(r.getId());
 		res.setVersion(r.getVersion());
-		res.setProcession(r.getProcession());
+		res.setParade(r.getParade());
 		res.setStatus("REJECTED");
 		this.requestRepository.save(res);
 
 	}
 
 	public Collection<Request> findByBrotherhood(final Parade p) {
-		return this.requestRepository.findRequestByProcessionId(p.getId());
+		return this.requestRepository.findRequestByParadeId(p.getId());
 	}
 
-	public Collection<Request> findByProcessionId(final int processionId) {
-		return this.requestRepository.findRequestByProcessionId(processionId);
+	public Collection<Request> findByParadeId(final int paradeId) {
+		return this.requestRepository.findRequestByParadeId(paradeId);
 	}
 
 	public Collection<Integer> suggestPosition(final Parade p) {
@@ -137,7 +137,7 @@ public class RequestService {
 
 	public void checkRequestOwnsBrotherhood(final Request r) {
 		final Brotherhood b = this.brotherhoodService.findOnePrincipal();
-		Assert.isTrue(r.getProcession().getBrotherhood().getId() == b.getId());
+		Assert.isTrue(r.getParade().getBrotherhood().getId() == b.getId());
 	}
 
 	public void checkPositionBeforeSave(final Request r) {
@@ -157,14 +157,14 @@ public class RequestService {
 			Assert.isTrue(r.getRejectReason() != "");
 		return this.requestRepository.save(r);
 	}
-public Request reconstructMember(final Request r, final BindingResult binding) {
+	public Request reconstructMember(final Request r, final BindingResult binding) {
 		Request res;
 
 		if (r.getId() == 0)
 			res = r;
 		else {
 			res = this.findOne(r);
-			res.setProcession(r.getProcession());
+			res.setParade(r.getParade());
 
 		}
 		this.validator.validate(res, binding);
@@ -200,7 +200,7 @@ public Request reconstructMember(final Request r, final BindingResult binding) {
 	}
 	public Boolean checkPosition(final Request r) {
 		Boolean res = false;
-		if (this.requestRepository.checkPosition(r.getRowPosition(), r.getColumnPosition(), r.getProcession().getId()) != null)
+		if (this.requestRepository.checkPosition(r.getRowPosition(), r.getColumnPosition(), r.getParade().getId()) != null)
 			res = true;
 
 		return res;

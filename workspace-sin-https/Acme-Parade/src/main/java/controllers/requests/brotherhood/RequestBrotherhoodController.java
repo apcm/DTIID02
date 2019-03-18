@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.BrotherhoodService;
 import services.MemberService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
 import controllers.AbstractController;
 import domain.Parade;
@@ -29,7 +29,7 @@ public class RequestBrotherhoodController extends AbstractController {
 	MemberService		memberService;
 
 	@Autowired
-	ProcessionService	processionService;
+	ParadeService		paradeService;
 
 	@Autowired
 	RequestService		requestService;
@@ -39,19 +39,19 @@ public class RequestBrotherhoodController extends AbstractController {
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView show(@RequestParam final int processionId) {
+	public ModelAndView show(@RequestParam final int paradeId) {
 		final ModelAndView res;
 		final Parade p;
 
-		final Collection<Request> requests = this.requestService.findByProcessionId(processionId);
+		final Collection<Request> requests = this.requestService.findByParadeId(paradeId);
 		final Parade p1 = new Parade();
-		p1.setId(processionId);
-		p = this.processionService.findOne(p1);
+		p1.setId(paradeId);
+		p = this.paradeService.findOne(p1);
 
-		this.brotherhoodService.checkBrotherhoodOwnsProcession(p);
+		this.brotherhoodService.checkBrotherhoodOwnsParade(p);
 
 		res = new ModelAndView("requests/list");
-		res.addObject("procession", p);
+		res.addObject("parade", p);
 		res.addObject("requests", requests);
 		res.addObject("brotherhoodView", true);
 
@@ -88,7 +88,7 @@ public class RequestBrotherhoodController extends AbstractController {
 
 	private ModelAndView createEditModelAndView(final Request r, final String status, final String messageCode) {
 		ModelAndView res;
-		final List<Integer> li = new ArrayList<>(this.requestService.suggestPosition(r.getProcession()));
+		final List<Integer> li = new ArrayList<>(this.requestService.suggestPosition(r.getParade()));
 		res = new ModelAndView("requests/edit");
 		res.addObject("row", li.get(0));
 		res.addObject("column", li.get(1));
@@ -97,8 +97,8 @@ public class RequestBrotherhoodController extends AbstractController {
 		res.addObject("brotherhoodView", true);
 		res.addObject("message", messageCode);
 		res.addObject("formAction", "requests/brotherhood/edit.do");
-		String redirect = "requests/brotherhood/list.do?processionId=";
-		redirect = redirect + r.getProcession().getId();
+		String redirect = "requests/brotherhood/list.do?paradeId=";
+		redirect = redirect + r.getParade().getId();
 
 		res.addObject("formBack", redirect);
 
@@ -124,8 +124,8 @@ public class RequestBrotherhoodController extends AbstractController {
 
 				final Request r1 = this.requestService.saveDirectly(r);
 
-				String redirect = "redirect:list.do?processionId=";
-				redirect = redirect + r1.getProcession().getId();
+				String redirect = "redirect:list.do?paradeId=";
+				redirect = redirect + r1.getParade().getId();
 				res = new ModelAndView(redirect);
 			} catch (final Throwable oops) {
 				res = this.createEditModelAndView(r, r.getStatus(), "error.request");

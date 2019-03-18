@@ -28,17 +28,17 @@
 	<spring:message code="dashboard.smallestsBrotherhoods"/>
 	<jstl:out value="${smallestB}"/>
 	<br/>
-	<spring:message code="dashboard.requestRatioProcession"/>
+	<spring:message code="dashboard.requestRatioParade"/>
 	<spring:message code="dashboard.ratioList"/>
 	<jstl:out value="${ratioList}"/>
 	<br>
-	<spring:message code="dashboard.processionList"/>
-	<jstl:out value="${processionList}"/>
+	<spring:message code="dashboard.paradeList"/>
+	<jstl:out value="${paradeList}"/>
 	<br>
 	<spring:message code="dashboard.statusList"/>
 	<jstl:out value="${statusList}"/>
 	<br/>
-	<spring:message code="dashboard.processions30Days"/>
+	<spring:message code="dashboard.parades30Days"/>
 	<jstl:out value="${p30}"/>
 	<br/>
 	<spring:message code="dashboard.requestRatio"/>

@@ -37,8 +37,8 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 	Collection<Brotherhood> smallestBrotherhoods();
 
 	//12.3.4
-	@Query("select 1.0 * count(r)/(select count(r1) from Request r1), r.procession.title, r.status from Request r group by r.status, r.procession")
-	List<Object[]> requestRatioByProcession();
+	@Query("select 1.0 * count(r)/(select count(r1) from Request r1), r.parade.title, r.status from Request r group by r.status, r.parade")
+	List<Object[]> requestRatioByParade();
 
 	//12.3.5 in service
 	//12.3.6
@@ -71,16 +71,16 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 	@Query("select stddev(a.brotherhoods.size) from Area a")
 	double stddevBrotherhoodsPerArea();
 	//22.2.2
-	@Query("select min(f.processions.size) from Finder f")
+	@Query("select min(f.parades.size) from Finder f")
 	double minFinderResults();
 
-	@Query("select max(f.processions.size) from Finder f")
+	@Query("select max(f.parades.size) from Finder f")
 	double maxFinderResults();
 
-	@Query("select avg(f.processions.size) from Finder f")
+	@Query("select avg(f.parades.size) from Finder f")
 	double avgFinderResults();
 
-	@Query("select stddev(f.processions.size) from Finder f")
+	@Query("select stddev(f.parades.size) from Finder f")
 	double stddevFinderResults();
 
 	//22.2.3

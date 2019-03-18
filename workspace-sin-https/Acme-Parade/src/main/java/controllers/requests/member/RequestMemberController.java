@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.MemberService;
-import services.ProcessionService;
+import services.ParadeService;
 import services.RequestService;
 import controllers.AbstractController;
 import domain.Member;
@@ -28,13 +28,13 @@ import domain.Request;
 public class RequestMemberController extends AbstractController {
 
 	@Autowired
-	MemberService		memberService;
+	MemberService	memberService;
 
 	@Autowired
-	ProcessionService	processionService;
+	ParadeService	paradeService;
 
 	@Autowired
-	RequestService		requestService;
+	RequestService	requestService;
 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
@@ -58,14 +58,14 @@ public class RequestMemberController extends AbstractController {
 		final Parade p;
 		final Request r;
 
-		p = this.processionService.findByRequestId(requestId);
+		p = this.paradeService.findByRequestId(requestId);
 		final Request r1 = new Request();
 		r1.setId(requestId);
 		r = this.requestService.findOne(r1);
 		this.requestService.checkRequestOwnsMember(r1);
 
 		res = new ModelAndView("requests/show");
-		res.addObject("procession", p);
+		res.addObject("parade", p);
 		res.addObject("request", r);
 
 		return res;
@@ -124,14 +124,14 @@ public class RequestMemberController extends AbstractController {
 		ModelAndView res;
 		res = new ModelAndView("requests/edit");
 		final Member member = this.memberService.findOnePrincipal();
-		final List<Parade> lp = new ArrayList<>(this.processionService.findAllFinalModeRequests());
-		final List<Parade> lp2 = this.processionService.findByMemberId(member);
+		final List<Parade> lp = new ArrayList<>(this.paradeService.findAllFinalModeRequests());
+		final List<Parade> lp2 = this.paradeService.findByMemberId(member);
 
 		lp.retainAll(lp2);
 
 		res.addObject("request", r);
 		res.addObject("message", messageCode);
-		res.addObject("listProcessions", lp);
+		res.addObject("listParades", lp);
 		res.addObject("memberView", true);
 		res.addObject("formAction", "requests/member/edit.do");
 		res.addObject("formBack", "requests/member/list.do");

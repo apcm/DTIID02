@@ -201,7 +201,7 @@ public class BrotherhoodService {
 
 	}
 
-	public void checkBrotherhoodOwnsProcession(final Parade p) {
+	public void checkBrotherhoodOwnsParade(final Parade p) {
 		final Brotherhood b = this.findOnePrincipal();
 		Assert.isTrue(p.getBrotherhood().getId() == b.getId());
 
@@ -233,7 +233,7 @@ public class BrotherhoodService {
 
 		} else {
 
-			Collection<Box> boxes = actorService.createPredefinedBoxes();
+			final Collection<Box> boxes = this.actorService.createPredefinedBoxes();
 			brotherhood.setBoxes(boxes);
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String oldpass = brotherhood.getUserAccount().getPassword();
@@ -423,8 +423,8 @@ public class BrotherhoodService {
 		}
 		return res;
 	}
-	
-		public Collection<Brotherhood> findAllNotApproved(final Member m) {
+
+	public Collection<Brotherhood> findAllNotApproved(final Member m) {
 		final List<Brotherhood> lb1 = new ArrayList<>(this.brotherhoodRepository.findAll());
 		final List<Brotherhood> lb2 = new ArrayList<>(this.brotherhoodRepository.findAllNotApproved(m.getId()));
 		lb1.removeAll(lb2);

@@ -19,8 +19,8 @@
 		
 		<jstl:when test="${row.status=='PENDING'}">
 
-		<display:column property="procession.title" titleKey="request.procession.title" style="background-color:lightgrey;"/>
-		<display:column property="procession.departureDate" titleKey="request.departureDate" style="background-color:lightgrey;"/>
+		<display:column property="parade.title" titleKey="request.parade.title" style="background-color:lightgrey;"/>
+		<display:column property="parade.departureDate" titleKey="request.departureDate" style="background-color:lightgrey;"/>
 		<display:column property="status" titleKey="request.status" sortable="true" style="background-color:lightgrey;"/>
 		<display:column property="rowPosition" titleKey="request.rowPosition" style="background-color:lightgrey;"/>
 		<display:column property="columnPosition" titleKey="request.columnPosition" style="background-color:lightgrey;"/>
@@ -41,8 +41,8 @@
 		</jstl:when>
 		
 		<jstl:when test="${row.status=='APPROVED'}">
-		<display:column property="procession.title" titleKey="request.procession.title" style="background-color:lightgreen;"/>
-		<display:column property="procession.departureDate" titleKey="request.departureDate" style="background-color:lightgreen;"/>
+		<display:column property="parade.title" titleKey="request.parade.title" style="background-color:lightgreen;"/>
+		<display:column property="parade.departureDate" titleKey="request.departureDate" style="background-color:lightgreen;"/>
 		<display:column property="status" titleKey="request.status" sortable="true" style="background-color:lightgreen;"/>
 
 		<display:column property="rowPosition" titleKey="request.rowPosition" style="background-color:lightgreen;"/>
@@ -59,8 +59,8 @@
 		</jstl:when>
 		
 		<jstl:when test="${row.status=='REJECTED'}">
-		<display:column property="procession.title" titleKey="request.procession.title" style="background-color:orange;"/>
-		<display:column property="procession.departureDate" titleKey="request.departureDate" style="background-color:orange;"/>
+		<display:column property="parade.title" titleKey="request.parade.title" style="background-color:orange;"/>
+		<display:column property="parade.departureDate" titleKey="request.departureDate" style="background-color:orange;"/>
 		<display:column property="status" titleKey="request.status" sortable="true" style="background-color:orange;"/>
 		<display:column property="rejectReason" titleKey="request.rejectReason" style="background-color:orange;"/>
 		<display:column property="columnPosition" titleKey="request.columnPosition" style="background-color:orange;"/>
@@ -77,8 +77,8 @@
 		</jstl:when>
 		
 		<jstl:when test="${row.status=='EXPELLED'}">
-		<display:column property="procession.title" titleKey="request.procession.title" style="background-color:orange;"/>
-		<display:column property="procession.departureDate" titleKey="request.departureDate" style="background-color:orange;"/>
+		<display:column property="parade.title" titleKey="request.parade.title" style="background-color:orange;"/>
+		<display:column property="parade.departureDate" titleKey="request.departureDate" style="background-color:orange;"/>
 		<display:column property="status" titleKey="request.status" sortable="true" style="background-color:orange;"/>
 		<display:column property="rowPosition" titleKey="request.rowPosition" style="background-color:orange;"/>
 		<display:column property="columnPosition" titleKey="request.columnPosition" style="background-color:orange;"/>

@@ -29,27 +29,23 @@ public class InceptionRecordService {
 		return res;
 	}
 
-	public InceptionRecord save(final InceptionRecord leg) {
-		Assert.notNull(leg);
+	public InceptionRecord save(final InceptionRecord inc) {
+		Assert.notNull(inc);
 		final Brotherhood b = this.brotherhoodService.findByPrincipal();
 
-		if (leg.getId() == 0) {
-			final Collection<InceptionRecord> legsOld = b.getInceptionRecords();
-			legsOld.add(leg);
-			b.setInceptionRecords(legsOld);
+		if (inc.getId() == 0) {
+			b.setInceptionRecord(inc);
 			this.brotherhoodService.save(b);
 		}
 
-		return this.inceptionRecordRepository.save(leg);
+		return this.inceptionRecordRepository.save(inc);
 	}
 
 	public void delete(final InceptionRecord inc) {
 		Assert.notNull(inc);
 		final Brotherhood b = this.brotherhoodService.findByPrincipal();
 
-		final Collection<InceptionRecord> incsOld = b.getInceptionRecords();
-		incsOld.remove(inc);
-		b.setInceptionRecords(incsOld);
+		b.setInceptionRecord(null);
 		this.brotherhoodService.save(b);
 
 		this.inceptionRecordRepository.delete(inc);

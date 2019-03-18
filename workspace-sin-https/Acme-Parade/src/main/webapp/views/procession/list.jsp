@@ -13,26 +13,26 @@
 
 
 <display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="processions" requestURI="${requestURI}" id="row">
+	name="parades" requestURI="${requestURI}" id="row">
 
-	<display:column property="title" titleKey="procession.title"  />
-	<display:column property="description" titleKey="procession.description"  />
-	<display:column property="departureDate" titleKey="procession.departureDate"  />
-	<display:column property="ticker" titleKey="procession.ticker"  />
-	<display:column property="finalMode" titleKey="procession.finalMode"  />
+	<display:column property="title" titleKey="parade.title"  />
+	<display:column property="description" titleKey="parade.description"  />
+	<display:column property="departureDate" titleKey="parade.departureDate"  />
+	<display:column property="ticker" titleKey="parade.ticker"  />
+	<display:column property="finalMode" titleKey="parade.finalMode"  />
 
 	<security:authorize access="hasRole('BROTHERHOOD')">
 	<display:column>	
 			
 			<jstl:if test="${row.finalMode == false}">
-			<a href="procession/brotherhood/edit.do?processionId=${row.id}">
-			<spring:message code="procession.edit.link" />
+			<a href="parade/brotherhood/edit.do?paradeId=${row.id}">
+			<spring:message code="parade.edit.link" />
 			</a>
 			</jstl:if>
 			
 			<jstl:if test="${row.finalMode == true}">
-			<a href="requests/brotherhood/list.do?processionId=${row.id}">
-			<spring:message code="procession.list.request" />
+			<a href="requests/brotherhood/list.do?paradeId=${row.id}">
+			<spring:message code="parade.list.request" />
 			</a>
 			</jstl:if>
 			
@@ -44,8 +44,8 @@
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 		<div>
-			<a href="procession/brotherhood/create.do"> <spring:message
-					code="procession.list.create" />
+			<a href="parade/brotherhood/create.do"> <spring:message
+					code="parade.list.create" />
 			</a>
 		</div>
 </security:authorize>

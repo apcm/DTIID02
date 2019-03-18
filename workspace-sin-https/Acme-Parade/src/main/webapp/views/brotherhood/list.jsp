@@ -19,8 +19,8 @@
 	<display:column property="stablishmentDate" titleKey="brotherhood.stablishment.date.d"  />
 	
 	<display:column>
-			<a href="procession/list.do?brotherhoodId=${row.id}">
-			<spring:message code="procession.list" />
+			<a href="parade/list.do?brotherhoodId=${row.id}">
+			<spring:message code="parade.list" />
 			</a>
 	</display:column>
 	

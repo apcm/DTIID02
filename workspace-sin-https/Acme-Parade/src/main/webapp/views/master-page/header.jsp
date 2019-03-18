@@ -43,7 +43,7 @@
 					<li class="arrow"></li>
 					<li><a href="float/brotherhood/list.do"><spring:message code="master.page.float.list" /></a></li>	
 					<li><a href="brotherhood/brotherhood/edit.do"><spring:message code="master.page.brotherhood.edit" /></a></li>	
-					<li><a href="procession/brotherhood/list.do"><spring:message code="master.page.procession.list" /></a></li>	
+					<li><a href="parade/brotherhood/list.do"><spring:message code="master.page.parade.list" /></a></li>	
 					<li><a href="members/brotherhood/list.do"><spring:message code="master.page.members.list" /></a></li>	
 					<li><a href="enrolements/brotherhood/list.do"><spring:message code="master.page.enrolements.list" /></a></li>	
 					<li><a href="history/brotherhood/showHistory.do"><spring:message code="master.page.history" /></a></li>	

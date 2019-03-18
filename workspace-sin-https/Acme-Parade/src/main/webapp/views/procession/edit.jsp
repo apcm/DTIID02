@@ -10,37 +10,37 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 
-<form:form action="procession/brotherhood/edit.do" modelAttribute="procession">
+<form:form action="parade/brotherhood/edit.do" modelAttribute="parade">
 
 	<form:hidden path="id" />
 	<form:hidden path="version" />
 	<form:hidden path="ticker" />
 	
-	<spring:message code="procession.ob" var="ob"/>
+	<spring:message code="parade.ob" var="ob"/>
 	<jstl:out value="${ob}"/>
 	<form:label path="title">
-		<spring:message code="procession.title" />:
+		<spring:message code="parade.title" />:
 	</form:label>
 	<form:input path="title" />
 	<form:errors cssClass="error" path="title" />
 	<br />
 
 	<form:label path="description">
-		<spring:message code="procession.description" />:
+		<spring:message code="parade.description" />:
 	</form:label>
 	<form:input path="description" />
 	<form:errors cssClass="error" path="description" />
 	<br />
 
 	<form:label path="departureDate">
-		<spring:message code="procession.departureDate" />:
+		<spring:message code="parade.departureDate" />:
 	</form:label>
 	<form:input path="departureDate" />
 	<form:errors cssClass="error" path="departureDate" />
 	<br />	
 	
 	<form:label path="finalMode">
-		<spring:message code="procession.finalMode" />:
+		<spring:message code="parade.finalMode" />:
 	</form:label>
 	<form:select path="finalMode">
 		<form:option value="true"></form:option>
@@ -51,7 +51,7 @@
 	<br />	
 	
 	<form:label path="floats">
-		<spring:message code="procession.float"/>
+		<spring:message code="parade.float"/>
 	</form:label>
 	<form:select path="floats" multiple="true">	
 		<form:options items="${floats}" itemLabel="title"
@@ -60,18 +60,18 @@
 
 	
 	<input type="submit" name="save"
-		value="<spring:message code="procession.save" />" />&nbsp; 
+		value="<spring:message code="parade.save" />" />&nbsp; 
 		
 		
-	<jstl:if test="${procession.id != 0}">
+	<jstl:if test="${parade.id != 0}">
 		<input type="submit" name="delete"
-			value="<spring:message code="procession.delete" />"
-			onclick="return confirm('<spring:message code="procession.confirm.delete" />')" />&nbsp;
+			value="<spring:message code="parade.delete" />"
+			onclick="return confirm('<spring:message code="parade.confirm.delete" />')" />&nbsp;
 	</jstl:if>
 	
 	<input type="button" name="cancel"
-		value="<spring:message code="procession.cancel" />"
-		onclick="javascript: relativeRedir('procession/brotherhood/list.do');" />
+		value="<spring:message code="parade.cancel" />"
+		onclick="javascript: relativeRedir('parade/brotherhood/list.do');" />
 	<br />
 
 

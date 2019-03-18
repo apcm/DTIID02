@@ -173,14 +173,14 @@ public class BrotherhoodController extends AbstractController {
 
 		final Collection<LegalRecord> legalRecords = brotherhood.getLegalRecords();
 		final Collection<PeriodRecord> periodRecords = brotherhood.getPeriodRecords();
-		final Collection<InceptionRecord> inceptionRecords = brotherhood.getInceptionRecords();
+		final InceptionRecord inceptionRecord = brotherhood.getInceptionRecord();
 		final Collection<LinkRecord> linkRecords = brotherhood.getLinkRecords();
 
 		result = new ModelAndView("brotherhood/showRecords");
 		result.addObject("brotherhood", brotherhood);
 		result.addObject("legalRecords", legalRecords);
 		result.addObject("periodRecords", periodRecords);
-		result.addObject("inceptionRecords", inceptionRecords);
+		result.addObject("inceptionRecord", inceptionRecord);
 		result.addObject("linkRecords", linkRecords);
 		result.addObject("message", message);
 		result.addObject("userAccount", userAccount);

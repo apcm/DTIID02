@@ -13,24 +13,24 @@
 <security:authorize access="hasRole('MEMBER')">
 	
 	<h2>
-		<spring:message code="request.procession" />
+		<spring:message code="request.parade" />
 	</h2>
-	<p><jstl:out value="${procession.title}"/></p>
+	<p><jstl:out value="${parade.title}"/></p>
 	
 	<h2>
-		<spring:message code="request.procession.description" />
+		<spring:message code="request.parade.description" />
 	</h2>
-	<p><jstl:out value="${procession.description}"/></p>
+	<p><jstl:out value="${parade.description}"/></p>
 	
 	<h2>
 		<spring:message code="request.departureDate" />
 	</h2>
-	<p><jstl:out value="${procession.departureDate}"/></p>
+	<p><jstl:out value="${parade.departureDate}"/></p>
 	
 	<h2>
-		<spring:message code="request.procession.ticker" />
+		<spring:message code="request.parade.ticker" />
 	</h2>
-	<p><jstl:out value="${procession.ticker}"/></p>
+	<p><jstl:out value="${parade.ticker}"/></p>
 	
 	<h2>
 		<spring:message code="request.status" />

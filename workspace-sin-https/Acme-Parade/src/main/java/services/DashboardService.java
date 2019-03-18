@@ -28,7 +28,7 @@ public class DashboardService {
 	public DashboardRepository	dashboardRepository;
 
 	@Autowired
-	public ProcessionService	processionService;
+	public ParadeService		paradeService;
 
 
 	public DashboardService() {
@@ -74,23 +74,23 @@ public class DashboardService {
 
 	//12.3.4 
 
-	public List<Object[]> requestRatioByProcession() {
+	public List<Object[]> requestRatioByParade() {
 		Assert.isTrue(this.checkAdmin());
-		return this.dashboardRepository.requestRatioByProcession();
+		return this.dashboardRepository.requestRatioByParade();
 	}
 
 	//12.3.5
-	public Collection<Parade> processionsOrganizedIn30Days() {
+	public Collection<Parade> paradesOrganizedIn30Days() {
 		Assert.isTrue(this.checkAdmin());
-		final List<Parade> processions = new ArrayList<Parade>(this.processionService.findAll());
-		final List<Parade> processionsQ = new ArrayList<Parade>(processions);
-		for (final Parade p : processions) {
+		final List<Parade> parades = new ArrayList<Parade>(this.paradeService.findAll());
+		final List<Parade> paradesQ = new ArrayList<Parade>(parades);
+		for (final Parade p : parades) {
 			final long diffInMillies = Math.abs(p.getDepartureDate().getTime() - Calendar.getInstance().getTime().getTime());
 			final long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			if (diff >= 30)
-				processionsQ.remove(p);
+				paradesQ.remove(p);
 		}
-		return processionsQ;
+		return paradesQ;
 	}
 
 	//12.3.6
