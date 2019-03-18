@@ -23,61 +23,50 @@ public class Segment extends DomainEntity {
 	private Double	origLongitude;
 	private Double	destLatitude;
 	private Double	destLongitude;
-	private Date	time;
-	private Boolean	finalmode;
+	private Date	arriveTime;
+	private Boolean	finalMode;
 	private String	status;
-	private Integer	order;
+	private Integer	segmentOrder;
 
 
-	public Double getorigLatitude() {
+	public Double getOrigLatitude() {
 		return this.origLatitude;
 	}
 
-	public void setorigLatitude(final Double origLatitude) {
+	public void setOrigLatitude(final Double origLatitude) {
 		this.origLatitude = origLatitude;
 	}
 
-	public Double getorigLongitude() {
+	public Double getOrigLongitude() {
 		return this.origLongitude;
 	}
 
-	public void setorigLongitude(final Double origLongitude) {
+	public void setOrigLongitude(final Double origLongitude) {
 		this.origLongitude = origLongitude;
 	}
 
-	public Double getdestLatitude() {
+	public Double getDestLatitude() {
 		return this.destLatitude;
 	}
 
-	public void setdestLatitude(final Double destLatitude) {
+	public void setDestLatitude(final Double destLatitude) {
 		this.destLatitude = destLatitude;
 	}
 
-	public Double getdestLongitude() {
+	public Double getDestLongitude() {
 		return this.destLongitude;
 	}
 
-	public void setdestLongitude(final Double destLongitude) {
+	public void setDestLongitude(final Double destLongitude) {
 		this.destLongitude = destLongitude;
 	}
 
-	@Temporal(TemporalType.DATE)
-	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	public Date getTime() {
-		return this.time;
+	public Boolean getFinalMode() {
+		return this.finalMode;
 	}
 
-	public void setTime(final Date time) {
-		this.time = time;
-	}
-
-	public Boolean getFinalmode() {
-		return this.finalmode;
-	}
-
-	public void setFinalmode(final Boolean finalmode) {
-		this.finalmode = finalmode;
+	public void setFinalMode(final Boolean finalMode) {
+		this.finalMode = finalMode;
 	}
 
 	@Pattern(regexp = "^SUBMITTED|ACCEPTED|REJECTED$")
@@ -90,12 +79,23 @@ public class Segment extends DomainEntity {
 	}
 
 	@Min(1)
-	public Integer getOrder() {
-		return this.order;
+	public Integer getSegmentOrder() {
+		return this.segmentOrder;
 	}
 
-	public void setOrder(final Integer order) {
-		this.order = order;
+	public void setSegmentOrder(final Integer segmentOrder) {
+		this.segmentOrder = segmentOrder;
+	}
+
+	@Temporal(TemporalType.TIME)
+	@DateTimeFormat(pattern = "HH:mm:ss")
+	@NotNull
+	public Date getArriveTime() {
+		return this.arriveTime;
+	}
+
+	public void setArriveTime(final Date arriveTime) {
+		this.arriveTime = arriveTime;
 	}
 
 

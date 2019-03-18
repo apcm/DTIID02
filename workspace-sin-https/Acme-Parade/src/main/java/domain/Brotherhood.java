@@ -11,6 +11,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
@@ -30,7 +31,7 @@ public class Brotherhood extends Actor {
 	private Collection<Enrolement>		enrolements;
 	private Area						area;
 	private Collection<LegalRecord>		legalRecords;
-	private Collection<InceptionRecord>	inceptionRecords;
+	private InceptionRecord				inceptionRecord;
 	private Collection<LinkRecord>		linkRecords;
 	private Collection<PeriodRecord>	periodRecords;
 
@@ -94,13 +95,13 @@ public class Brotherhood extends Actor {
 	}
 
 	@Valid
-	@OneToMany(cascade = CascadeType.ALL)
-	public Collection<InceptionRecord> getInceptionRecords() {
-		return this.inceptionRecords;
+	@OneToOne(cascade = CascadeType.ALL)
+	public InceptionRecord getInceptionRecord() {
+		return this.inceptionRecord;
 	}
 
-	public void setInceptionRecords(final Collection<InceptionRecord> inceptionRecords) {
-		this.inceptionRecords = inceptionRecords;
+	public void setInceptionRecord(final InceptionRecord inceptionRecord) {
+		this.inceptionRecord = inceptionRecord;
 	}
 
 	@Valid

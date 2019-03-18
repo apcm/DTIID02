@@ -23,9 +23,9 @@ public class Proclaim extends DomainEntity {
 	private String	text;
 
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
 	public Date getMoment() {
 		return this.moment;
 	}

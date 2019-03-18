@@ -4,6 +4,7 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
@@ -69,6 +70,7 @@ public class CreditCard extends DomainEntity {
 	}
 
 	@NotNull
+	@Min(2019)
 	public int getExpirationYear() {
 		return this.expirationYear;
 	}

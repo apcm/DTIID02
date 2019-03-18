@@ -58,16 +58,16 @@ public class Request extends DomainEntity {
 
 	//------------Relationships------------
 
-	private Parade	procession;
+	private Parade	parade;
 
 
 	@ManyToOne
-	public Parade getProcession() {
-		return this.procession;
+	public Parade getParade() {
+		return this.parade;
 	}
 
-	public void setProcession(final Parade procession) {
-		this.procession = procession;
+	public void setParade(final Parade parade) {
+		this.parade = parade;
 	}
 
 }
