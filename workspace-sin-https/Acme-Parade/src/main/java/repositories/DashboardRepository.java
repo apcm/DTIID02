@@ -118,5 +118,15 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 
 	@Query("select avg(length(b.inceptionRecord.description) + length(p.description) + length(l.description) + length(li.description)) from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li")
 	double historyAvgSize();
+	
+	//Queries de la B
+	@Query("select 1.0 * count(a)/(select count(a1) from Area a1) from Area a where a.id not in (select a.id from Chapter c join c.area a)")
+	double ratioAreasNoChapter();
+
+	@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2 where p2.finalMode='1') from Parade p1 where p1.finalMode='0'")
+	double ratioParadesDraftModevsFinalMode();
+
+	@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2) from Parade p1 where p1.finalMode='1' group by p1.status")
+	Collection<double> RatioParadesFinalModeGroupedByStatus();
 
 }
