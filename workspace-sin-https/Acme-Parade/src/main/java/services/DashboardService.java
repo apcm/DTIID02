@@ -28,7 +28,7 @@ public class DashboardService {
 	public DashboardRepository	dashboardRepository;
 
 	@Autowired
-	public ParadeService		paradeService;
+	public ProcessionService	processionService;
 
 
 	public DashboardService() {
@@ -72,25 +72,25 @@ public class DashboardService {
 		return this.dashboardRepository.smallestBrotherhoods();
 	}
 
-	//12.3.4 
+	//12.3.4
 
-	public List<Object[]> requestRatioByParade() {
+	public List<Object[]> requestRatioByProcession() {
 		Assert.isTrue(this.checkAdmin());
 		return this.dashboardRepository.requestRatioByParade();
 	}
 
 	//12.3.5
-	public Collection<Parade> paradesOrganizedIn30Days() {
+	public Collection<Parade> processionsOrganizedIn30Days() {
 		Assert.isTrue(this.checkAdmin());
-		final List<Parade> parades = new ArrayList<Parade>(this.paradeService.findAll());
-		final List<Parade> paradesQ = new ArrayList<Parade>(parades);
-		for (final Parade p : parades) {
+		final List<Parade> processions = new ArrayList<Parade>(this.processionService.findAll());
+		final List<Parade> processionsQ = new ArrayList<Parade>(processions);
+		for (final Parade p : processions) {
 			final long diffInMillies = Math.abs(p.getDepartureDate().getTime() - Calendar.getInstance().getTime().getTime());
 			final long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
 			if (diff >= 30)
-				paradesQ.remove(p);
+				processionsQ.remove(p);
 		}
-		return paradesQ;
+		return processionsQ;
 	}
 
 	//12.3.6
@@ -165,4 +165,37 @@ public class DashboardService {
 		Assert.isTrue(this.checkAdmin());
 		return this.dashboardRepository.ratioEmptyFinders();
 	}
+
+	//-----------------ACME PARADE-----------------------
+	public Integer maxNumRecordsPerHistory() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.maxNumRecordsPerHistory();
+	}
+
+	public Integer minNumRecordsPerHistory() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.minNumRecordsPerHistory();
+	}
+
+	public double avgNumRecordsPerHistory() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.avgNumRecordsPerHistory();
+	}
+
+	public double stddevNumRecordsPerHistory() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.stddevNumRecordsPerHistory();
+	}
+
+	public Collection<String> largestHistoryBrotherhood() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.largestHistoryBrotherhood();
+	}
+
+	public Collection<String> largerThanAvgHistoryBrotherhood() {
+		Assert.isTrue(this.checkAdmin());
+		final double avg = this.dashboardRepository.avgNumRecordsPerHistory();
+		return this.dashboardRepository.largerThanAvgHistoryBrotherhood(avg);
+	}
+
 }

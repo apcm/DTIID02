@@ -35,6 +35,7 @@ public class DashboardAdministratorController extends AbstractController {
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public ModelAndView dashboard() {
 		final ModelAndView res;
+		res = new ModelAndView("dashboard/dashboard");
 
 		final double minMembers = this.dashboardService.minMembers();
 		final double maxMembers = this.dashboardService.maxMembers();
@@ -45,17 +46,17 @@ public class DashboardAdministratorController extends AbstractController {
 
 		final Collection<Brotherhood> smallestBrotherhoods = this.dashboardService.smallestsBrotherhoods();
 
-		final List<Object[]> requestRatioByParade = this.dashboardService.requestRatioByParade();
+		final List<Object[]> requestRatioByProcession = this.dashboardService.requestRatioByProcession();
 		final List<Double> ratioList = new ArrayList<>();
-		final List<String> paradeList = new ArrayList<>();
+		final List<String> processionList = new ArrayList<>();
 		final List<String> statusList = new ArrayList<>();
-		for (final Object[] o : requestRatioByParade) {
+		for (final Object[] o : requestRatioByProcession) {
 			ratioList.add((double) o[0]);
-			paradeList.add((String) o[1]);
+			processionList.add((String) o[1]);
 			statusList.add((String) o[2]);
 		}
 
-		final Collection<Parade> paradesOrganizedIn30Days = this.dashboardService.paradesOrganizedIn30Days();
+		final Collection<Parade> processionsOrganizedIn30Days = this.dashboardService.processionsOrganizedIn30Days();
 
 		final List<Double> requestRatio = this.dashboardService.requestRatio();
 
@@ -83,18 +84,17 @@ public class DashboardAdministratorController extends AbstractController {
 
 		final double ratioEmptyFinders = this.dashboardService.ratioEmptyFinders();
 
-		res = new ModelAndView("dashboard/dashboard");
 		res.addObject("minM", minMembers);
 		res.addObject("maxM", maxMembers);
 		res.addObject("avgM", avgMembers);
 		res.addObject("stddevM", stddevMembers);
 		res.addObject("largestB", largestBrotherhoods);
 		res.addObject("smallestB", smallestBrotherhoods);
-		//res.addObject("rRatioP", requestRatioByParade);
+		//res.addObject("rRatioP", requestRatioByProcession);
 		res.addObject("ratioList", ratioList);
-		res.addObject("paradeList", paradeList);
+		res.addObject("processionList", processionList);
 		res.addObject("statusList", statusList);
-		res.addObject("p30", paradesOrganizedIn30Days);
+		res.addObject("p30", processionsOrganizedIn30Days);
 		res.addObject("rRatio", requestRatio);
 		res.addObject("m10", members10Percent);
 		//res.addObject("histogram", positionHistogram);
@@ -111,6 +111,22 @@ public class DashboardAdministratorController extends AbstractController {
 		res.addObject("maxFinder", maxFinderResults);
 		res.addObject("stddevFinder", stddevFinderResults);
 		res.addObject("ratioEmptyFinders", ratioEmptyFinders);
+
+		//ACME PARADE
+		final Integer maxNumRecordsPerHistory = this.dashboardService.maxNumRecordsPerHistory();
+		final Integer minNumRecordsPerHistory = this.dashboardService.minNumRecordsPerHistory();
+		final double avgNumRecordsPerHistory = this.dashboardService.avgNumRecordsPerHistory();
+		final double stddevNumRecordsPerHistory = this.dashboardService.stddevNumRecordsPerHistory();
+		final List<String> largestBrotherhoodList = new ArrayList<>(this.dashboardService.largestHistoryBrotherhood());
+		final String largestBrotherhoodHistory = largestBrotherhoodList.get(0);
+		final Collection<String> brotherhoodAvgHistory = this.dashboardService.largerThanAvgHistoryBrotherhood();
+
+		res.addObject("maxRec", maxNumRecordsPerHistory);
+		res.addObject("minRec", minNumRecordsPerHistory);
+		res.addObject("avgRec", avgNumRecordsPerHistory);
+		res.addObject("stdRec", stddevNumRecordsPerHistory);
+		res.addObject("largestBH", largestBrotherhoodHistory);
+		res.addObject("largestAvgBH", brotherhoodAvgHistory);
 
 		return res;
 	}

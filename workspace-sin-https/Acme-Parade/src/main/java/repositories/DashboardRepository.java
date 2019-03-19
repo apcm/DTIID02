@@ -15,7 +15,8 @@ import domain.Member;
 @Repository
 public interface DashboardRepository extends JpaRepository<Administrator, Integer> {
 
-	//12.3.1 
+	//12.3.1
+
 	@Query("select min(e.size) from Brotherhood b join b.enrolements e where e.status ='APPROVED'")
 	double minMembers();
 
@@ -29,31 +30,38 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 	double stddevMembers();
 
 	//12.3.2
+
 	@Query("select b from Brotherhood b join b.enrolements e where e.status='APPROVED' and e.dropOutMoment is null order by count(e) desc")
 	Collection<Brotherhood> largestBrotherhoods();
 
 	//12.3.3
+
 	@Query("select b from Brotherhood b join b.enrolements e where e.status='APPROVED' and e.dropOutMoment is null order by count(e) asc")
 	Collection<Brotherhood> smallestBrotherhoods();
 
 	//12.3.4
-	@Query("select 1.0 * count(r)/(select count(r1) from Request r1), r.parade.title, r.status from Request r group by r.status, r.parade")
+
+	@Query("select 1.0   count(r)/(select count(r1) from Request r1), r.parade.title, r.status from Request r group by r.status, r.parade")
 	List<Object[]> requestRatioByParade();
 
 	//12.3.5 in service
 	//12.3.6
-	@Query("select 1.0 * count(r1)/(select count(r) from Request r) from Request r1 group by r1.status")
+
+	@Query("select 1.0   count(r1)/(select count(r) from Request r) from Request r1 group by r1.status")
 	List<Double> requestRatio();
 
-	//12.3.7 
-	@Query("select distinct m from Member m join m.requests r1 where r1.status='APPROVED' group by m.id having count(r1)> 0.1 * m.requests.size")
+	//12.3.7
+
+	@Query("select distinct m from Member m join m.requests r1 where r1.status='APPROVED' group by m.id having count(r1)> 0.1   m.requests.size")
 	Collection<Member> membersWith10PercentRequestsApproved();
 
 	//12.3.8
+
 	@Query("select e.position.positionEng, count(e) from Enrolement e group by e.position")
 	List<Object[]> positionHistogram();
 	//22.2.1
-	@Query("select 1.0 * count(b)/(select count(b1) from Brotherhood b1) from Area a join a.brotherhoods b")
+
+	@Query("select 1.0   count(b)/(select count(b1) from Brotherhood b1) from Area a join a.brotherhoods b")
 	double ratioBrotherhoodsPerArea();
 
 	@Query("select a.brotherhoods.size from Area a")
@@ -71,6 +79,7 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 	@Query("select stddev(a.brotherhoods.size) from Area a")
 	double stddevBrotherhoodsPerArea();
 	//22.2.2
+
 	@Query("select min(f.parades.size) from Finder f")
 	double minFinderResults();
 
@@ -84,7 +93,30 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 	double stddevFinderResults();
 
 	//22.2.3
-	@Query("select 1.0 * count(f)/(select count(f1) from Finder f1) from Finder f where f.keyword is null and f.startDate is null and f.endDate is null and f.area is null")
+
+	@Query("select 1.0   count(f)/(select count(f1) from Finder f1) from Finder f where f.keyword is null and f.startDate is null and f.endDate is null and f.area is null")
 	double ratioEmptyFinders();
+
+	//---------------------------------ACME PARADE-----------------------------------
+	@Query("select max(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size) from Brotherhood b")
+	Integer maxNumRecordsPerHistory();
+
+	@Query("select min(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size) from Brotherhood b")
+	Integer minNumRecordsPerHistory();
+
+	@Query("select avg(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size)from Brotherhood b group by b.id")
+	double avgNumRecordsPerHistory();
+
+	@Query("select stddev(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size)from Brotherhood b group by b.id")
+	double stddevNumRecordsPerHistory();
+
+	@Query("select b.title from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li order by (length(b.inceptionRecord.description) + length(p.description + length(l.description) + length(li.description))")
+	Collection<String> largestHistoryBrotherhood();
+
+	@Query("select b.title from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li where (length(b.inceptionRecord.description) + length(p.description) + length(l.description) + length(li.description)) > ?1")
+	Collection<String> largerThanAvgHistoryBrotherhood(double avgHistory);
+
+	@Query("select avg(length(b.inceptionRecord.description) + length(p.description) + length(l.description) + length(li.description)) from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li")
+	double historyAvgSize();
 
 }
