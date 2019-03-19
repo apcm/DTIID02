@@ -32,6 +32,14 @@ public class LegalRecordService {
 	public LegalRecord save(final LegalRecord leg) {
 		Assert.notNull(leg);
 		final Brotherhood b = this.brotherhoodService.findByPrincipal();
+		boolean test = false;
+
+		if (leg.getId() != 0) {
+			for (final LegalRecord lr : b.getLegalRecords())
+				if (lr.getId() == leg.getId())
+					test = true;
+			Assert.isTrue(test, "You are not the owner of this legal record");
+		}
 
 		if (leg.getId() == 0) {
 			final Collection<LegalRecord> legsOld = b.getLegalRecords();
@@ -55,4 +63,11 @@ public class LegalRecordService {
 		this.legalRecordRepository.delete(leg);
 	}
 
+	public LegalRecord findOne(final int id) {
+		return this.legalRecordRepository.findOne(id);
+	}
+
+	public Collection<LegalRecord> findAll() {
+		return this.legalRecordRepository.findAll();
+	}
 }

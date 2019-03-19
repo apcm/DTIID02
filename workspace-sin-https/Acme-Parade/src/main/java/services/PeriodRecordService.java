@@ -32,6 +32,14 @@ public class PeriodRecordService {
 	public PeriodRecord save(final PeriodRecord leg) {
 		Assert.notNull(leg);
 		final Brotherhood b = this.brotherhoodService.findByPrincipal();
+		boolean test = false;
+
+		if (leg.getId() != 0) {
+			for (final PeriodRecord lr : b.getPeriodRecords())
+				if (lr.getId() == leg.getId())
+					test = true;
+			Assert.isTrue(test, "You are not the owner of this period record");
+		}
 
 		if (leg.getId() == 0) {
 			final Collection<PeriodRecord> legsOld = b.getPeriodRecords();
@@ -53,6 +61,10 @@ public class PeriodRecordService {
 		this.brotherhoodService.save(b);
 
 		this.periodRecordRepository.delete(leg);
+	}
+
+	public PeriodRecord findOne(final int id) {
+		return this.periodRecordRepository.findOne(id);
 	}
 
 }
