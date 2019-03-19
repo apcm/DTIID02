@@ -28,7 +28,7 @@ public class DashboardService {
 	public DashboardRepository	dashboardRepository;
 
 	@Autowired
-	public ProcessionService	processionService;
+	public ParadeService		processionService;
 
 
 	public DashboardService() {
@@ -167,12 +167,12 @@ public class DashboardService {
 	}
 
 	//-----------------ACME PARADE-----------------------
-	public Integer maxNumRecordsPerHistory() {
+	public double maxNumRecordsPerHistory() {
 		Assert.isTrue(this.checkAdmin());
 		return this.dashboardRepository.maxNumRecordsPerHistory();
 	}
 
-	public Integer minNumRecordsPerHistory() {
+	public double minNumRecordsPerHistory() {
 		Assert.isTrue(this.checkAdmin());
 		return this.dashboardRepository.minNumRecordsPerHistory();
 	}

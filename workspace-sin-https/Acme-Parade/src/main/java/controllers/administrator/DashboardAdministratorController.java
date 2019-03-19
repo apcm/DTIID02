@@ -113,8 +113,8 @@ public class DashboardAdministratorController extends AbstractController {
 		res.addObject("ratioEmptyFinders", ratioEmptyFinders);
 
 		//ACME PARADE
-		final Integer maxNumRecordsPerHistory = this.dashboardService.maxNumRecordsPerHistory();
-		final Integer minNumRecordsPerHistory = this.dashboardService.minNumRecordsPerHistory();
+		final double maxNumRecordsPerHistory = this.dashboardService.maxNumRecordsPerHistory();
+		final double minNumRecordsPerHistory = this.dashboardService.minNumRecordsPerHistory();
 		final double avgNumRecordsPerHistory = this.dashboardService.avgNumRecordsPerHistory();
 		final double stddevNumRecordsPerHistory = this.dashboardService.stddevNumRecordsPerHistory();
 		final List<String> largestBrotherhoodList = new ArrayList<>(this.dashboardService.largestHistoryBrotherhood());
