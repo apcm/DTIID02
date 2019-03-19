@@ -95,7 +95,7 @@ public class Brotherhood extends Actor {
 	}
 
 	@Valid
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, optional=true)
 	public InceptionRecord getInceptionRecord() {
 		return this.inceptionRecord;
 	}

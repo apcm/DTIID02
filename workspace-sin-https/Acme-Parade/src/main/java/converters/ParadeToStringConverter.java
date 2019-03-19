@@ -9,16 +9,16 @@ import domain.Parade;
 
 @Component
 @Transactional
-public class ProcessionToStringConverter implements Converter<Parade, String> {
+public class ParadeToStringConverter implements Converter<Parade, String> {
 
 	@Override
-	public String convert(final Parade procession) {
+	public String convert(final Parade parade) {
 		String res;
 
 		if (procession == null)
 			res = null;
 		else
-			res = String.valueOf(procession.getId());
+			res = String.valueOf(parade.getId());
 
 		return res;
 	}
