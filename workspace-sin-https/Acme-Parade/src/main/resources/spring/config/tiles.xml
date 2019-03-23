@@ -42,6 +42,8 @@
 		<value>/views/socialprofile/tiles.xml</value>
 		<value>/views/record/tiles.xml</value>
 		<value>/views/chapter/tiles.xml</value>
+		<value>/views/parade/tiles.xml</value>
+		
 
 	</util:list>
 

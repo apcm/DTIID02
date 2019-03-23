@@ -68,6 +68,7 @@
 				<ul>
 					<li class="arrow"></li>
 					<li><a href="chapter/chapter/edit.do"><spring:message code="master.page.chapter.edit" /></a></li>
+					<li><a href="parade/chapter/list.do"><spring:message code="master.page.parade.list" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>	

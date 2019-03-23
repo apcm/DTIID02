@@ -1,5 +1,5 @@
 
-package controllers.brotherhood;
+package controllers.chapter;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,19 +18,22 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.BrotherhoodService;
+import repositories.ParadeRepository;
+import services.AreaService;
+import services.ChapterService;
 import services.FloatService;
 import services.ParadeService;
 import controllers.AbstractController;
-import domain.Brotherhood;
+import domain.Area;
+import domain.Chapter;
 import domain.Parade;
 
 @Controller
 @RequestMapping("/parade")
-public class ParadeBrotherhoodController extends AbstractController {
+public class ParadeChapterController extends AbstractController {
 
 	@Autowired
-	BrotherhoodService	brotherhoodService;
+	ChapterService		chapterService;
 
 	@Autowired
 	ParadeService		paradeService;
@@ -38,21 +41,25 @@ public class ParadeBrotherhoodController extends AbstractController {
 	@Autowired
 	FloatService		floatService;
 
+	@Autowired
+	AreaService			areaService;
 
-	@RequestMapping(value = "/brotherhood/list", method = RequestMethod.GET)
+	@Autowired
+	ParadeRepository	paradeRepository;
+
+
+	@RequestMapping(value = "/chapter/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView res;
 
-		final Brotherhood bro = this.brotherhoodService.findByPrincipal();
-
-		final Collection<Parade> parades = this.paradeService.findByBrotherhoodId(bro.getId());
+		final Collection<Parade> parades = this.paradeService.findParadesByChapterId();
 		final List<Boolean> finalModes = new ArrayList<>();
 		finalModes.add(true);
 		finalModes.add(false);
 
-		res = new ModelAndView("parade/brotherhood/list");
+		res = new ModelAndView("parade/chapter/list");
 		res.addObject("parades", parades);
-		res.addObject("requestURI", "parade/brotherhood/list.do");
+		res.addObject("requestURI", "parade/chapter/list.do");
 		res.addObject("finalModes", finalModes);
 		return res;
 	}
@@ -62,57 +69,27 @@ public class ParadeBrotherhoodController extends AbstractController {
 	Validator	validator;
 
 
-	//	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST, params = "save")
-	//	public ModelAndView save(@ModelAttribute final Parade parade, final BindingResult binding) {
-	//		ModelAndView result;
-	//		Parade procMod;
-	//		try {
-	//			Assert.notNull(parade.getDescription());
-	//			Assert.isTrue(parade.getDescription() != "");
-	//			Assert.notNull(parade.getDepartureDate());
-	//			Assert.notNull(parade.getFloats());
-	//			Assert.isTrue(parade.getFloats().isEmpty() == false);
-	//			Assert.notNull(parade.getTitle());
-	//			Assert.isTrue(parade.getTitle() != "");
-	//
-	//		} catch (final Throwable error) {
-	//			result = this.createEditModelAndView(parade, "parade.mandatory");
-	//			return result;
-	//		}
-	//		try {
-	//			procMod = this.paradeService.reconstruct(parade, binding);
-	//			this.validator.validate(procMod, binding);
-	//			if (binding.hasErrors())
-	//				result = this.createEditModelAndView(procMod);
-	//			else {
-	//				this.paradeService.save(procMod);
-	//				result = new ModelAndView("redirect:list.do");
-	//			}
-	//		} catch (final Throwable oops) {
-	//			result = this.createEditModelAndView(parade, "parade.commit.error");
-	//		}
-	//
-	//		return result;
-	//	}
-
-	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST, params = "save")
+	@RequestMapping(value = "/chapter/editStatus", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@ModelAttribute Parade parade, final BindingResult binding) {
 		ModelAndView result;
 		try {
-			parade = this.paradeService.reconstruct(parade, binding);
-			this.paradeService.save(parade);
+			final Parade paradeOld = this.paradeRepository.findOne(parade.getId());
+			final String subm = "SUBMITTED";
+			Assert.isTrue(paradeOld.getStatus() == "SUBMITTED" || paradeOld.getStatus() == subm || paradeOld.getStatus().contains("SUBMITTED"));
+			parade = this.paradeService.reconstructChapter(parade, binding);
+			this.paradeService.saveStatus(parade);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final ValidationException oops) {
 			result = this.createEditModelAndView(parade);
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(parade, "commit.error");
+			result = this.createEditModelAndView(parade, "parade.commit.error");
 		}
 
 		return result;
 
 	}
 
-	@RequestMapping(value = "/brotherhood/create", method = RequestMethod.GET)
+	@RequestMapping(value = "/chapter/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView res;
 		Parade parade;
@@ -124,21 +101,25 @@ public class ParadeBrotherhoodController extends AbstractController {
 		return res;
 	}
 
-	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.GET)
+	@RequestMapping(value = "/chapter/editStatus", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int paradeId) {
 		ModelAndView result;
 		Parade parade;
-		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 
 		parade = this.paradeService.findOne(paradeId);
-		Assert.isTrue(parade.getBrotherhood().getId() == brotherhood.getId());
+		//Area de la parade
+		final Area area = this.areaService.getParadeArea(paradeId);
+		//Se comprueba que la parade pertenece a la área que gestiona el chapter logeado
+		final Chapter cha = this.chapterService.findByPrincipal();
+		Assert.isTrue(area == cha.getArea());
+
 		Assert.isTrue(parade.getFinalMode() == false);
 		result = this.createEditModelAndView(parade);
 
 		return result;
 	}
 
-	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST, params = "delete")
+	@RequestMapping(value = "/chapter/editStatus", method = RequestMethod.POST, params = "delete")
 	public ModelAndView delete(final Parade parade, final BindingResult binding) {
 		ModelAndView result;
 
@@ -163,15 +144,14 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final Parade parade, final String message) {
 		ModelAndView result;
-		final Brotherhood bro = this.brotherhoodService.findByPrincipal();
-		final Collection<domain.Float> floats = this.floatService.findByBrotherhoodId(bro.getId());
 
-		result = new ModelAndView("parade/edit");
-		result.addObject("floats", floats);
+		final Collection<Parade> parades = this.paradeService.findParadesByChapterId();
+
+		result = new ModelAndView("parade/chapter/editStatus");
+		result.addObject("parades", parades);
 		result.addObject("parade", parade);
 		result.addObject("message", message);
 
 		return result;
 	}
-
 }

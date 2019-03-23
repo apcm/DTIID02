@@ -9,6 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +24,10 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import utilities.TickerGenerator;
+import domain.Actor;
+import domain.Area;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Enrolement;
 import domain.Finder;
 import domain.Member;
@@ -48,6 +53,12 @@ public class ParadeService {
 	@Autowired
 	public MemberService		memberService;
 
+	@Autowired
+	public ChapterService		chapterService;
+
+	@Autowired
+	public AreaService			areaService;
+
 
 	public ParadeService() {
 		super();
@@ -64,13 +75,15 @@ public class ParadeService {
 
 		return res;
 	}
-
 	public Parade save(final Parade proc) {
 
 		Brotherhood res;
 
 		res = this.brotherhoodService.findByPrincipal();
 		proc.setBrotherhood(res);
+
+		if (proc.getId() == 0)
+			proc.setStatus("SUBMITTED");
 
 		if (proc.getId() != 0) {
 			final Parade procOld = this.paradeRepository.findOne(proc.getId());
@@ -149,6 +162,16 @@ public class ParadeService {
 		return user.getAuthorities().contains(a);
 	}
 
+	public Collection<Parade> findParadesByChapterId() {
+		final Chapter cha = this.chapterService.findByPrincipal();
+		final Area a = cha.getArea();
+		return this.findParadesByArea2(a.getId());
+
+	}
+	public Collection<Parade> findParadesByArea2(final int id) {
+		return this.paradeRepository.findParadesByAreaId(id);
+	}
+
 	public Collection<Parade> findParadesByKeyworkd(final String keyword) {
 		Assert.isTrue(this.checkMember());
 		return this.paradeRepository.findParadesByKeyword("%" + keyword + "%");
@@ -208,23 +231,71 @@ public class ParadeService {
 
 		//Check authority
 		final Authority a = new Authority();
-		final Brotherhood bro = this.brotherhoodService.findByPrincipal();
-		final UserAccount user = bro.getUserAccount();
+		final Authority b = new Authority();
+		final Actor act = this.actorService.findByPrincipal();
+		final UserAccount user = act.getUserAccount();
 		a.setAuthority(Authority.BROTHERHOOD);
-		Assert.isTrue(user.getAuthorities().contains(a) && user.getAuthorities().size() == 1);
+		b.setAuthority(Authority.CHAPTER);
+		Assert.isTrue(user.getAuthorities().contains(a) && user.getAuthorities().size() == 1 || user.getAuthorities().contains(b));
 
 		if (pro.getId() == 0)
 			res = pro;
-		else {
+		else
 			res = this.paradeRepository.findOne(pro.getId());
-			res.setFloats(pro.getFloats());
-			res.setTitle(pro.getTitle());
-			res.setFinalMode(pro.getFinalMode());
-			res.setDescription(pro.getDescription());
-			res.setDepartureDate(pro.getDepartureDate());
-			this.validator.validate(res, binding);
-		}
+		res.setFloats(pro.getFloats());
+		res.setTitle(pro.getTitle());
+		res.setFinalMode(pro.getFinalMode());
+		res.setDescription(pro.getDescription());
+		res.setDepartureDate(pro.getDepartureDate());
+		res.setBrotherhood(pro.getBrotherhood());
+		res.setStatus(pro.getStatus());
+
+		this.validator.validate(res, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		return res;
+	}
+
+	public Parade reconstructChapter(final Parade pro, final BindingResult binding) {
+		Parade res;
+
+		//Check authority
+		final Authority a = new Authority();
+		final Authority b = new Authority();
+		final Actor act = this.actorService.findByPrincipal();
+		final UserAccount user = act.getUserAccount();
+		a.setAuthority(Authority.BROTHERHOOD);
+		b.setAuthority(Authority.CHAPTER);
+		Assert.isTrue(user.getAuthorities().contains(a) && user.getAuthorities().size() == 1 || user.getAuthorities().contains(b));
+
+		if (pro.getId() == 0)
+			res = pro;
+		else
+			res = this.paradeRepository.findOne(pro.getId());
+		//		res.setFloats(pro.getFloats());
+		//		res.setTitle(pro.getTitle());
+		//		res.setFinalMode(pro.getFinalMode());
+		//		res.setDescription(pro.getDescription());
+		//		res.setDepartureDate(pro.getDepartureDate());	
+		//		res.setBrotherhood(pro.getBrotherhood());
+		res.setStatus(pro.getStatus());
+		res.setRejectReason(pro.getRejectReason());
+
+		this.validator.validate(res, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
+
+		return res;
+	}
+
+	public Parade saveStatus(final Parade parade) {
+
+		final String rej = "REJECTED";
+		if (parade.getId() != 0)
+			if (parade.getStatus() == rej || parade.getStatus().contains("REJECTED"))
+				Assert.isTrue(parade.getRejectReason() != "");
+		return this.paradeRepository.save(parade);
 	}
 
 }
