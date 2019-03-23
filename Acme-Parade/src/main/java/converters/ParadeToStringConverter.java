@@ -15,7 +15,7 @@ public class ParadeToStringConverter implements Converter<Parade, String> {
 	public String convert(final Parade parade) {
 		String res;
 
-		if (procession == null)
+		if (parade == null)
 			res = null;
 		else
 			res = String.valueOf(parade.getId());

@@ -89,6 +89,24 @@ public class ParadeService {
 		}
 		return this.paradeRepository.save(proc);
 	}
+	
+	public Parade copy(Parade p){
+		Parade copy = new Parade();
+		
+		Assert.notNull(p);
+		copy.setFinalMode(false);
+		copy.setStatus("");
+		copy.setRejectReason("");
+		copy.setDepartureDate(p.getDepartureDate());
+		copy.setDescription(p.getDescription());
+		copy.setFloats(p.getFloats());
+		copy.setTicker(TickerGenerator.generateTicker());
+		copy.setTitle(p.getTitle());
+		copy.setBrotherhood(p.getBrotherhood());
+		
+		return this.save(copy);
+	}
+	
 	public void delete(final Parade proc) {
 		Assert.isTrue(!proc.getFinalMode());
 
@@ -226,5 +244,5 @@ public class ParadeService {
 		}
 		return res;
 	}
-
+	
 }

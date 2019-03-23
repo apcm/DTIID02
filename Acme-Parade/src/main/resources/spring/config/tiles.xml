@@ -32,7 +32,6 @@
 		<value>/views/member/tiles.xml</value>
 		<value>/views/float/tiles.xml</value>
 		<value>/views/area/tiles.xml</value>
-		<value>/views/procession/tiles.xml</value>
 		<value>/views/customisation/tiles.xml</value>
 		<value>/views/position/tiles.xml</value>
 		<value>/views/dashboard/tiles.xml</value>
@@ -42,6 +41,7 @@
 		<value>/views/socialprofile/tiles.xml</value>
 		<value>/views/record/tiles.xml</value>
 		<value>/views/chapter/tiles.xml</value>
+		<value>/views/parade/tiles.xml</value>
 
 	</util:list>
 
