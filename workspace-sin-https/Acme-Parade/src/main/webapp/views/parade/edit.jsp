@@ -94,6 +94,13 @@
 		value="<spring:message code="parade.cancel" />"
 		onclick="javascript: relativeRedir('parade/brotherhood/list.do');" />
 	<br />
+	
+	<jstl:if test="${parade.id != 0}">
+	<input type="button" name="segments"
+		value="<spring:message code="parade.segment.list" />"
+		onclick="javascript: relativeRedir('parade/segment/list.do?paradeId=${parade.id}');" />
+	<br />
+	</jstl:if>
 
 
 </form:form>

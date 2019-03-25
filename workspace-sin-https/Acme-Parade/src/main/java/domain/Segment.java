@@ -6,12 +6,12 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+
+
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,12 +23,11 @@ public class Segment extends DomainEntity {
 	private Double	origLongitude;
 	private Double	destLatitude;
 	private Double	destLongitude;
+	private Date	startTime;
 	private Date	arriveTime;
-	private Boolean	finalMode;
-	private String	status;
 	private Integer	segmentOrder;
 
-
+	@NotNull
 	public Double getOrigLatitude() {
 		return this.origLatitude;
 	}
@@ -37,6 +36,7 @@ public class Segment extends DomainEntity {
 		this.origLatitude = origLatitude;
 	}
 
+	@NotNull
 	public Double getOrigLongitude() {
 		return this.origLongitude;
 	}
@@ -45,6 +45,7 @@ public class Segment extends DomainEntity {
 		this.origLongitude = origLongitude;
 	}
 
+	@NotNull
 	public Double getDestLatitude() {
 		return this.destLatitude;
 	}
@@ -53,29 +54,13 @@ public class Segment extends DomainEntity {
 		this.destLatitude = destLatitude;
 	}
 
+	@NotNull
 	public Double getDestLongitude() {
 		return this.destLongitude;
 	}
 
 	public void setDestLongitude(final Double destLongitude) {
 		this.destLongitude = destLongitude;
-	}
-
-	public Boolean getFinalMode() {
-		return this.finalMode;
-	}
-
-	public void setFinalMode(final Boolean finalMode) {
-		this.finalMode = finalMode;
-	}
-
-	@Pattern(regexp = "^SUBMITTED|ACCEPTED|REJECTED$")
-	public String getStatus() {
-		return this.status;
-	}
-
-	public void setStatus(final String status) {
-		this.status = status;
 	}
 
 	@Min(1)
@@ -97,20 +82,16 @@ public class Segment extends DomainEntity {
 	public void setArriveTime(final Date arriveTime) {
 		this.arriveTime = arriveTime;
 	}
-
-
-	//Relationships
-
-	private Parade	parade;
-
-
-	@ManyToOne(optional = false)
-	public Parade getParade() {
-		return this.parade;
+	
+	@Temporal(TemporalType.TIME)
+	@DateTimeFormat(pattern = "HH:mm:ss")
+	@NotNull
+	public Date getStartTime() {
+		return this.startTime;
 	}
 
-	public void setParade(final Parade parade) {
-		this.parade = parade;
+	public void setStartTime(final Date startTime) {
+		this.startTime = startTime;
 	}
-
+	
 }

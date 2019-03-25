@@ -150,9 +150,8 @@
 
 		</security:authorize>
 	</jstl:if>
-</display:table>
-
-	<security:authorize access="hasRole('CHAPTER')">
+	
+		<security:authorize access="hasRole('CHAPTER')">
 	<display:column>	
 			
 			<jstl:if test="${row.finalMode == false and row.status == 'SUBMITTED'}">
@@ -162,8 +161,18 @@
 			</jstl:if>
 			
 	</display:column>
+	<display:column>	
+	
+			<a href="chapter/segment/list.do?paradeId=${row.id}">
+			<spring:message code="parade.segment.list" />
+			</a>
+			
+	</display:column>
 	
 	</security:authorize>
+</display:table>
+
+
 
 <security:authorize access="hasRole('BROTHERHOOD')">
 	<div>

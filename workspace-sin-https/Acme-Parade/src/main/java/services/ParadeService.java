@@ -33,6 +33,7 @@ import domain.Finder;
 import domain.Member;
 import domain.Parade;
 import domain.Request;
+import domain.Segment;
 
 @Service
 @Transactional
@@ -58,6 +59,9 @@ public class ParadeService {
 
 	@Autowired
 	public AreaService			areaService;
+	
+	@Autowired
+	private SegmentService		segmentService;
 
 
 	public ParadeService() {
@@ -313,6 +317,70 @@ public class ParadeService {
 		copy.setBrotherhood(p.getBrotherhood());
 		
 		return this.save(copy);
+	}
+	
+	public Segment saveSegmentInParade(Segment segment, Parade parade){
+		Segment res = null;
+		Parade p = this.findOne(parade.getId());
+		List<Segment> segments = new ArrayList<Segment>();
+		Segment ant = this.getLastSegment(p,segment);
+		if(ant != null){
+			segment.setOrigLatitude(ant.getDestLatitude());
+			segment.setOrigLongitude(ant.getDestLongitude());
+		}
+		
+		res = this.segmentService.save(segment);
+		segments.addAll(p.getSegments());
+		if(segments.contains(res)){
+			segments.remove(res);
+		}
+		segments.add(res);
+		p.setSegments(segments);
+		
+		
+		return res;
+	}
+	
+	public void deleteSegmentInParade(Segment segment, Parade parade){
+		Parade p = this.findOne(parade.getId());
+		List<Segment> segments = new ArrayList<Segment>();
+		segments.addAll(p.getSegments());
+		segments.remove(segment);
+		p.setSegments(segments);
+		this.segmentService.delete(segment);
+		
+	}
+	
+	
+	private Segment getLastSegment(Parade p, Segment segment) {
+		int i = 0;
+		Segment res = null;
+		for(Segment s : p.getSegments()){
+			if(s.getSegmentOrder()>i && (!s.equals(segment))){
+				i = s.getSegmentOrder();
+				res = s;
+			}
+		}
+		return res;
+	}
+
+	public Collection<Parade> getParadesFinalMode() {
+		Collection<Parade> res = new ArrayList<Parade>();
+		Collection<Parade> parades = new ArrayList<Parade>();
+		
+		res = paradesFinal(parades);
+		
+		return res;
+	}
+
+	private Collection<Parade> paradesFinal(Collection<Parade> parades) {
+		Collection<Parade> res = new ArrayList<Parade>();
+		for (Parade p : parades){
+			if(p.getFinalMode()){
+				res.add(p);
+			}
+		}
+		return res;
 	}
 
 }

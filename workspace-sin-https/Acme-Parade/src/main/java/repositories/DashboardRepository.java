@@ -126,7 +126,7 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 	@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2 where p2.finalMode='1') from Parade p1 where p1.finalMode='0'")
 	double ratioParadesDraftModevsFinalMode();
 
-	@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2) from Parade p1 where p1.finalMode='1' group by p1.status")
+	/*@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2) from Parade p1 where p1.finalMode='1' group by p1.status")
 	Collection<double> RatioParadesFinalModeGroupedByStatus();
-
+*/
 }

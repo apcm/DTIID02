@@ -1986,6 +1986,14 @@
 		<property name="ticker" value="000101-AAAAAD" />
 		<property name="departureDate" value="10/10/2021" />
 		<property name="brotherhood" ref="brotherhood1" />
+		<property name="segments">
+  			<list>
+  				<ref bean="segment1" /> 
+  				<ref bean="segment2" /> 
+  				<ref bean="segment3" /> 
+  			</list>
+  		</property>
+		
 	</bean>
 
 	<bean id="parade2" class="domain.Parade">
@@ -2003,69 +2011,66 @@
 		<property name="ticker" value="000101-AAAAAC" />
 		<property name="departureDate" value="10/12/2021" />
 		<property name="brotherhood" ref="brotherhood2" />
+		<property name="segments">
+  			<list>
+  				<ref bean="segment4" /> 
+  				<ref bean="segment5" /> 
+  			</list>
+  		</property>
 	</bean>
 
 	<!-- ***************************** SEGMENT ********************************** -->
-	<bean id="segment1" class="domain.Segment">
-		<property name="origLatitude" value="0.0" />
-		<property name="origLongitude" value="0.0" />
-		<property name="destLatitude" value="0.1" />
-		<property name="destLongitude" value="0.1" />
-		<property name="arriveTime" value="2010/01/01 17:00:00" />
-		<property name="finalMode" value="true" />
-		<property name="status" value="ACCEPTED" />
-		<property name="segmentOrder" value="1" />
-		<property name="parade" ref="parade1" />
-	</bean>
-
-	<bean id="segment2" class="domain.Segment">
-		<property name="origLatitude" value="0.1" />
-		<property name="origLongitude" value="0.1" />
-		<property name="destLatitude" value="0.7" />
-		<property name="destLongitude" value="0.7" />
-		<property name="arriveTime" value="2010/01/01 18:30:00" />
-		<property name="finalMode" value="true" />
-		<property name="status" value="ACCEPTED" />
-		<property name="segmentOrder" value="2" />
-		<property name="parade" ref="parade1" />
-	</bean>
-
-	<bean id="segment3" class="domain.Segment">
-		<property name="origLatitude" value="0.7" />
-		<property name="origLongitude" value="0.7" />
-		<property name="destLatitude" value="1.5" />
-		<property name="destLongitude" value="1.5" />
-		<property name="arriveTime" value="2010/01/01 20:10:00" />
-		<property name="finalMode" value="true" />
-		<property name="status" value="ACCEPTED" />
-		<property name="segmentOrder" value="3" />
-		<property name="parade" ref="parade1" />
-	</bean>
-
-	<bean id="segment4" class="domain.Segment">
-		<property name="origLatitude" value="2.1" />
-		<property name="origLongitude" value="2.1" />
-		<property name="destLatitude" value="3.7" />
-		<property name="destLongitude" value="3.7" />
-		<property name="arriveTime" value="2010/01/01 12:30:00" />
-		<property name="finalMode" value="true" />
-		<property name="status" value="ACCEPTED" />
-		<property name="segmentOrder" value="1" />
-		<property name="parade" ref="parade2" />
-	</bean>
-
-	<bean id="segment5" class="domain.Segment">
-		<property name="origLatitude" value="3.7" />
-		<property name="origLongitude" value="3.7" />
-		<property name="destLatitude" value="10.5" />
-		<property name="destLongitude" value="10.5" />
-		<property name="arriveTime" value="2010/01/01 15:10:00" />
-		<property name="finalMode" value="true" />
-		<property name="status" value="ACCEPTED" />
-		<property name="segmentOrder" value="2" />
-		<property name="parade" ref="parade2" />
-	</bean>
-
+  
+  <bean id="segment1" class="domain.Segment">
+  <property name="origLatitude" value="0.0" /> 
+  <property name="origLongitude" value="0.0" /> 
+  <property name="destLatitude" value="0.1" /> 
+  <property name="destLongitude" value="0.1" /> 
+  <property name="startTime" value="2010/01/01 16:00:00" /> 
+  <property name="arriveTime" value="2010/01/01 17:00:00" /> 
+  <property name="segmentOrder" value="1" /> 
+  </bean>
+  
+  <bean id="segment2" class="domain.Segment">
+  <property name="origLatitude" value="0.1" /> 
+  <property name="origLongitude" value="0.1" /> 
+  <property name="destLatitude" value="0.7" /> 
+  <property name="destLongitude" value="0.7" /> 
+  <property name="startTime" value="2010/01/01 17:00:00" /> 
+  <property name="arriveTime" value="2010/01/01 18:30:00" /> 
+  <property name="segmentOrder" value="2" /> 
+  </bean>
+  
+  <bean id="segment3" class="domain.Segment">
+  <property name="origLatitude" value="0.7" /> 
+  <property name="origLongitude" value="0.7" /> 
+  <property name="destLatitude" value="1.5" /> 
+  <property name="destLongitude" value="1.5" /> 
+  <property name="startTime" value="2010/01/01 18:30:00" /> 
+  <property name="arriveTime" value="2010/01/01 20:10:00" /> 
+  <property name="segmentOrder" value="3" /> 
+  </bean>
+  
+  <bean id="segment4" class="domain.Segment">
+  <property name="origLatitude" value="2.1" /> 
+  <property name="origLongitude" value="2.1" /> 
+  <property name="destLatitude" value="3.7" /> 
+  <property name="destLongitude" value="3.7" /> 
+  <property name="startTime" value="2010/01/01 11:10:00" /> 
+  <property name="arriveTime" value="2010/01/01 12:30:00" /> 
+  <property name="segmentOrder" value="1" /> 
+  </bean>
+  
+  <bean id="segment5" class="domain.Segment">
+  <property name="origLatitude" value="3.7" /> 
+  <property name="origLongitude" value="3.7" /> 
+  <property name="destLatitude" value="10.5" /> 
+  <property name="destLongitude" value="10.5" /> 
+  <property name="startTime" value="2010/01/01 12:30:00" /> 
+  <property name="arriveTime" value="2010/01/01 15:10:00" /> 
+  <property name="segmentOrder" value="2" /> 
+  </bean>
+	
 
 	<!-- ***************************** MESSAGE ********************************** -->
 

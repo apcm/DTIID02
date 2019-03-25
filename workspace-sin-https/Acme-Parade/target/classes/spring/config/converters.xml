@@ -30,8 +30,7 @@
   <bean class="converters.StringToMemberConverter" /> 
   <bean class="converters.StringToEnrolementConverter" /> 
   <bean class="converters.StringToPositionConverter" /> 
-<bean class="converters.ProcessionToStringConverter"/>
-<bean class="converters.StringToProcessionConverter"/>
+
 <bean class="converters.StringToFinderConverter"/>
 <bean class="converters.FinderToStringConverter"/>
 		  
@@ -54,6 +53,8 @@
  		 <bean class="converters.StringToMessageConverter" /> 
  		 <bean class="converters.SocialProfileToStringConverter" /> 
  		 <bean class="converters.StringToSocialProfileConverter" /> 
+ 		 <bean class="converters.SegmentToStringConverter" /> 
+ 		 <bean class="converters.StringToSegmentConverter" /> 
 		  
 	</util:list>
 	

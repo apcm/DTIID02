@@ -3,6 +3,7 @@ package domain;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -104,6 +105,7 @@ public class Parade extends DomainEntity {
 	//Relaciones
 	private Collection<Float>	floats;
 	private Brotherhood			brotherhood;
+	private List<Segment>		segments;
 
 
 	@ManyToMany
@@ -122,6 +124,15 @@ public class Parade extends DomainEntity {
 
 	public void setBrotherhood(final Brotherhood brotherhood) {
 		this.brotherhood = brotherhood;
+	}
+	
+	@ManyToMany
+	public List<Segment> getSegments(){
+		return this.segments;
+	}
+	
+	public void setSegments(final List<Segment> segments){
+		this.segments = segments;
 	}
 
 }

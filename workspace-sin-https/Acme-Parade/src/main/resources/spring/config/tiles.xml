@@ -43,6 +43,7 @@
 		<value>/views/record/tiles.xml</value>
 		<value>/views/chapter/tiles.xml</value>
 		<value>/views/parade/tiles.xml</value>
+		<value>/views/segment/tiles.xml</value>
 		
 
 	</util:list>
