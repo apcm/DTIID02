@@ -298,4 +298,21 @@ public class ParadeService {
 		return this.paradeRepository.save(parade);
 	}
 
+	public Parade copy(Parade p){
+		Parade copy = new Parade();
+		
+		Assert.notNull(p);
+		copy.setFinalMode(false);
+		copy.setStatus("");
+		copy.setRejectReason("");
+		copy.setDepartureDate(p.getDepartureDate());
+		copy.setDescription(p.getDescription());
+		copy.setFloats(p.getFloats());
+		copy.setTicker(TickerGenerator.generateTicker());
+		copy.setTitle(p.getTitle());
+		copy.setBrotherhood(p.getBrotherhood());
+		
+		return this.save(copy);
+	}
+
 }

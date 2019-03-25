@@ -174,4 +174,38 @@ public class ParadeBrotherhoodController extends AbstractController {
 		return result;
 	}
 
+	@RequestMapping(value= "brotherhood/edit", method=RequestMethod.POST, params="copy")
+	public ModelAndView copy(Parade parade, BindingResult binding) {
+		ModelAndView result;
+		Parade procMod;
+		try {
+			Assert.notNull(parade.getDescription());
+			Assert.isTrue(parade.getDescription() != "");
+			Assert.notNull(parade.getDepartureDate());
+			Assert.notNull(parade.getFloats());
+			Assert.isTrue(parade.getFloats().isEmpty() == false);
+			Assert.notNull(parade.getTitle());
+			Assert.isTrue(parade.getTitle() != "");
+
+		} catch (final Throwable error) {
+			result = this.createEditModelAndView(parade, "parade.mandatory");
+			return result;
+		}
+		try {
+			procMod = this.paradeService.reconstruct(parade, binding);
+			this.validator.validate(procMod, binding);
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(procMod);
+			else {
+				this.paradeService.copy(parade);
+				result = new ModelAndView("redirect:list.do");
+			}
+		} catch (final Throwable oops) {
+			result = this.createEditModelAndView(parade, "parade.commit.error");
+		}
+
+		return result;
+		
+	}
+
 }
