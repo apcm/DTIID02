@@ -1781,7 +1781,7 @@
 		<property name="finderDuration" value="24" />
 		<property name="resultsNumber" value="10" />
 		<property name="systemName" value="Acme Madruga" />
-		<property name="bannerURL" value=" https://tinyurl.com/acme-madruga" />
+		<property name="bannerURL" value="https://i.ibb.co/dGyn5JP/banner.jpg" />
 		<property name="phoneNumberCountryCode" value="+34 " />
 		<property name="messagePriorities" ref="priority" />
 		<property name="creditCardMakes" ref="ccmakes" />
