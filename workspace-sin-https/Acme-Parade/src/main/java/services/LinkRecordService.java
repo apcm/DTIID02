@@ -33,6 +33,15 @@ public class LinkRecordService {
 		Assert.notNull(leg);
 		final Brotherhood b = this.brotherhoodService.findByPrincipal();
 
+		boolean test = false;
+
+		if (leg.getId() != 0) {
+			for (final LinkRecord lr : b.getLinkRecords())
+				if (lr.getId() == leg.getId())
+					test = true;
+			Assert.isTrue(test, "You are not the owner of this link record");
+		}
+
 		if (leg.getId() == 0) {
 			final Collection<LinkRecord> legsOld = b.getLinkRecords();
 			legsOld.add(leg);
@@ -53,6 +62,14 @@ public class LinkRecordService {
 		this.brotherhoodService.save(b);
 
 		this.linkRecordRepository.delete(leg);
+	}
+
+	public LinkRecord findOne(final int id) {
+		return this.linkRecordRepository.findOne(id);
+	}
+
+	public Collection<LinkRecord> findAll() {
+		return this.linkRecordRepository.findAll();
 	}
 
 }

@@ -33,6 +33,14 @@ public class InceptionRecordService {
 		Assert.notNull(inc);
 		final Brotherhood b = this.brotherhoodService.findByPrincipal();
 
+		boolean test = false;
+
+		if (inc.getId() != 0) {
+			if (b.getInceptionRecord().getId() == inc.getId())
+				test = true;
+			Assert.isTrue(test, "You are not the owner of this inception record");
+		}
+
 		if (inc.getId() == 0) {
 			b.setInceptionRecord(inc);
 			this.brotherhoodService.save(b);
@@ -49,6 +57,14 @@ public class InceptionRecordService {
 		this.brotherhoodService.save(b);
 
 		this.inceptionRecordRepository.delete(inc);
+	}
+
+	public InceptionRecord findOne(final int id) {
+		return this.inceptionRecordRepository.findOne(id);
+	}
+
+	public Collection<InceptionRecord> findAll() {
+		return this.inceptionRecordRepository.findAll();
 	}
 
 }
