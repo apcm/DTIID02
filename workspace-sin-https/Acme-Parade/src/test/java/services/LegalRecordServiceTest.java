@@ -3,6 +3,8 @@ package services;
 
 import java.util.ArrayList;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,8 +43,7 @@ public class LegalRecordServiceTest extends AbstractTest {
 		Assert.isTrue(saved.getLegalName() == "Sample" && saved.getDescription() == "Sample" && saved.getTitle() == "SAMPLE" && saved.getApplicableLaws().isEmpty() && saved.getVatNumber() == 7);
 		super.unauthenticate();
 	}
-
-	@Test
+	@Test(expected = ConstraintViolationException.class)
 	public void badTestSaveLegalRecord() {
 		super.authenticate("brotherhood1");
 		final LegalRecord savetest = this.lrs.create();
@@ -68,7 +69,7 @@ public class LegalRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void badTestEditLegalRecord() {
 		super.authenticate("brotherhood2");
 		final int id = super.getEntityId("legalRecord1");

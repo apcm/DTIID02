@@ -3,6 +3,8 @@ package services;
 
 import java.util.ArrayList;
 
+import javax.validation.ConstraintViolationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +44,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	@Test
+	@Test(expected = ConstraintViolationException.class)
 	public void badTestSavePeriodRecord() {
 		super.authenticate("brotherhood1");
 		final PeriodRecord savetest = this.prs.create();
@@ -63,7 +65,7 @@ public class PeriodRecordServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void badTestEditPeriodRecord() {
 		super.authenticate("brotherhood2");
 		final int id = super.getEntityId("periodRecord1");
