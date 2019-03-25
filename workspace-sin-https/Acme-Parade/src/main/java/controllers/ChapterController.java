@@ -3,12 +3,13 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -57,41 +58,27 @@ public class ChapterController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final ChapterForm chapterForm, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute final ChapterForm chapterForm, final BindingResult binding) {
 		ModelAndView result;
 
-		try { //name, surname, address, email, title, departure	
-			Assert.notNull(chapterForm.getEmail());
-			Assert.isTrue(chapterForm.getEmail() != "");
+		try {
+			final Chapter chapter = this.chapterService.reconstruct(chapterForm, binding);
+			final String vacia = "";
+			if (!chapter.getEmail().isEmpty() || chapter.getEmail() != vacia)
+				Assert.isTrue(chapter.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || chapter.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
 
-		} catch (final Throwable error) {
-			result = this.createEditModelAndView(chapterForm, "chapter.mandatory");
-			return result;
+			this.chapterService.save(chapter);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final ValidationException oops) {
+			result = this.createEditModelAndView(chapterForm);
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "Wrong email")
+				result = this.createEditModelAndView(chapterForm, "chapter.email.error");
+			else
+				result = this.createEditModelAndView(chapterForm, "chapter.comit.error");
 		}
-
 		if (!chapterForm.isConditionsAccepted())
 			result = this.createEditModelAndView(chapterForm, "chapter.conditionsError");
-		//result.addObject("conditionsError", true);
-		else {
-			final Chapter chapter = this.chapterService.reconstruct(chapterForm, binding);
-			if (binding.hasErrors())
-				result = this.createEditModelAndView(chapterForm);
-			else
-				try {
-					final String vacia = "";
-					if (!chapter.getEmail().isEmpty() || chapter.getEmail() != vacia)
-						Assert.isTrue(chapter.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || chapter.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
-
-					this.chapterService.save(chapter);
-					result = new ModelAndView("redirect:/welcome/index.do");
-				} catch (final Throwable error) {
-					if (error.getMessage() == "Wrong email")
-						result = this.createEditModelAndView(chapterForm, "chapter.email.error");
-					else
-						result = this.createEditModelAndView(chapterForm, "chapter.comit.error");
-					System.out.println(error.getMessage());
-				}
-		}
 
 		return result;
 

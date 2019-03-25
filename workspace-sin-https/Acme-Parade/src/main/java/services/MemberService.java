@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -176,7 +178,7 @@ public class MemberService {
 			mem.setPhoneNumber(cc.concat(pnumber));
 
 		if (mem.getId() == 0) {
-			Collection<Box> boxes = actorService.createPredefinedBoxes();
+			final Collection<Box> boxes = this.actorService.createPredefinedBoxes();
 			mem.setBoxes(boxes);
 			final Md5PasswordEncoder encoder = new Md5PasswordEncoder();
 			final String oldpass = mem.getUserAccount().getPassword();
@@ -206,7 +208,6 @@ public class MemberService {
 	}
 
 	public List<Member> membersByEnrolemetId(final Collection<Enrolement> enrolements) {
-		// TODO Auto-generated method stub
 		final List<Member> res = new ArrayList<>();
 		for (final Enrolement e : enrolements)
 			res.add(this.memberByEnrolemetId(e.getId()));
@@ -228,20 +229,51 @@ public class MemberService {
 		return this.memberRepository.findByRequestId(requestId);
 	}
 
+	//	public Member reconstruct(final MemberForm memberForm, final BindingResult binding) {
+	//		final Member member = this.create();
+	//
+	//		Assert.isTrue(memberForm.isConditionsAccepted());
+	//		final Authority mem = new Authority();
+	//		mem.setAuthority(Authority.MEMBER);
+	//		Assert.isTrue(memberForm.getUserAccount().getAuthorities().contains(mem));
+	//		final Collection<Authority> colMem = new ArrayList<Authority>();
+	//		final Authority memb = new Authority();
+	//		memb.setAuthority(Authority.MEMBER);
+	//		colMem.add(memb);
+	//		//Assert.isTrue(memberForm.getUserAccount().getAuthorities() == colMem);
+	//		//Damos valores a los atributos del member que devolveremos con los datos que nos llegan
+	//
+	//		member.setAddress(memberForm.getAddress());
+	//		member.setEmail(memberForm.getEmail());
+	//		member.setMiddleName(memberForm.getMiddleName());
+	//		member.setName(memberForm.getName());
+	//		member.setPhoneNumber(memberForm.getPhoneNumber());
+	//		member.setPhoto(memberForm.getPhoto());
+	//		member.setSurname(memberForm.getSurname());
+	//		member.setUserAccount(memberForm.getUserAccount());
+	//
+	//		//		member.setFlagSpam(memberForm.isFlagSpam());
+	//		//		member.setPolarityScore(memberForm.getPolarityScore());
+	//		//		member.setBan(memberForm.getBan());
+	//
+	//		member.setBan(false);
+	//		member.setFinder(new Finder());
+	//
+	//		return member;
+	//	}
+
 	public Member reconstruct(final MemberForm memberForm, final BindingResult binding) {
 		final Member member = this.create();
 
-		Assert.isTrue(memberForm.isConditionsAccepted());
+		//Assert.isTrue(brotherhoodForm.isConditionsAccepted());
 		final Authority mem = new Authority();
 		mem.setAuthority(Authority.MEMBER);
 		Assert.isTrue(memberForm.getUserAccount().getAuthorities().contains(mem));
 		final Collection<Authority> colMem = new ArrayList<Authority>();
-		final Authority memb = new Authority();
-		memb.setAuthority(Authority.MEMBER);
-		colMem.add(memb);
-		//Assert.isTrue(memberForm.getUserAccount().getAuthorities() == colMem);
-		//Damos valores a los atributos del member que devolveremos con los datos que nos llegan
+		colMem.add(mem);
+		//Assert.isTrue(brotherhoodForm.getUserAccount().getAuthorities() == colMem);
 
+		//Damos valores a los atributos de la hermandad con los datos que nos llegan
 		member.setAddress(memberForm.getAddress());
 		member.setEmail(memberForm.getEmail());
 		member.setMiddleName(memberForm.getMiddleName());
@@ -250,13 +282,11 @@ public class MemberService {
 		member.setPhoto(memberForm.getPhoto());
 		member.setSurname(memberForm.getSurname());
 		member.setUserAccount(memberForm.getUserAccount());
-
-		//		member.setFlagSpam(memberForm.isFlagSpam());
-		//		member.setPolarityScore(memberForm.getPolarityScore());
-		//		member.setBan(memberForm.getBan());
-
 		member.setBan(false);
-		member.setFinder(new Finder());
+
+		this.validator.validate(member, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		return member;
 	}
@@ -277,27 +307,21 @@ public class MemberService {
 
 		if (member.getId() == 0)
 			res = member;
-		else {
+		else
 			res = this.memberRepository.findOne(member.getId());
-			//			res.setBan(member.getBan());
-			//			res.setFlagSpam(member.isFlagSpam());
-			//			res.setBoxes(member.getBoxes());
-			//			res.setEnrolements(member.getEnrolements());
-			//			res.setRequests(member.getRequests());
-			//			res.setSocialProfiles(member.getSocialProfiles());
-			//res.setUserAccount(member.getUserAccount());
-			res.setName(member.getName());
-			res.setEmail(member.getEmail());
-			res.setMiddleName(member.getMiddleName());
-			res.setSurname(member.getSurname());
-			res.setAddress(member.getAddress());
-			res.setPhoneNumber(member.getPhoneNumber());
-			res.setPhoto(member.getPhoto());
 
-			System.out.println("debug test");
+		res.setName(member.getName());
+		res.setEmail(member.getEmail());
+		res.setMiddleName(member.getMiddleName());
+		res.setSurname(member.getSurname());
+		res.setAddress(member.getAddress());
+		res.setPhoneNumber(member.getPhoneNumber());
+		res.setPhoto(member.getPhoto());
 
-			this.validator.validate(res, binding);
-		}
+		this.validator.validate(res, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		return res;
 	}
 

@@ -3,6 +3,8 @@ package controllers.chapter;
 
 import java.util.Collection;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -53,48 +55,30 @@ public class ChapterChapterController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute("chapter") final Chapter chapter, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute Chapter chapter, final BindingResult binding) {
 		ModelAndView result;
-		Chapter chapterMod = chapter;
-
-		try { //name, surname, address, email, title, departure	
-			Assert.notNull(chapter.getName());
-			Assert.isTrue(chapter.getName() != "");
-			Assert.notNull(chapter.getEmail());
-			Assert.isTrue(chapter.getEmail() != "");
-			Assert.notNull(chapter.getAddress());
-			Assert.isTrue(chapter.getAddress() != "");
-			Assert.notNull(chapter.getTitle());
-			Assert.isTrue(chapter.getTitle() != "");
-		} catch (final Throwable error) {
-			result = this.createEditEditModelAndView(chapter, "chapter.mandatory");
-			return result;
-		}
 
 		try {
-			chapterMod = this.chapterService.reconstruct(chapter, binding);
-			if (binding.hasErrors())
-				result = this.createEditEditModelAndView(chapter);
-			else {
-				final String vacia = "";
+			chapter = this.chapterService.reconstruct(chapter, binding);
+			final String vacia = "";
+			if (!chapter.getEmail().isEmpty() || chapter.getEmail() != vacia)
+				Assert.isTrue(chapter.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || chapter.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
 
-				if (!chapterMod.getEmail().isEmpty() || chapterMod.getEmail() != vacia)
-					Assert.isTrue(chapterMod.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || chapterMod.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
-
-				//	Si se introduce un área, se comprueba que no tenía una
-				if (chapter.getArea() != null) {
-					final Chapter oldBro = this.chapterService.findOne(chapter.getId());
-					Assert.isTrue(oldBro.getArea() != null);
-				}
-				this.chapterService.save(chapterMod);
-				result = new ModelAndView("redirect:/welcome/index.do");
+			//	Si se introduce un área, se comprueba que no tenía una
+			if (chapter.getArea() != null) {
+				final Chapter oldCha = this.chapterService.findOne(chapter.getId());
+				Assert.isTrue(oldCha.getArea() != null);
 			}
-		} catch (final Throwable error) {
-			if (error.getMessage() == "Wrong email")
+
+			this.chapterService.save(chapter);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final ValidationException oops) {
+			result = this.createEditEditModelAndView(chapter);
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "Wrong email")
 				result = this.createEditEditModelAndView(chapter, "chapter.email.error");
 			else
 				result = this.createEditEditModelAndView(chapter, "chapter.comit.error");
-			System.out.println(error.getMessage());
 		}
 
 		return result;

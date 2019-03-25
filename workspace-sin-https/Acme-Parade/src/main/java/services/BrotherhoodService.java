@@ -7,6 +7,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -354,7 +356,7 @@ public class BrotherhoodService {
 	public Brotherhood reconstruct(final BrotherhoodForm brotherhoodForm, final BindingResult binding) {
 		final Brotherhood brotherhood = this.create();
 
-		Assert.isTrue(brotherhoodForm.isConditionsAccepted());
+		//Assert.isTrue(brotherhoodForm.isConditionsAccepted());
 		final Authority bro = new Authority();
 		bro.setAuthority(Authority.BROTHERHOOD);
 		Assert.isTrue(brotherhoodForm.getUserAccount().getAuthorities().contains(bro));
@@ -362,7 +364,6 @@ public class BrotherhoodService {
 		colMem.add(bro);
 		//Assert.isTrue(brotherhoodForm.getUserAccount().getAuthorities() == colMem);
 		//Damos valores a los atributos de la hermandad con los datos que nos llegan
-
 		brotherhood.setAddress(brotherhoodForm.getAddress());
 		brotherhood.setEmail(brotherhoodForm.getEmail());
 		brotherhood.setMiddleName(brotherhoodForm.getMiddleName());
@@ -376,11 +377,11 @@ public class BrotherhoodService {
 		brotherhood.setStablishmentDate(brotherhoodForm.getStablishmentDate());
 		brotherhood.setTitle(brotherhoodForm.getTitle());
 		brotherhood.setUrls(brotherhoodForm.getUrls());
-		//		member.setFlagSpam(memberForm.isFlagSpam());
-		//		member.setPolarityScore(memberForm.getPolarityScore());
-		//		member.setBan(memberForm.getBan());
-
 		brotherhood.setBan(false);
+
+		this.validator.validate(brotherhood, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		return brotherhood;
 	}
@@ -390,37 +391,35 @@ public class BrotherhoodService {
 	private Validator	validator;
 
 
-	public Brotherhood reconstruct(final Brotherhood brotherhood, final BindingResult binding) {
+	public Brotherhood reconstruct(final Brotherhood bro, final BindingResult binding) {
 		Brotherhood res;
 
 		//Check authority
 		final Authority a = new Authority();
-		final UserAccount user = brotherhood.getUserAccount();
+		final Actor act = this.actorService.findByPrincipal();
+		final UserAccount user = act.getUserAccount();
 		a.setAuthority(Authority.BROTHERHOOD);
 		Assert.isTrue(user.getAuthorities().contains(a) && user.getAuthorities().size() == 1);
 
-		if (brotherhood.getId() == 0)
-			res = brotherhood;
-		else {
-			res = this.brotherhoodRepository.findOne(brotherhood.getId());
-			//			res.setBan(member.getBan());
-			//			res.setFlagSpam(member.isFlagSpam());
-			//			res.setBoxes(member.getBoxes());
-			//			res.setEnrolements(member.getEnrolements());
-			//			res.setRequests(member.getRequests());
-			//			res.setSocialProfiles(member.getSocialProfiles());
-			//res.setUserAccount(member.getUserAccount());
-			res.setName(brotherhood.getName());
-			res.setEmail(brotherhood.getEmail());
-			res.setMiddleName(brotherhood.getMiddleName());
-			res.setSurname(brotherhood.getSurname());
-			res.setAddress(brotherhood.getAddress());
-			res.setPhoneNumber(brotherhood.getPhoneNumber());
-			res.setPhoto(brotherhood.getPhoto());
-			res.setArea(brotherhood.getArea());
-			res.setUrls(brotherhood.getUrls());
-			this.validator.validate(res, binding);
-		}
+		if (bro.getId() == 0)
+			res = bro;
+		else
+			res = this.brotherhoodRepository.findOne(bro.getId());
+		res.setName(bro.getName());
+		res.setEmail(bro.getEmail());
+		res.setMiddleName(bro.getMiddleName());
+		res.setSurname(bro.getSurname());
+		res.setAddress(bro.getAddress());
+		res.setPhoneNumber(bro.getPhoneNumber());
+		res.setPhoto(bro.getPhoto());
+		if (res.getArea() == null)
+			res.setArea(bro.getArea());
+		res.setUrls(bro.getUrls());
+
+		this.validator.validate(res, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		return res;
 	}
 

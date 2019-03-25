@@ -3,12 +3,13 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,41 +65,28 @@ public class MemberController extends AbstractController {
 
 	}
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final MemberForm memberForm, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute final MemberForm memberForm, final BindingResult binding) {
 		ModelAndView result;
 
-		try { //name, surname, address, email, title, departure	
-			Assert.notNull(memberForm.getEmail());
-			Assert.isTrue(memberForm.getEmail() != "");
+		try {
+			final Member member = this.memberService.reconstruct(memberForm, binding);
+			final String vacia = "";
+			if (!member.getEmail().isEmpty() || member.getEmail() != vacia)
+				Assert.isTrue(member.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || member.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
 
-		} catch (final Throwable error) {
-			result = this.createEditModelAndView(memberForm, "member.mandatory");
-			return result;
+			this.memberService.save(member);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final ValidationException oops) {
+			result = this.createEditModelAndView(memberForm);
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "Wrong email")
+				result = this.createEditModelAndView(memberForm, "member.email.error");
+			else
+				result = this.createEditModelAndView(memberForm, "member.comit.error");
 		}
-		
 		if (!memberForm.isConditionsAccepted())
 			result = this.createEditModelAndView(memberForm, "member.conditionsError");
-		//result.addObject("conditionsError", true);
-		else {
-			final Member member = this.memberService.reconstruct(memberForm, binding);
-			if (binding.hasErrors())
-				result = this.createEditModelAndView(memberForm);
-			else
-				try {
-					final String vacia = "";
-					if (!member.getEmail().isEmpty() || member.getEmail() != vacia)
-						Assert.isTrue(member.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || member.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
 
-					this.memberService.save(member);
-					result = new ModelAndView("redirect:/welcome/index.do");
-				} catch (final Throwable error) {
-					if (error.getMessage() == "Wrong email")
-						result = this.createEditModelAndView(memberForm, "member.email.error");
-					else
-						result = this.createEditModelAndView(memberForm, "member.comit.error");
-					System.out.println(error.getMessage());
-				}
-		}
 		return result;
 	}
 

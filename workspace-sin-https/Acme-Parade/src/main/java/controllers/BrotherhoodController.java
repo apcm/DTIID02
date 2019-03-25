@@ -3,12 +3,13 @@ package controllers;
 
 import java.util.Collection;
 
-import javax.validation.Valid;
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -69,41 +70,27 @@ public class BrotherhoodController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final BrotherhoodForm brotherhoodForm, final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute final BrotherhoodForm brotherhoodForm, final BindingResult binding) {
 		ModelAndView result;
 
-		try { //name, surname, address, email, title, departure	
-			Assert.notNull(brotherhoodForm.getEmail());
-			Assert.isTrue(brotherhoodForm.getEmail() != "");
+		try {
+			final Brotherhood brotherhood = this.brotherhoodService.reconstruct(brotherhoodForm, binding);
+			final String vacia = "";
+			if (!brotherhood.getEmail().isEmpty() || brotherhood.getEmail() != vacia)
+				Assert.isTrue(brotherhood.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || brotherhood.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
 
-		} catch (final Throwable error) {
-			result = this.createEditModelAndView(brotherhoodForm, "brotherhood.mandatory");
-			return result;
+			this.brotherhoodService.save(brotherhood);
+			result = new ModelAndView("redirect:/welcome/index.do");
+		} catch (final ValidationException oops) {
+			result = this.createEditModelAndView(brotherhoodForm);
+		} catch (final Throwable oops) {
+			if (oops.getMessage() == "Wrong email")
+				result = this.createEditModelAndView(brotherhoodForm, "brotherhood.email.error");
+			else
+				result = this.createEditModelAndView(brotherhoodForm, "brotherhood.comit.error");
 		}
-
 		if (!brotherhoodForm.isConditionsAccepted())
 			result = this.createEditModelAndView(brotherhoodForm, "brotherhood.conditionsError");
-		//result.addObject("conditionsError", true);
-		else {
-			final Brotherhood brotherhood = this.brotherhoodService.reconstruct(brotherhoodForm, binding);
-			if (binding.hasErrors())
-				result = this.createEditModelAndView(brotherhoodForm);
-			else
-				try {
-					final String vacia = "";
-					if (!brotherhood.getEmail().isEmpty() || brotherhood.getEmail() != vacia)
-						Assert.isTrue(brotherhood.getEmail().matches("^[A-z0-9]+@[A-z0-9.]+$") || brotherhood.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@[A-z0-9.]+>$"), "Wrong email");
-
-					this.brotherhoodService.save(brotherhood);
-					result = new ModelAndView("redirect:/welcome/index.do");
-				} catch (final Throwable error) {
-					if (error.getMessage() == "Wrong email")
-						result = this.createEditModelAndView(brotherhoodForm, "brotherhood.email.error");
-					else
-						result = this.createEditModelAndView(brotherhoodForm, "brotherhood.comit.error");
-					System.out.println(error.getMessage());
-				}
-		}
 
 		return result;
 

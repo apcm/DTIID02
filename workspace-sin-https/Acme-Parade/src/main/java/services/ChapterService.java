@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.validation.ValidationException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -222,7 +224,11 @@ public class ChapterService {
 
 		chapter.setArea(chapterForm.getArea());
 		chapter.setTitle(chapterForm.getTitle());
-		;
+		chapter.setBan(false);
+
+		this.validator.validate(chapter, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
 
 		chapter.setBan(false);
 
@@ -245,25 +251,23 @@ public class ChapterService {
 
 		if (chapter.getId() == 0)
 			res = chapter;
-		else {
+		else
 			res = this.chapterRepository.findOne(chapter.getId());
-			//			res.setBan(member.getBan());
-			//			res.setFlagSpam(member.isFlagSpam());
-			//			res.setBoxes(member.getBoxes());
-			//			res.setEnrolements(member.getEnrolements());
-			//			res.setRequests(member.getRequests());
-			//			res.setSocialProfiles(member.getSocialProfiles());
-			//res.setUserAccount(member.getUserAccount());
-			res.setName(chapter.getName());
-			res.setEmail(chapter.getEmail());
-			res.setMiddleName(chapter.getMiddleName());
-			res.setSurname(chapter.getSurname());
-			res.setAddress(chapter.getAddress());
-			res.setPhoneNumber(chapter.getPhoneNumber());
-			res.setPhoto(chapter.getPhoto());
+
+		res.setName(chapter.getName());
+		res.setEmail(chapter.getEmail());
+		res.setMiddleName(chapter.getMiddleName());
+		res.setSurname(chapter.getSurname());
+		res.setAddress(chapter.getAddress());
+		res.setPhoneNumber(chapter.getPhoneNumber());
+		res.setPhoto(chapter.getPhoto());
+		if (res.getArea() == null)
 			res.setArea(chapter.getArea());
-			this.validator.validate(res, binding);
-		}
+
+		this.validator.validate(res, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		return res;
 	}
 
