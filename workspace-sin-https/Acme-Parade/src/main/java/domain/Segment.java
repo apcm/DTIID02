@@ -11,8 +11,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -26,6 +24,7 @@ public class Segment extends DomainEntity {
 	private Date	startTime;
 	private Date	arriveTime;
 	private Integer	segmentOrder;
+
 
 	@NotNull
 	public Double getOrigLatitude() {
@@ -72,8 +71,8 @@ public class Segment extends DomainEntity {
 		this.segmentOrder = segmentOrder;
 	}
 
-	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@NotNull
 	public Date getArriveTime() {
 		return this.arriveTime;
@@ -82,9 +81,9 @@ public class Segment extends DomainEntity {
 	public void setArriveTime(final Date arriveTime) {
 		this.arriveTime = arriveTime;
 	}
-	
-	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm:ss")
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@NotNull
 	public Date getStartTime() {
 		return this.startTime;
@@ -93,5 +92,5 @@ public class Segment extends DomainEntity {
 	public void setStartTime(final Date startTime) {
 		this.startTime = startTime;
 	}
-	
+
 }

@@ -89,9 +89,13 @@ public class ParadeSegmentController {
 			result = this.createEditModelAndView(segment, this.paradeACT);
 		else
 			try {
+				if(this.segmentService.isCorrectDate(segment, this.paradeACT)){
+					this.paradeService.saveSegmentInParade(segment,this.paradeACT);
+					result = this.list(this.paradeACT.getId());
+				}else{
+					result = this.createEditModelAndView(segment,this.paradeACT, "segment.commit.error");
+				}
 				
-				this.paradeService.saveSegmentInParade(segment,this.paradeACT);
-				result = this.list(this.paradeACT.getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(segment,this.paradeACT, "segment.commit.error");
 			}

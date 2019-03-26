@@ -77,4 +77,28 @@ public class SegmentService {
 	}
 
 
+	public boolean isCorrectDate(Segment segment, Parade parade) {
+		Parade p = this.paradeService.findOne(parade.getId());
+		boolean res = false;
+		Segment ant;
+		Integer x = 1;
+		if(p.getSegments().contains(segment)){ x = 2;}
+			if(segment.getSegmentOrder()==1){
+				ant = null;
+			}
+			
+			else {
+				ant = p.getSegments().get(p.getSegments().size() -x);
+			}
+			
+			if(ant == null){
+				res = segment.getArriveTime().after(segment.getStartTime());
+			}else{
+				res = ant.getArriveTime().before(segment.getStartTime()) && segment.getArriveTime().after(segment.getStartTime());
+			}
+		
+		return res;
+	}
+
+
 }
