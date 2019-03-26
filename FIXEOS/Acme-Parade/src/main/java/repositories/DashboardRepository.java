@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import domain.Administrator;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Member;
 
 @Repository
@@ -104,29 +105,34 @@ public interface DashboardRepository extends JpaRepository<Administrator, Intege
 	@Query("select min(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size) from Brotherhood b")
 	double minNumRecordsPerHistory();
 
-	@Query("select avg(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size)from Brotherhood b group by b.id")
+	@Query("select avg(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size)from Brotherhood b")
 	double avgNumRecordsPerHistory();
 
-	@Query("select stddev(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size)from Brotherhood b group by b.id")
+	@Query("select stddev(1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size)from Brotherhood b")
 	double stddevNumRecordsPerHistory();
 
-	@Query("select b.title from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li order by (length(b.inceptionRecord.description) + length(p.description) + length(l.description) + length(li.description))")
-	Collection<String> largestHistoryBrotherhood();
+	@Query("select b from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li order by (1 + count(p) + count(l) + count(li))")
+	Collection<Brotherhood> largestHistoryBrotherhood();
 
-	@Query("select b.title from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li where (length(b.inceptionRecord.description) + length(p.description) + length(l.description) + length(li.description)) > 1.0 * ?1")
-	Collection<String> largerThanAvgHistoryBrotherhood(double avgHistory);
+	@Query("select b from Brotherhood b where (1 + b.periodRecords.size + b.legalRecords.size + b.linkRecords.size)>?1 *1.0")
+	Collection<Brotherhood> largerThanAvgHistoryBrotherhood(double avgHistory);
 
-	@Query("select avg(length(b.inceptionRecord.description) + length(p.description) + length(l.description) + length(li.description)) from Brotherhood b join b.periodRecords p join b.legalRecords l join b.linkRecords li")
-	double historyAvgSize();
-	
 	//Queries de la B
 	@Query("select 1.0 * count(a)/(select count(a1) from Area a1) from Area a where a.id not in (select a.id from Chapter c join c.area a)")
 	double ratioAreasNoChapter();
 
+	@Query("select count(p)*1.0/(select count(c) from Chapter c) from Parade p join p.brotherhood b1 where b1 in (select b from Chapter c join c.area.brotherhoods b)")
+	double avgParadesPerChapter();
+
+	@Query("select 1.0 *count(p) from Parade p join p.brotherhood b1 where b1 in (select b from Chapter c join c.area.brotherhoods b) and p.finalMode=1 group by b1.area")
+	Collection<Double> countParadesPerChapter();
+
+	@Query("select c from Chapter c , Parade p where p.brotherhood member of c.area.brotherhoods group by c having count(p)>=1.1*?1")
+	Collection<Chapter> chapterMoreParadesThanAvg(Double avg);
+
 	@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2 where p2.finalMode='1') from Parade p1 where p1.finalMode='0'")
 	double ratioParadesDraftModevsFinalMode();
 
-	/*@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2) from Parade p1 where p1.finalMode='1' group by p1.status")
-	Collection<double> RatioParadesFinalModeGroupedByStatus();
-*/
+	@Query("select 1.0 * count(p1)/(select count(p2) from Parade p2) from Parade p1 where p1.finalMode='1' group by p1.status")
+	Collection<Double> ratioParadesFinalModeGroupedByStatus();
 }

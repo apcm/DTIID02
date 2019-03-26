@@ -17,6 +17,7 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Member;
 import domain.Parade;
 
@@ -187,15 +188,79 @@ public class DashboardService {
 		return this.dashboardRepository.stddevNumRecordsPerHistory();
 	}
 
-	public Collection<String> largestHistoryBrotherhood() {
+	public Collection<Brotherhood> largestHistoryBrotherhood() {
 		Assert.isTrue(this.checkAdmin());
 		return this.dashboardRepository.largestHistoryBrotherhood();
 	}
 
-	public Collection<String> largerThanAvgHistoryBrotherhood() {
+	public Collection<Brotherhood> largerThanAvgHistoryBrotherhood() {
 		Assert.isTrue(this.checkAdmin());
 		final double avg = this.dashboardRepository.avgNumRecordsPerHistory();
 		return this.dashboardRepository.largerThanAvgHistoryBrotherhood(avg);
+	}
+
+	//B-Level Dashboard
+	public double ratioAreasNoChapter() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.ratioAreasNoChapter();
+	}
+
+	public double avgParadesPerChapter() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.avgParadesPerChapter();
+	}
+
+	public double minParadesPerChapter() {
+		Assert.isTrue(this.checkAdmin());
+		double min = 0.0;
+		final List<Double> countParades = new ArrayList<>(this.dashboardRepository.countParadesPerChapter());
+		for (int i = 0; i < countParades.size() - 1; i++)
+			min = Math.min(countParades.get(i), countParades.get(i + 1));
+		return min;
+	}
+
+	public double maxParadesPerChapter() {
+		Assert.isTrue(this.checkAdmin());
+		double max = 0.0;
+		final List<Double> countParades = new ArrayList<>(this.dashboardRepository.countParadesPerChapter());
+		for (int i = 0; i < countParades.size() - 1; i++)
+			max = Math.max(countParades.get(i), countParades.get(i + 1));
+		return max;
+	}
+
+	public double stddevParadesPerChapter() {
+		Assert.isTrue(this.checkAdmin());
+		final List<Double> countParades = new ArrayList<>(this.dashboardRepository.countParadesPerChapter());
+		double sum = 0.0, standardDeviation = 0.0;
+
+		final int length = countParades.size();
+
+		for (final double num : countParades)
+			sum += num;
+
+		final double mean = sum / length;
+
+		for (final double num : countParades)
+			standardDeviation += Math.pow(num - mean, 2);
+
+		return Math.sqrt(standardDeviation / length);
+
+	}
+
+	public Collection<Chapter> chapterMoreParadesThanAvg() {
+		Assert.isTrue(this.checkAdmin());
+		final double avg = this.avgParadesPerChapter();
+		return this.dashboardRepository.chapterMoreParadesThanAvg(avg);
+	}
+
+	public double ratioParadesDraftModeVsFinalMode() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.ratioParadesDraftModevsFinalMode();
+	}
+
+	public Collection<Double> ratioParadesFinalModeGroupedByStatus() {
+		Assert.isTrue(this.checkAdmin());
+		return this.dashboardRepository.ratioParadesFinalModeGroupedByStatus();
 	}
 
 }
