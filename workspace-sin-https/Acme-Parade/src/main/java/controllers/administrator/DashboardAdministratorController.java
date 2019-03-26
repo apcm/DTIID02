@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.DashboardService;
 import controllers.AbstractController;
 import domain.Brotherhood;
+import domain.Chapter;
 import domain.Member;
 import domain.Parade;
 
@@ -117,9 +118,9 @@ public class DashboardAdministratorController extends AbstractController {
 		final double minNumRecordsPerHistory = this.dashboardService.minNumRecordsPerHistory();
 		final double avgNumRecordsPerHistory = this.dashboardService.avgNumRecordsPerHistory();
 		final double stddevNumRecordsPerHistory = this.dashboardService.stddevNumRecordsPerHistory();
-		final List<String> largestBrotherhoodList = new ArrayList<>(this.dashboardService.largestHistoryBrotherhood());
-		final String largestBrotherhoodHistory = largestBrotherhoodList.get(0);
-		final Collection<String> brotherhoodAvgHistory = this.dashboardService.largerThanAvgHistoryBrotherhood();
+		final List<Brotherhood> largestBrotherhoodList = new ArrayList<>(this.dashboardService.largestHistoryBrotherhood());
+		final String largestBrotherhoodHistory = largestBrotherhoodList.get(0).getTitle();
+		final Collection<Brotherhood> brotherhoodAvgHistory = this.dashboardService.largerThanAvgHistoryBrotherhood();
 
 		res.addObject("maxRec", maxNumRecordsPerHistory);
 		res.addObject("minRec", minNumRecordsPerHistory);
@@ -128,6 +129,27 @@ public class DashboardAdministratorController extends AbstractController {
 		res.addObject("largestBH", largestBrotherhoodHistory);
 		res.addObject("largestAvgBH", brotherhoodAvgHistory);
 
+		//B
+
+		final double ratioAreasNoChapter = this.dashboardService.ratioAreasNoChapter();
+		final double avgParadesChapter = this.dashboardService.avgParadesPerChapter();
+		final double minParadesChapter = this.dashboardService.minParadesPerChapter();
+		final double maxParadesChapter = this.dashboardService.maxParadesPerChapter();
+		final double stddevParadesChapter = this.dashboardService.stddevParadesPerChapter();
+		final Collection<Chapter> chapterMoreParadesThanAvg = this.dashboardService.chapterMoreParadesThanAvg();
+		final double ratioParadesDraftVsFinal = this.dashboardService.ratioParadesDraftModeVsFinalMode();
+		final Collection<Double> ratioParadesFinalModeGroupedByStatus = this.dashboardService.ratioParadesFinalModeGroupedByStatus();
+
+		res.addObject("ratioANC", ratioAreasNoChapter);
+		res.addObject("avgPC", avgParadesChapter);
+		res.addObject("minPC", minParadesChapter);
+		res.addObject("maxPC", maxParadesChapter);
+		res.addObject("stddevPC", stddevParadesChapter);
+		res.addObject("chapterMoreParades", chapterMoreParadesThanAvg);
+		res.addObject("ratioPDvF", ratioParadesDraftVsFinal);
+		res.addObject("ratioPFM", ratioParadesFinalModeGroupedByStatus);
+
 		return res;
+
 	}
 }
