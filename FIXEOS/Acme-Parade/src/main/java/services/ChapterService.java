@@ -23,6 +23,7 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.TickerGenerator;
 import domain.Actor;
+import domain.Area;
 import domain.Box;
 import domain.Chapter;
 import domain.Customisation;
@@ -50,6 +51,9 @@ public class ChapterService {
 
 	@Autowired
 	public AreaRepository			areaRepository;
+
+	@Autowired
+	public AreaService				areaService;
 
 
 	//Constructor
@@ -123,6 +127,11 @@ public class ChapterService {
 		if (pnumber.matches("^[0-9]{4,}$"))
 			chapter.setPhoneNumber(cc.concat(pnumber));
 
+		//Area seleccionada está disponible
+		final Collection<Area> notAssigned = this.areaService.findNotAssigned();
+		if (chapter.getArea() != null)
+			Assert.isTrue(notAssigned.contains(chapter.getArea()));
+
 		if (chapter.getId() != 0) {
 			Assert.isTrue(this.actorService.checkChapter());
 
@@ -131,6 +140,11 @@ public class ChapterService {
 			logChapter = this.findByPrincipal();
 			Assert.notNull(logChapter);
 			Assert.notNull(logChapter.getId());
+
+			//No se ha modificado su área
+			final Chapter oldChapter = this.chapterRepository.findOne(chapter.getId());
+			if (chapter.getArea() != null)
+				Assert.isTrue(chapter.getArea() == oldChapter.getArea());
 
 		} else {
 
@@ -150,7 +164,6 @@ public class ChapterService {
 		res = this.chapterRepository.save(chapter);
 		return res;
 	}
-
 	public Chapter findByUserAccount(final UserAccount userAccount) {
 		Chapter res;
 		Assert.notNull(userAccount);

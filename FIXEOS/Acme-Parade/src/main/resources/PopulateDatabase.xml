@@ -179,8 +179,30 @@
 			</list>
 		</property>
 	</bean>
+	
+	<bean id="userAccount11" class="security.UserAccount">
+		<property name="username" value="chapter3" />
+		<property name="password" value="4cf7b4e4bb6d429f0f08bc498e397d81" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="CHAPTER" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 
-
+	<bean id="userAccount12" class="security.UserAccount">
+		<property name="username" value="brotherhood3" />
+		<property name="password" value="cb8f36c7d5bbbc6aa5798a0e5796ebd5" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="BROTHERHOOD" />
+				</bean>
+			</list>
+		</property>
+	</bean>
 	<!-- ******************************ADMINISTRATOR************************************* -->
 	<bean id="administrator1" class="domain.Administrator">
 		<property name="name" value="administrator1" />
@@ -1396,6 +1418,137 @@
 
 	</bean>
 
+	<bean id="in11" class="domain.Box">
+
+		<property name="name" value="in box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="notification11" class="domain.Box">
+		<property name="name" value="notification box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="out11" class="domain.Box">
+		<property name="name" value="out box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="trash11" class="domain.Box">
+		<property name="name" value="trash box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="spam11" class="domain.Box">
+		<property name="name" value="spam box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="in12" class="domain.Box">
+
+		<property name="name" value="in box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="notification12" class="domain.Box">
+		<property name="name" value="notification box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="out12" class="domain.Box">
+		<property name="name" value="out box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="trash12" class="domain.Box">
+		<property name="name" value="trash box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="spam12" class="domain.Box">
+		<property name="name" value="spam box" />
+		<property name="predefined" value="true" />
+		<property name="messages">
+			<list>
+			</list>
+		</property>
+		<property name="descendants">
+			<list>
+			</list>
+		</property>
+	</bean>
 	<!-- ***************************BROTHERHOOD**************************** -->
 
 	<bean id="brotherhood1" class="domain.Brotherhood">
@@ -1422,6 +1575,7 @@
 		<property name="legalRecords">
 			<list>
 				<ref bean="legalRecord1" />
+				<ref bean="legalRecord3" />
 			</list>
 		</property>
 		<property name="inceptionRecord" ref="inceptionRecord1" />
@@ -1486,9 +1640,50 @@
 		<property name="stablishmentDate" value="04/11/1595" />
 		<property name="urls" ref="pics" />
 		<property name="area" ref="area2" />
-
-
 	</bean>
+	
+	<bean id="brotherhood3" class="domain.Brotherhood">
+		<property name="name" value="Hermandad de la Macarena" />
+		<property name="middleName" value="brotherhood3" />
+		<property name="surname" value="brotherhood3" />
+		<property name="phoneNumber" value="+34 666656248" />
+		<property name="address" value="C/ Wednesday, nº 1" />
+		<property name="email" value="macarena@gmail.com" />
+		<property name="photo" value="http://wwww.photo1.com" />
+		<property name="ban" value="False" />
+		<property name="userAccount" ref="userAccount12" />
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="legalRecords">
+			<list>
+			</list>
+		</property>
+		
+		<property name="periodRecords">
+			<list>
+			</list>
+		</property>
+		<property name="linkRecords">
+			<list>
+			</list>
+		</property>
+		<property name="Boxes">
+			<list>
+				<ref bean="in12" />
+				<ref bean="notification12" />
+				<ref bean="out12" />
+				<ref bean="trash12" />
+				<ref bean="spam12" />
+			</list>
+		</property>
+		<property name="title" value="Macarena" />
+		<property name="stablishmentDate" value="04/11/1795" />
+		<property name="urls" ref="pics" />
+		<property name="area" ref="area3" />
+	</bean>
+	
 	<!-- ******************************INCEPTIONRECORD******************************* -->
 	<bean id="inceptionRecord1" class="domain.InceptionRecord">
 		<property name="title" value="InceptionRecord 1" />
@@ -1537,6 +1732,19 @@
 			</list>
 		</property>
 	</bean>
+	<bean id="legalRecord3" class="domain.LegalRecord">
+		<property value="title3" name="title"/>
+		<property value="desc3" name="description"/>
+		<property value="legalName3" name="legalName"/>
+		<property value="20" name="vatNumber"/>
+		<property name="applicableLaws">
+			<list>
+				<value>LAW 1</value>
+				<value>LAW 2</value>
+			</list>
+		</property>
+	</bean>
+	
 	<!-- ******************************LINKRECORD******************************* -->
 	<bean id="linkRecord2" class="domain.LinkRecord">
 		<property name="title" value="Link 2" />
@@ -1633,7 +1841,7 @@
 		<property name="area" ref="area2"/>
 		</bean>
 		
-		<bean id="chapter2" class="domain.Chapter">
+	<bean id="chapter2" class="domain.Chapter">
 		<property name="name" value="Chapter 2" />
 		<property name="middleName" value="" />
 		<property name="surname" value="Two" />
@@ -1660,6 +1868,34 @@
 		</property>
 		<property name="title" value="Chapteer"/>
 		<property name="area" ref="area1"/>
+		</bean>
+		
+	<bean id="chapter3" class="domain.Chapter">
+		<property name="name" value="Chapter 3" />
+		<property name="middleName" value="Chapt3" />
+		<property name="surname" value="Three" />
+		<property name="phoneNumber" value="+34 656738678" />
+		<property name="address" value="C/ Chapter, nº 3" />
+		<property name="email" value="chapter3@gmail.com" />
+		<property name="photo" value="http://wwww.photo3.com" />
+		<property name="ban" value="false" />
+		<property name="userAccount" ref="userAccount11" />
+		<property name="polarityScore" value="0.0"/>
+		<property name="flagSpam" value="false"/>
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="Boxes">
+			<list>
+				<ref bean="in11" />
+				<ref bean="notification11" />
+				<ref bean="out11" />
+				<ref bean="trash11" />
+				<ref bean="spam11" />
+			</list>
+		</property>
+		<property name="title" value="Chapter3"/>
 		</bean>
 		
 	<!-- ****************************PROCLAIM******************************* -->
@@ -1998,7 +2234,6 @@
   				<ref bean="segment3" /> 
   			</list>
   		</property>
-		
 	</bean>
 
 	<bean id="parade2" class="domain.Parade">

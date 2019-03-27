@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import repositories.AreaRepository;
 import security.UserAccount;
+import services.AreaService;
 import services.ChapterService;
 import controllers.AbstractController;
 import domain.Area;
@@ -30,6 +31,9 @@ public class ChapterChapterController extends AbstractController {
 
 	@Autowired
 	AreaRepository	areaRepository;
+
+	@Autowired
+	AreaService		areaService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -95,7 +99,7 @@ public class ChapterChapterController extends AbstractController {
 	}
 
 	protected ModelAndView createEditEditModelAndView(final Chapter chapter, final String message) {
-		ModelAndView result;
+		final ModelAndView result;
 
 		UserAccount userAccount;
 
@@ -103,7 +107,7 @@ public class ChapterChapterController extends AbstractController {
 
 		Area area = null;
 		area = chapter.getArea();
-		final Collection<Area> areas = this.areaRepository.findAll();
+		final Collection<Area> areas = this.areaService.findNotAssigned();
 
 		result = new ModelAndView("chapter/edit");
 		result.addObject("chapter", chapter);
@@ -113,7 +117,6 @@ public class ChapterChapterController extends AbstractController {
 		result.addObject("area", area);
 		return result;
 	}
-
 	////////////////////////////
 	//////////SHOW//////////////
 	////////////////////////////
