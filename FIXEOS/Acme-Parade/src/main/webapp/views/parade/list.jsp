@@ -36,11 +36,8 @@
 								code="parade.list.request" />
 						</a>
 					</display:column>
-					
-					<display:column style="background-color:lightgrey;">
-						<a href=""
-					</display:column>
-				</security:authorize>
+						</security:authorize>
+			
 
 				<display:column style="background-color:lightgrey;" titleKey = "parade.floats">
 					<jstl:forEach var="f" items="${row.floats }">
@@ -55,6 +52,25 @@
 
 				</security:authorize>
 
+		
+	<security:authorize access="hasRole('CHAPTER')">
+		<display:column>
+
+			<a href="parade/chapter/editStatus.do?paradeId=${row.id}"> <spring:message
+						code="parade.edit.link" />
+				</a>
+
+		</display:column>
+		<display:column>
+
+			<a href="chapter/segment/list.do?paradeId=${row.id}"> <spring:message
+					code="parade.segment.list" />
+			</a>
+
+		</display:column>
+
+				</security:authorize>
+				
 			</jstl:when>
 
 			<jstl:when test="${row.status == 'ACCEPTED'}">

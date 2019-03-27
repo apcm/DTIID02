@@ -52,11 +52,14 @@ public class ParadeChapterController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView res;
 
-		final Collection<Parade> parades = this.paradeService.findParadesByChapterId();
+		final Collection<Parade> parades2 = this.paradeService.findParadesByChapterId();
 		final List<Boolean> finalModes = new ArrayList<>();
 		finalModes.add(true);
 		finalModes.add(false);
-
+		final Collection<Parade> parades = new ArrayList<Parade>();
+		for (final Parade p : parades2)
+			if (p.getFinalMode() == true)
+				parades.add(p);
 		res = new ModelAndView("parade/chapter/list");
 		res.addObject("parades", parades);
 		res.addObject("requestURI", "parade/chapter/list.do");
@@ -113,7 +116,7 @@ public class ParadeChapterController extends AbstractController {
 		final Chapter cha = this.chapterService.findByPrincipal();
 		Assert.isTrue(area == cha.getArea());
 
-		Assert.isTrue(parade.getFinalMode() == false);
+		Assert.isTrue(parade.getFinalMode() == true);
 		result = this.createEditModelAndView(parade);
 
 		return result;
