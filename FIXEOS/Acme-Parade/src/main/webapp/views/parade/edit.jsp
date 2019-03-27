@@ -98,12 +98,6 @@
 		onclick="javascript: relativeRedir('parade/brotherhood/list.do');" />
 	<br />
 	
-		<jstl:if test="${parade.id != 0}">
-		<input type="submit" name="copy"
-			value="<spring:message code="parade.copy" />"
-			onclick="return confirm('<spring:message code="parade.confirm.copy" />')" />&nbsp;
-	</jstl:if>
-	
 	<jstl:if test="${parade.id != 0}">
 	<input type="button" name="segments"
 		value="<spring:message code="parade.segment.list" />"

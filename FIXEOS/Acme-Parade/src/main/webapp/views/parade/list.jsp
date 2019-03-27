@@ -30,20 +30,23 @@
 					style="background-color:lightgrey;" />
 				<display:column property="finalMode" titleKey="parade.finalMode"
 					style="background-color:lightgrey;" />
+
+
+
+				<display:column style="background-color:lightgrey;"
+					titleKey="parade.floats">
+					<jstl:forEach var="f" items="${row.floats }">
+						<jstl:out value="${f.title }"></jstl:out>
+					</jstl:forEach>
+				</display:column>
+
 				<security:authorize access="hasRole('BROTHERHOOD')">
 					<display:column style="background-color:lightgrey;">
 						<a href="requests/brotherhood/list.do?paradeId=${row.id}"> <spring:message
 								code="parade.list.request" />
 						</a>
 					</display:column>
-						</security:authorize>
-			
-
-				<display:column style="background-color:lightgrey;" titleKey = "parade.floats">
-					<jstl:forEach var="f" items="${row.floats }">
-						<jstl:out value="${f.title }"></jstl:out>
-					</jstl:forEach>
-				</display:column>
+				</security:authorize>
 
 				<security:authorize
 					access="hasRole('BROTHERHOOD')||hasRole('CHAPTER')">
@@ -52,25 +55,35 @@
 
 				</security:authorize>
 
-		
-	<security:authorize access="hasRole('CHAPTER')">
-		<display:column>
 
-			<a href="parade/chapter/editStatus.do?paradeId=${row.id}"> <spring:message
-						code="parade.edit.link" />
-				</a>
 
-		</display:column>
-		<display:column>
+				<security:authorize access="hasRole('CHAPTER')">
+					<display:column style="background-color:lightgrey;">
 
-			<a href="chapter/segment/list.do?paradeId=${row.id}"> <spring:message
-					code="parade.segment.list" />
-			</a>
+						<a href="parade/chapter/editStatus.do?paradeId=${row.id}"> <spring:message
+								code="parade.edit.link" />
+						</a>
 
-		</display:column>
+					</display:column>
+					<display:column style="background-color:lightgrey;">
+
+						<a href="chapter/segment/list.do?paradeId=${row.id}"> <spring:message
+								code="parade.segment.list" />
+						</a>
+
+					</display:column>
 
 				</security:authorize>
-				
+				<security:authorize access="hasRole('BROTHERHOOD')">
+					<display:column style="background-color:lightgrey;">
+						<input type="button"
+							onclick="javascript: relativeRedir('parade/brotherhood/copy.do?paradeId=${row.id}')"
+							value="<spring:message
+								code="parade.copy"/>">
+
+					</display:column>
+				</security:authorize>
+
 			</jstl:when>
 
 			<jstl:when test="${row.status == 'ACCEPTED'}">
@@ -87,6 +100,15 @@
 					style="background-color:lightgreen;" />
 				<display:column property="finalMode" titleKey="parade.finalMode"
 					style="background-color:lightgreen;" />
+
+				<display:column style="background-color:lightgreen;"
+					titleKey="parade.floats">
+					<jstl:forEach var="f" items="${row.floats }">
+						<jstl:out value="${f.title }"></jstl:out>
+						<br />
+					</jstl:forEach>
+				</display:column>
+
 				<security:authorize access="hasRole('BROTHERHOOD')">
 					<display:column style="background-color:lightgreen;">
 						<a href="requests/brotherhood/list.do?paradeId=${row.id}"> <spring:message
@@ -94,19 +116,21 @@
 						</a>
 					</display:column>
 				</security:authorize>
-				<display:column style="background-color:lightgreen;" titleKey = "parade.floats">
-					<jstl:forEach var="f" items="${row.floats }">
-						<jstl:out value="${f.title }"></jstl:out>
-						<br/>
-					</jstl:forEach>
-				</display:column>
-
 
 				<security:authorize
 					access="hasRole('BROTHERHOOD')||hasRole('CHAPTER')">
 					<display:column property="status" titleKey="parade.status"
 						sortable="true" style="background-color:lightgreen;" />
 
+				</security:authorize>
+				<security:authorize access="hasRole('BROTHERHOOD')">
+					<display:column style="background-color:lightgreen;">
+						<input type="button"
+							onclick="javascript: relativeRedir('parade/brotherhood/copy.do?paradeId=${row.id}')"
+							value="<spring:message
+								code="parade.copy"/>">
+
+					</display:column>
 				</security:authorize>
 			</jstl:when>
 
@@ -123,6 +147,15 @@
 					style="background-color:red;" />
 				<display:column property="finalMode" titleKey="parade.finalMode"
 					style="background-color:red;" />
+
+				<display:column titleKey="parade.floats"
+					style="background-color:red;">
+					<jstl:forEach var="f" items="${row.floats }">
+						<jstl:out value="${f.title }"></jstl:out>
+						<br />
+					</jstl:forEach>
+				</display:column>
+
 				<security:authorize access="hasRole('BROTHERHOOD')">
 					<display:column style="background-color:red;">
 						<a href="requests/brotherhood/list.do?paradeId=${row.id}"> <spring:message
@@ -130,20 +163,22 @@
 						</a>
 					</display:column>
 				</security:authorize>
-					<display:column titleKey = "parade.floats" style="background-color:red;">
-						<jstl:forEach var="f" items="${row.floats }">
-							<jstl:out value="${f.title }"></jstl:out>
-							<br/>
-						</jstl:forEach>
+				<security:authorize
+					access="hasRole('BROTHERHOOD')||hasRole('CHAPTER')">
+					<display:column property="status" titleKey="parade.status"
+						sortable="true" style="background-color:red;" />
+
+				</security:authorize>
+				<security:authorize access="hasRole('BROTHERHOOD')">
+					<display:column style="background-color:red;">
+						<input type="button"
+							onclick="javascript: relativeRedir('parade/brotherhood/copy.do?paradeId=${row.id}')"
+							value="<spring:message
+								code="parade.copy"/>">
+
 					</display:column>
+				</security:authorize>
 
-
-					<security:authorize
-						access="hasRole('BROTHERHOOD')||hasRole('CHAPTER')">
-						<display:column property="status" titleKey="parade.status"
-							sortable="true" style="background-color:red;" />
-
-					</security:authorize>
 			</jstl:when>
 		</jstl:choose>
 	</jstl:if>
@@ -162,10 +197,11 @@
 		<display:column property="finalMode" titleKey="parade.finalMode"
 			style="background-color:lightorange;" />
 
-		<display:column style="background-color:lightorange;" titleKey="parade.floats">
+		<display:column style="background-color:lightorange;"
+			titleKey="parade.floats">
 			<jstl:forEach var="f" items="${row.floats }">
 				<jstl:out value="${f.title }"></jstl:out>
-				<br/>
+				<br />
 			</jstl:forEach>
 		</display:column>
 
@@ -180,9 +216,19 @@
 		<security:authorize
 			access="hasRole('BROTHERHOOD')||hasRole('CHAPTER')">
 			<display:column property="status" titleKey="parade.status"
-				sortable="true" style="background-color:lightlightorange;" />
+				sortable="true" style="background-color:lightorange;" />
 
 		</security:authorize>
+		<security:authorize access="hasRole('BROTHERHOOD')">
+			<display:column style="background-color:lightorange;">
+				<input type="button"
+					onclick="javascript: relativeRedir('parade/brotherhood/copy.do?paradeId=${row.id}')"
+					value="<spring:message
+								code="parade.copy"/>">
+
+			</display:column>
+		</security:authorize>
+
 	</jstl:if>
 
 	<security:authorize access="hasRole('CHAPTER')">
