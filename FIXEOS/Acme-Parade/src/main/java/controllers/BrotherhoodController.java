@@ -74,6 +74,7 @@ public class BrotherhoodController extends AbstractController {
 		ModelAndView result;
 
 		try {
+			Assert.isTrue(brotherhoodForm.isConditionsAccepted(), "conditionsAccepted");
 			final Brotherhood brotherhood = this.brotherhoodService.reconstruct(brotherhoodForm, binding);
 			final String vacia = "";
 			if (!brotherhood.getEmail().isEmpty() || brotherhood.getEmail() != vacia)
@@ -86,6 +87,8 @@ public class BrotherhoodController extends AbstractController {
 		} catch (final Throwable oops) {
 			if (oops.getMessage() == "Wrong email")
 				result = this.createEditModelAndView(brotherhoodForm, "brotherhood.email.error");
+			else if (oops.getMessage() == "conditionsAccepted")
+				result = this.createEditModelAndView(brotherhoodForm, "member.conditionsError");
 			else
 				result = this.createEditModelAndView(brotherhoodForm, "brotherhood.comit.error");
 		}

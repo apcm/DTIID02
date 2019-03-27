@@ -62,6 +62,8 @@ public class ChapterController extends AbstractController {
 		ModelAndView result;
 
 		try {
+			Assert.isTrue(chapterForm.isConditionsAccepted(), "conditionsAccepted");
+
 			final Chapter chapter = this.chapterService.reconstruct(chapterForm, binding);
 			final String vacia = "";
 			if (!chapter.getEmail().isEmpty() || chapter.getEmail() != vacia)
@@ -74,6 +76,8 @@ public class ChapterController extends AbstractController {
 		} catch (final Throwable oops) {
 			if (oops.getMessage() == "Wrong email")
 				result = this.createEditModelAndView(chapterForm, "chapter.email.error");
+			else if (oops.getMessage() == "conditionsAccepted")
+				result = this.createEditModelAndView(chapterForm, "member.conditionsError");
 			else
 				result = this.createEditModelAndView(chapterForm, "chapter.comit.error");
 		}

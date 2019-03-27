@@ -69,6 +69,7 @@ public class MemberController extends AbstractController {
 		ModelAndView result;
 
 		try {
+			Assert.isTrue(memberForm.isConditionsAccepted(), "conditionsAccepted");
 			final Member member = this.memberService.reconstruct(memberForm, binding);
 			final String vacia = "";
 			if (!member.getEmail().isEmpty() || member.getEmail() != vacia)
@@ -81,11 +82,11 @@ public class MemberController extends AbstractController {
 		} catch (final Throwable oops) {
 			if (oops.getMessage() == "Wrong email")
 				result = this.createEditModelAndView(memberForm, "member.email.error");
+			else if (oops.getMessage() == "conditionsAccepted")
+				result = this.createEditModelAndView(memberForm, "member.conditionsError");
 			else
 				result = this.createEditModelAndView(memberForm, "member.comit.error");
 		}
-		if (!memberForm.isConditionsAccepted())
-			result = this.createEditModelAndView(memberForm, "member.conditionsError");
 
 		return result;
 	}
