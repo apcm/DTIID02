@@ -252,7 +252,8 @@ public class ParadeService {
 		res.setDescription(pro.getDescription());
 		res.setDepartureDate(pro.getDepartureDate());
 		//res.setBrotherhood(pro.getBrotherhood());
-		res.setStatus(pro.getStatus());
+		if (pro.getStatus() != null)
+			res.setStatus(pro.getStatus());
 
 		this.validator.validate(res, binding);
 		if (binding.hasErrors())
@@ -295,10 +296,6 @@ public class ParadeService {
 
 	public Parade saveStatus(final Parade parade) {
 
-		final String rej = "REJECTED";
-		if (parade.getId() != 0)
-			if (parade.getStatus() == rej || parade.getStatus().contains("REJECTED"))
-				Assert.isTrue(parade.getRejectReason() != "");
 		return this.paradeRepository.save(parade);
 	}
 
@@ -323,23 +320,40 @@ public class ParadeService {
 		return this.save(copy);
 	}
 
-	public Segment saveSegmentInParade(final Segment segment, final Parade parade) {
+	public Segment saveSegmentInParade(Segment segment, Parade parade){
+		Brotherhood b;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		b = this.brotherhoodService.findByUserAccount(userAccount);
+		if(parade.getBrotherhood()!=b){
+			throw new IllegalArgumentException();
+		}
+		
+		if(segment.getArriveTime()==null || segment.getStartTime()==null){
+			throw new IllegalArgumentException();
+		}
+		
+		
 		Segment res = null;
-		final Parade p = this.findOne(parade.getId());
-		final List<Segment> segments = new ArrayList<Segment>();
-		final Segment ant = this.getLastSegment(p, segment);
-		if (ant != null) {
+		Parade p = this.findOne(parade.getId());
+		List<Segment> segments = new ArrayList<Segment>();
+		Segment ant = this.getLastSegment(p,segment);
+		if(ant != null){
 			segment.setOrigLatitude(ant.getDestLatitude());
 			segment.setOrigLongitude(ant.getDestLongitude());
 		}
-
+		
 		res = this.segmentService.save(segment);
 		segments.addAll(p.getSegments());
-		if (segments.contains(res))
+		if(segments.contains(res)){
 			segments.remove(res);
+		}
 		segments.add(res);
 		p.setSegments(segments);
-
+		
+		
 		return res;
 	}
 

@@ -178,7 +178,21 @@ public class RequestService {
 			res = r;
 		else {
 			res = this.findOne(r);
-			res = this.checkConditionsReconstruct(res);
+			
+			if (r.getRowPosition() != 0 && r.getColumnPosition() != 0)
+			res.setStatus("APPROVED");
+		else if (r.getRejectReason() != null) {
+			res.setStatus("REJECTED");
+			if (r.getRejectReason().length() == 0)
+				res.setRejectReason("We don't have positions available. No tenemos posiciones disponibles");
+		} else
+			res.setStatus("PENDING");
+
+		if (res.getStatus().contains("APPROVED")) {
+			res.setRowPosition(r.getRowPosition());
+			res.setColumnPosition(r.getColumnPosition());
+		} else if (res.getStatus().contains("REJECTED") && r.getRejectReason().length() != 0)
+			res.setRejectReason(r.getRejectReason());
 		}
 		this.validator.validate(res, binding);
 

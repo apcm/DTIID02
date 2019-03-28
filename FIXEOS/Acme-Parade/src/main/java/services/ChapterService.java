@@ -23,7 +23,6 @@ import security.LoginService;
 import security.UserAccount;
 import utilities.TickerGenerator;
 import domain.Actor;
-import domain.Area;
 import domain.Box;
 import domain.Chapter;
 import domain.Customisation;
@@ -128,9 +127,9 @@ public class ChapterService {
 			chapter.setPhoneNumber(cc.concat(pnumber));
 
 		//Area seleccionada está disponible
-		final Collection<Area> notAssigned = this.areaService.findNotAssigned();
-		if (chapter.getArea() != null)
-			Assert.isTrue(notAssigned.contains(chapter.getArea()));
+		//	final Collection<Area> notAssigned = this.areaService.findNotAssigned();
+		//	if (chapter.getArea() != null)
+		//		Assert.isTrue(notAssigned.contains(chapter.getArea()));
 
 		if (chapter.getId() != 0) {
 			Assert.isTrue(this.actorService.checkChapter());

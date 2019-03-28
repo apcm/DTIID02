@@ -141,4 +141,29 @@
 	<jstl:out value="${largestAvgBH}"/>
 	<br/>
 	
+	<spring:message code="dashboard.ratioANC"/>
+	<jstl:out value="${ratioANC}"/>
+	<br/>
+	<spring:message code="dashboard.avgPC"/>
+	<jstl:out value="${avgPC}"/>
+	<br/>
+	<spring:message code="dashboard.minPC"/>
+	<jstl:out value="${minPC}"/>
+	<br/>
+	<spring:message code="dashboard.maxPC"/>
+	<jstl:out value="${maxPC}"/>
+	<br/>
+	<spring:message code="dashboard.stddevPC"/>
+	<jstl:out value="${stddevPC}"/>
+	<br/>
+	<spring:message code="dashboard.chapterMoreParades"/>
+	<jstl:out value="${chapterMoreParades}"/>
+	<br/>
+	<spring:message code="dashboard.ratioPDvF"/>
+	<jstl:out value="${ratioPDvF}"/>
+	<br/>
+	<spring:message code="dashboard.ratioPFM"/>
+	<jstl:out value="${ratioPFM}"/>
+	<br/>
+	
 </security:authorize>

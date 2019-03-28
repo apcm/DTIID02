@@ -69,9 +69,9 @@
 		<value>FLY</value>
 	</util:list>
 	<util:list id="welcome" value-type="java.lang.String">
-		<value>Welcome to Acme Madruga! The site to organise your parades.
+		<value>Welcome to Acme Parade! The site to organise your parades.
 		</value>
-		<value>¡Bienvenidos a Acme Madrugá! Tu sitio para organizar desfiles.
+		<value>¡Bienvenidos a Acme Parade! Tu sitio para organizar desfiles.
 		</value>
 	</util:list>
 
@@ -2114,6 +2114,12 @@
 		<property name="brotherhood" ref="brotherhood2" />
 	</bean>
 
+	<bean id="float5" class="domain.Float">
+		<property name="title" value="Virgen de la Macarena" />
+		<property name="description" value="Virgen de la Macarena" />
+		<property name="pictures" ref="pics" />
+		<property name="brotherhood" ref="brotherhood3" />
+	</bean>
 
 	<!-- *************************FINDER************************ -->
 
@@ -2259,6 +2265,28 @@
   		</property>
 	</bean>
 
+	<bean id="parade3" class="domain.Parade">
+		<property name="title" value="Macarena" />
+		<property name="description" value="Procesión de la Macarena" />
+		<property name="finalMode" value="TRUE" />
+		<property name="status" value="SUBMITTED" />
+		<property name="rejectReason" value="" />
+		<property name="floats">
+			<list>
+				<ref bean="float5" />
+			</list>
+		</property>
+		<property name="ticker" value="130111-AAGRAC" />
+		<property name="departureDate" value="10/12/2020" />
+		<property name="brotherhood" ref="brotherhood3" />
+		<property name="segments">
+  			<list>
+  				<ref bean="segment6"/>
+  			</list>
+  		</property>
+	</bean>
+
+
 	<!-- ***************************** SEGMENT ********************************** -->
   
   <bean id="segment1" class="domain.Segment">
@@ -2311,7 +2339,15 @@
   <property name="segmentOrder" value="2" /> 
   </bean>
 	
-
+  <bean id="segment6" class="domain.Segment">
+	  <property name="origLatitude" value="200.5" /> 
+	  <property name="origLongitude" value="123.678" /> 
+	  <property name="destLatitude" value="435.345" /> 
+	  <property name="destLongitude" value="567.678" /> 
+	  <property name="startTime" value="2010/01/01 12:30:00" /> 
+	  <property name="arriveTime" value="2010/01/01 15:10:00" /> 
+	  <property name="segmentOrder" value="1" /> 
+  </bean>
 	<!-- ***************************** MESSAGE ********************************** -->
 
 	<bean id="message1" class="domain.Message">

@@ -16,6 +16,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Brotherhood;
+import domain.Chapter;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -26,12 +27,30 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Autowired
 	private DashboardService		dashboardService;
+
+	@Autowired
+	private ChapterService			chapterService;
 	@Rule
 	public final ExpectedException	exception	= ExpectedException.none();
 
 
+	/**
+	 * THIS TEST IS FOR TESTING THE REQUIREMENT #4 AND #8
+	 * THERE ARE 16 GOOD TESTING CASES, AND 13 BAD TESTING CASES
+	 * COVERED INSTRUCTIONS IN THIS TEST: 84.5%
+	 * COVERED DATA IN THIS TEST: ?%
+	 * */
+
 	@Test
 	public void testNewFunctions1() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 100.0%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final String valorEsperado = "La Lanzada";
 		final List<Brotherhood> res = new ArrayList<>(this.dashboardService.largerThanAvgHistoryBrotherhood());
@@ -42,6 +61,13 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions1Fail() {
+		/**
+		 * TESTING REQUIREMENT #4
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 83.9%
+		 * COVERED DATA: ?%
+		 * */
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final String valorEsperado = "La Lan";
@@ -54,6 +80,14 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions2() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 100.0%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final String valorEsperado = "La Lanzada";
 		final List<Brotherhood> res = new ArrayList<>(this.dashboardService.largestHistoryBrotherhood());
@@ -63,6 +97,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions2Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 83.9%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final String valorEsperado = "La Lan";
@@ -72,6 +115,14 @@ public class DashboardServiceTest extends AbstractTest {
 	}
 	@Test
 	public void testNewFunctions3() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final double valorEsperado = 5.0;
 		Assert.isTrue(this.dashboardService.maxNumRecordsPerHistory() == valorEsperado);
@@ -81,6 +132,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions3Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 4.0;
@@ -91,8 +151,16 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions4() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
-		final double valorEsperado = 4.0;
+		final double valorEsperado = 1.0;
 		Assert.isTrue(this.dashboardService.minNumRecordsPerHistory() == valorEsperado);
 
 		super.unauthenticate();
@@ -100,6 +168,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions4Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 3.0;
@@ -110,8 +187,16 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions5() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
-		final double valorEsperado = 0.5;
+		final double valorEsperado = 1.6997;
 		Assert.isTrue(this.dashboardService.stddevNumRecordsPerHistory() == valorEsperado);
 
 		super.unauthenticate();
@@ -119,6 +204,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions5Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 0.6;
@@ -129,15 +223,31 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions6() {
-		super.authenticate("admin1");
-		final double valorEsperado = 4.5;
-		Assert.isTrue(this.dashboardService.avgNumRecordsPerHistory() == valorEsperado);
 
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
+		super.authenticate("admin1");
+		final double valorEsperado = 3.3333;
+		Assert.isTrue(this.dashboardService.avgNumRecordsPerHistory() == valorEsperado);
 		super.unauthenticate();
 	}
 
 	@Test
 	public void testNewFunctions6Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 3.2;
@@ -148,8 +258,16 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions7() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
-		final double valorEsperado = 0.;
+		final double valorEsperado = 0.33333;
 		Assert.isTrue(this.dashboardService.ratioAreasNoChapter() == valorEsperado);
 
 		super.unauthenticate();
@@ -157,6 +275,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions7Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 0.2;
@@ -167,8 +294,16 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions8() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
-		final double valorEsperado = 1.0;
+		final double valorEsperado = 0.66667;
 		Assert.isTrue(this.dashboardService.avgParadesPerChapter() == valorEsperado);
 
 		super.unauthenticate();
@@ -176,6 +311,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions8Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 0.2;
@@ -186,6 +330,14 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions9() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final double valorEsperado = 1.0;
 		Assert.isTrue(this.dashboardService.minParadesPerChapter() == valorEsperado);
@@ -195,6 +347,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions9Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 0.2;
@@ -204,6 +365,14 @@ public class DashboardServiceTest extends AbstractTest {
 	}
 	@Test
 	public void testNewFunctions10() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final double valorEsperado = 1.0;
 		Assert.isTrue(this.dashboardService.maxParadesPerChapter() == valorEsperado);
@@ -213,6 +382,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions10Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 0.2;
@@ -223,6 +401,14 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions11() {
+
+		/**
+		 * TESTING REQUIREMENT #4
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final double valorEsperado = 1.0;
 		Assert.isTrue(this.dashboardService.maxParadesPerChapter() == valorEsperado);
@@ -232,6 +418,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions11Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 0.2;
@@ -242,6 +437,14 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions12() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final double valorEsperado = 0.;
 		Assert.isTrue(this.dashboardService.stddevParadesPerChapter() == valorEsperado);
@@ -251,6 +454,15 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions12Fail() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: 72.7%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
 		final double valorEsperado = 0.2;
@@ -261,34 +473,39 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions13() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 100.0%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
-		Assert.isTrue(this.dashboardService.chapterMoreParadesThanAvg().isEmpty());
+		final Chapter c1 = new Chapter();
+		c1.setId(859);
+		final Chapter c2 = new Chapter();
+		c2.setId(860);
+		final Chapter cEsperado1 = this.chapterService.findOne(c1);
+		final Chapter cEsperado2 = this.chapterService.findOne(c2);
 
-		super.unauthenticate();
-	}
-
-	@Test
-	public void testNewFunctions13Fail() {
-		super.authenticate("admin1");
-		this.exception.expect(IllegalArgumentException.class);
-		Assert.isTrue(!this.dashboardService.chapterMoreParadesThanAvg().isEmpty());
-
+		Assert.isTrue(this.dashboardService.chapterMoreParadesThanAvg().contains(cEsperado1));
+		Assert.isTrue(this.dashboardService.chapterMoreParadesThanAvg().contains(cEsperado2));
 		super.unauthenticate();
 	}
 
 	@Test
 	public void testNewFunctions14() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final double valorEsperado = 0.;
-		Assert.isTrue(this.dashboardService.ratioParadesDraftModeVsFinalMode() == valorEsperado);
-
-		super.unauthenticate();
-	}
-
-	public void testNewFunctions14Fail() {
-		super.authenticate("admin1");
-		this.exception.expect(IllegalArgumentException.class);
-		final double valorEsperado = 0.2;
 		Assert.isTrue(this.dashboardService.ratioParadesDraftModeVsFinalMode() == valorEsperado);
 
 		super.unauthenticate();
@@ -296,6 +513,14 @@ public class DashboardServiceTest extends AbstractTest {
 
 	@Test
 	public void testNewFunctions15() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 94.4%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("admin1");
 		final double valorEsperado = 0.;
 		Assert.isTrue(this.dashboardService.ratioParadesDraftModeVsFinalMode() == valorEsperado);
@@ -303,37 +528,37 @@ public class DashboardServiceTest extends AbstractTest {
 		super.unauthenticate();
 	}
 
-	public void testNewFunctions15Fail() {
-		super.authenticate("admin1");
-		this.exception.expect(IllegalArgumentException.class);
-		final double valorEsperado = 0.2;
-		Assert.isTrue(this.dashboardService.ratioParadesDraftModeVsFinalMode() == valorEsperado);
-
-		super.unauthenticate();
-	}
-
 	@Test
 	public void testNewFunctions16() {
-		super.authenticate("admin1");
-		final double valorEsperado = 1.0;
-		final List<Double> lista = new ArrayList<Double>(this.dashboardService.ratioParadesFinalModeGroupedByStatus());
-		Assert.isTrue(lista.get(0) == valorEsperado);
 
-		super.unauthenticate();
-	}
+		/**
+		 * TESTING REQUIREMENT #8
+		 * POSITIVE TEST
+		 * COVERED INSTRUCTIONS: 95.1%
+		 * COVERED DATA: ?%
+		 * */
 
-	public void testNewFunctions16Fail() {
 		super.authenticate("admin1");
-		this.exception.expect(IllegalArgumentException.class);
-		final double valorEsperado = 0.0;
+		final double valorEsperado1 = 0.66667;
+		final double valorEsperado2 = 0.33333;
 		final List<Double> lista = new ArrayList<Double>(this.dashboardService.ratioParadesFinalModeGroupedByStatus());
-		Assert.isTrue(lista.get(0) == valorEsperado);
+		Assert.isTrue(lista.get(0) == valorEsperado1);
+		Assert.isTrue(lista.get(1) == valorEsperado2);
 
 		super.unauthenticate();
 	}
 
 	@Test
 	public void badTestNewFunctions1() {
+
+		/**
+		 * TESTING REQUIREMENT #8
+		 * NEGATIVE TEST: A BROTHERHOOD USER CAN'T USE THIS METHOD
+		 * (Expected IllegalArgumentException)
+		 * COVERED INSTRUCTIONS: ?%
+		 * COVERED DATA: ?%
+		 * */
+
 		super.authenticate("brotherhood1");
 		this.exception.expect(IllegalArgumentException.class);
 		this.dashboardService.largerThanAvgHistoryBrotherhood();
@@ -342,138 +567,4 @@ public class DashboardServiceTest extends AbstractTest {
 
 	}
 
-	@Test
-	public void badTestNewFunctions2() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.largestHistoryBrotherhood();
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badTestNewFunctions3() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.maxNumRecordsPerHistory();
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badTestNewFunctions4() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.minNumRecordsPerHistory();
-
-		super.unauthenticate();
-
-	}
-
-	@Test
-	public void badTestNewFunctions5() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.stddevNumRecordsPerHistory();
-
-		super.unauthenticate();
-
-	}
-
-	@Test
-	public void badtestNewFunctions6() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.avgNumRecordsPerHistory();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions7() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.ratioAreasNoChapter();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions8() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.avgParadesPerChapter();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions9() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.minParadesPerChapter();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions10() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.maxParadesPerChapter();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions11() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.maxParadesPerChapter();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions12() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.stddevParadesPerChapter();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions13() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.chapterMoreParadesThanAvg();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions14() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.ratioParadesDraftModeVsFinalMode();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions15() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.ratioParadesDraftModeVsFinalMode();
-
-		super.unauthenticate();
-	}
-
-	@Test
-	public void badtestNewFunctions16() {
-		super.authenticate("brotherhood1");
-		this.exception.expect(IllegalArgumentException.class);
-		this.dashboardService.ratioParadesFinalModeGroupedByStatus();
-
-		super.unauthenticate();
-	}
 }
