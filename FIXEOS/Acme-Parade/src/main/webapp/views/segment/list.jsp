@@ -27,11 +27,11 @@
 <display:column property="destLongitude" titleKey="segment.destLongitude"/>
 
 <display:column>
-	
+	<jstl:if test="${row.id == lastId}" >
 	<a href="parade/segment/edit.do?segmentId=${row.id}">
 		<spring:message code="segment.edit"/>
 	</a>
-	
+	</jstl:if>
 </display:column>
 
 <display:column>
@@ -42,7 +42,6 @@
 
 
 </display:table>
-
 
 <a href="parade/segment/create.do">
 <spring:message code="segment.create"/>

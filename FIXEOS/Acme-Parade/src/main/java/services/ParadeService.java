@@ -300,18 +300,18 @@ public class ParadeService {
 	}
 
 	public Parade copy(final Parade p) {
-		Brotherhood b = brotherhoodService.findByPrincipal();
+		final Brotherhood b = this.brotherhoodService.findByPrincipal();
 		final Parade copy = new Parade();
 
 		Assert.notNull(p);
-		
+
 		copy.setFinalMode(false);
 		copy.setStatus("");
 		copy.setRejectReason("");
-		
+
 		copy.setDepartureDate(p.getDepartureDate());
 		copy.setDescription(p.getDescription());
-		if(!p.getFloats().isEmpty() || p.getFloats() != null)
+		if (!p.getFloats().isEmpty() || p.getFloats() != null)
 			copy.setFloats(p.getFloats());
 		copy.setTicker(TickerGenerator.generateTicker());
 		copy.setTitle(p.getTitle());
@@ -320,40 +320,35 @@ public class ParadeService {
 		return this.save(copy);
 	}
 
-	public Segment saveSegmentInParade(Segment segment, Parade parade){
+	public Segment saveSegmentInParade(final Segment segment, final Parade parade) {
 		Brotherhood b;
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 		b = this.brotherhoodService.findByUserAccount(userAccount);
-		if(parade.getBrotherhood()!=b){
+		if (parade.getBrotherhood().getId() != b.getId())
 			throw new IllegalArgumentException();
-		}
-		
-		if(segment.getArriveTime()==null || segment.getStartTime()==null){
+
+		if (segment.getArriveTime() == null || segment.getStartTime() == null)
 			throw new IllegalArgumentException();
-		}
-		
-		
+
 		Segment res = null;
-		Parade p = this.findOne(parade.getId());
-		List<Segment> segments = new ArrayList<Segment>();
-		Segment ant = this.getLastSegment(p,segment);
-		if(ant != null){
+		final Parade p = this.findOne(parade.getId());
+		final List<Segment> segments = new ArrayList<Segment>();
+		final Segment ant = this.getLastSegment(p, segment);
+		if (ant != null) {
 			segment.setOrigLatitude(ant.getDestLatitude());
 			segment.setOrigLongitude(ant.getDestLongitude());
 		}
-		
+
 		res = this.segmentService.save(segment);
 		segments.addAll(p.getSegments());
-		if(segments.contains(res)){
+		if (segments.contains(res))
 			segments.remove(res);
-		}
 		segments.add(res);
 		p.setSegments(segments);
-		
-		
+
 		return res;
 	}
 
