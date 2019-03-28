@@ -64,7 +64,7 @@ public class Customisation extends DomainEntity {
 
 	@Min(value = 1L)
 	@Max(value = 24)
-	@NotBlank
+	@NotNull
 	public Integer getFinderDuration() {
 		return this.finderDuration;
 	}
@@ -72,7 +72,7 @@ public class Customisation extends DomainEntity {
 	public void setFinderDuration(final Integer finderDuration) {
 		this.finderDuration = finderDuration;
 	}
-	@NotBlank
+	@NotNull
 	@Min(value = 1L)
 	@Max(value = 100)
 	public Integer getResultsNumber() {
@@ -147,7 +147,7 @@ public class Customisation extends DomainEntity {
 		this.creditCardMakes = creditCardMakes;
 	}
 
-	@NotBlank
+	@NotNull
 	@Min(value = 0)
 	public Double getFare() {
 		return this.fare;
@@ -160,7 +160,7 @@ public class Customisation extends DomainEntity {
 
 	@Min(value = 0L)
 	@Max(value = 100)
-	@NotBlank
+	@NotNull
 	public Integer getVatPercentage() {
 		return this.vatPercentage;
 	}
