@@ -38,7 +38,7 @@ public class DashboardServiceTest extends AbstractTest {
 	 * THIS TEST IS FOR TESTING THE REQUIREMENT #4 AND #8
 	 * THERE ARE 16 GOOD TESTING CASES, AND 13 BAD TESTING CASES
 	 * COVERED INSTRUCTIONS IN THIS TEST: 84.5%
-	 * COVERED DATA IN THIS TEST: ?%
+	 * COVERED DATA IN THIS TEST: 100%
 	 * */
 
 	@Test
@@ -48,7 +48,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 100.0%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -66,7 +66,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 83.9%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 		super.authenticate("admin1");
 		this.exception.expect(IllegalArgumentException.class);
@@ -85,7 +85,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 100.0%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -103,7 +103,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 83.9%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -120,7 +120,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -138,7 +138,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -156,7 +156,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -174,7 +174,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -192,7 +192,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -210,7 +210,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -228,7 +228,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -245,7 +245,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -263,7 +263,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -281,7 +281,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -299,7 +299,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -317,7 +317,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -335,7 +335,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -353,7 +353,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -370,7 +370,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -388,7 +388,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -406,7 +406,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #4
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -424,7 +424,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -442,7 +442,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -460,7 +460,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * NEGATIVE TEST: THE EXPECTED VALUE IS NOT THE CORRECT ONE
 		 * (Expected IllegalArgumentException)
 		 * COVERED INSTRUCTIONS: 72.7%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -478,7 +478,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 100.0%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -501,7 +501,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -518,7 +518,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 94.4%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -535,7 +535,7 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * POSITIVE TEST
 		 * COVERED INSTRUCTIONS: 95.1%
-		 * COVERED DATA: ?%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("admin1");
@@ -555,8 +555,8 @@ public class DashboardServiceTest extends AbstractTest {
 		 * TESTING REQUIREMENT #8
 		 * NEGATIVE TEST: A BROTHERHOOD USER CAN'T USE THIS METHOD
 		 * (Expected IllegalArgumentException)
-		 * COVERED INSTRUCTIONS: ?%
-		 * COVERED DATA: ?%
+		 * COVERED INSTRUCTIONS: 100%
+		 * COVERED DATA: 100%
 		 * */
 
 		super.authenticate("brotherhood1");

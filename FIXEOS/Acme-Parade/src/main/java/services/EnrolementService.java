@@ -30,7 +30,7 @@ public class EnrolementService {
 
 	@Autowired
 	public MemberService		memberService;
-	
+
 	@Autowired
 	private Validator			validator;
 
@@ -105,7 +105,7 @@ public class EnrolementService {
 		e.setDropOutMoment(Calendar.getInstance().getTime());
 		e.setStatus("EXPELLED");
 		final Member m = this.memberService.memberByEnrolemetId(e.getId());
-		this.brotherhoodService.deleteRequests(m);
+		this.brotherhoodService.deleteRequests2(m, e.getBrotherhood());
 		e.setPosition(null);
 		this.saveDirectly(e);
 	}

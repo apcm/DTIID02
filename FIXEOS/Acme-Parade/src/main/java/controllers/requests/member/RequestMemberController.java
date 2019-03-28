@@ -126,8 +126,10 @@ public class RequestMemberController extends AbstractController {
 		final Member member = this.memberService.findOnePrincipal();
 		final List<Parade> lp = new ArrayList<>(this.paradeService.findAllFinalModeRequests());
 		final List<Parade> lp2 = this.paradeService.findByMemberId(member);
+		final List<Parade> lp3 = new ArrayList<>(this.paradeService.requestByMember());
 
 		lp.retainAll(lp2);
+		lp.removeAll(lp3);
 
 		res.addObject("request", r);
 		res.addObject("message", messageCode);

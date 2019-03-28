@@ -300,39 +300,23 @@ public class ParadeService {
 	}
 
 	public Parade copy(final Parade p) {
-		final Brotherhood b = this.brotherhoodService.findByPrincipal();
 		final Parade copy = new Parade();
 
 		Assert.notNull(p);
-
 		copy.setFinalMode(false);
 		copy.setStatus("");
 		copy.setRejectReason("");
-
 		copy.setDepartureDate(p.getDepartureDate());
 		copy.setDescription(p.getDescription());
-		if (!p.getFloats().isEmpty() || p.getFloats() != null)
-			copy.setFloats(p.getFloats());
+		copy.setFloats(p.getFloats());
 		copy.setTicker(TickerGenerator.generateTicker());
 		copy.setTitle(p.getTitle());
-		copy.setBrotherhood(b);
+		copy.setBrotherhood(p.getBrotherhood());
 
 		return this.save(copy);
 	}
 
 	public Segment saveSegmentInParade(final Segment segment, final Parade parade) {
-		Brotherhood b;
-		UserAccount userAccount;
-
-		userAccount = LoginService.getPrincipal();
-		Assert.notNull(userAccount);
-		b = this.brotherhoodService.findByUserAccount(userAccount);
-		if (parade.getBrotherhood().getId() != b.getId())
-			throw new IllegalArgumentException();
-
-		if (segment.getArriveTime() == null || segment.getStartTime() == null)
-			throw new IllegalArgumentException();
-
 		Segment res = null;
 		final Parade p = this.findOne(parade.getId());
 		final List<Segment> segments = new ArrayList<Segment>();
@@ -388,6 +372,11 @@ public class ParadeService {
 			if (p.getFinalMode())
 				res.add(p);
 		return res;
+	}
+
+	public Collection<Parade> requestByMember() {
+		final Member m1 = this.memberService.findOnePrincipal();
+		return this.paradeRepository.requestByMember(m1.getId());
 	}
 
 }

@@ -170,12 +170,23 @@ public class BrotherhoodService {
 	}
 
 	public void deleteRequests(final Member member) {
+		final Brotherhood b = this.brotherhoodRepository.findByUserAccountId(LoginService.getPrincipal().getId());
 		final Member m = this.memberService.findOne(member.getId());
-		for (final Request r : m.getRequests()) {
-			r.setStatus("REJECTED");
-			r.setRejectReason("You have been expelled. Has sido eliminado de la hermandad");
-		}
+		for (final Request r : m.getRequests())
+			if (b.getId() == r.getParade().getBrotherhood().getId()) {
+				r.setStatus("REJECTED");
+				r.setRejectReason("You have been expelled. Has sido eliminado de la hermandad");
+			}
 
+	}
+
+	public void deleteRequests2(final Member member, final Brotherhood b) {
+		final Member m = this.memberService.findOne(member.getId());
+		for (final Request r : m.getRequests())
+			if (b.getId() == r.getParade().getBrotherhood().getId()) {
+				r.setStatus("REJECTED");
+				r.setRejectReason("You have been expelled. Has sido eliminado de la hermandad");
+			}
 	}
 
 	public void acceptMember(final Enrolement enrolement) {

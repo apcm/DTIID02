@@ -42,6 +42,9 @@ public interface ParadeRepository extends JpaRepository<Parade, Integer> {
 	@Query("select p from Parade p join p.brotherhood.enrolements e where e.id=?1 and e.status='APPROVED'")
 	Collection<Parade> findByEnrolementIdApproved(int id);
 
+	@Query("select r.parade from Member m join m.requests r where m.id=?1 and r.status!='REJECTED'")
+	Collection<Parade> requestByMember(int id);
+
 	@Query("select p from Parade p where p.finalMode='1' and p.departureDate>=?1")
 	Collection<Parade> findAllFinalModeRequests(Date today);
 

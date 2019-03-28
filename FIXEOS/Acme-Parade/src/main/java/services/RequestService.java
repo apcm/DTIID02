@@ -178,45 +178,27 @@ public class RequestService {
 			res = r;
 		else {
 			res = this.findOne(r);
-			
-			if (r.getRowPosition() != 0 && r.getColumnPosition() != 0)
-			res.setStatus("APPROVED");
-		else if (r.getRejectReason() != null) {
-			res.setStatus("REJECTED");
-			if (r.getRejectReason().length() == 0)
-				res.setRejectReason("We don't have positions available. No tenemos posiciones disponibles");
-		} else
-			res.setStatus("PENDING");
 
-		if (res.getStatus().contains("APPROVED")) {
-			res.setRowPosition(r.getRowPosition());
-			res.setColumnPosition(r.getColumnPosition());
-		} else if (res.getStatus().contains("REJECTED") && r.getRejectReason().length() != 0)
-			res.setRejectReason(r.getRejectReason());
+			if (r.getRowPosition() != 0 || r.getColumnPosition() != 0)
+				res.setStatus("APPROVED");
+			else if (r.getRejectReason() != null) {
+				res.setStatus("REJECTED");
+				if (r.getRejectReason().length() == 0)
+					res.setRejectReason("We don't have positions available. No tenemos posiciones disponibles");
+			} else
+				res.setStatus("PENDING");
+
+			if (res.getStatus().contains("APPROVED")) {
+				res.setRowPosition(r.getRowPosition());
+				res.setColumnPosition(r.getColumnPosition());
+			} else if (res.getStatus().contains("REJECTED") && r.getRejectReason().length() != 0)
+				res.setRejectReason(r.getRejectReason());
 		}
 		this.validator.validate(res, binding);
 
 		return res;
 	}
-	private Request checkConditionsReconstruct(final Request r) {
-		final Request res = r;
-		if (r.getRowPosition() != 0 && r.getColumnPosition() != 0)
-			res.setStatus("APPROVED");
-		else if (r.getRejectReason() != null) {
-			res.setStatus("REJECTED");
-			if (r.getRejectReason().length() == 0)
-				res.setRejectReason("We don't have positions available. No tenemos posiciones disponibles");
-		} else
-			res.setStatus("PENDING");
 
-		if (res.getStatus().contains("APPROVED")) {
-			res.setRowPosition(r.getRowPosition());
-			res.setColumnPosition(r.getColumnPosition());
-		} else if (res.getStatus().contains("REJECTED") && r.getRejectReason().length() != 0)
-			res.setRejectReason(r.getRejectReason());
-		return res;
-
-	}
 	public Boolean checkPosition(final Request r) {
 		Boolean res = false;
 		if (this.requestRepository.checkPosition(r.getRowPosition(), r.getColumnPosition(), r.getParade().getId()) != null)
