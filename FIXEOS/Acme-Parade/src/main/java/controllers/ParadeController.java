@@ -29,8 +29,9 @@ public class ParadeController extends AbstractController {
 		final Collection<Parade> parades = this.paradeService.findByBrotherhoodId(brotherhoodId);
 		final Collection<Parade> paradesFinal = new ArrayList<>();
 		for (final Parade p : parades)
-			if (p.getFinalMode() == true)
+			if (p.getFinalMode() == true && p.getStatus().equals("ACCEPTED"))
 				paradesFinal.add(p);
+		
 
 		res = new ModelAndView("parade/list");
 		res.addObject("requestURI", "parade/list.do");
