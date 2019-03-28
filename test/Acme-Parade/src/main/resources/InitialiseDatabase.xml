@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+ * PopulateDatabase.xml
+ *
+ * Copyright (C) 2019 Universidad de Sevilla
+ * 
+ * The use of this project is hereby constrained to the conditions of the 
+ * TDG Licence, a copy of which you may download from 
+ * http://www.tdg-seville.info/License.html
+ -->
+ <beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util
+                    http://www.springframework.org/schema/util/spring-util-2.5.xsd">
+
+	
+	<!-- User accounts -->
+
+	<bean id="userAccount1" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password" value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMIN" />
+				</bean>
+			</list>
+		
+		</property>
+	</bean>
+	
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="administrator1" />
+		<property name="middleName" value="" />
+		<property name="surname" value="Exposito" />
+		<property name="phoneNumber" value="+34 654456248" />
+		<property name="address" value="C/ Wednesday, nº 1" />
+		<property name="email" value="admin1@" />
+		<property name="photo" value="http://wwww.photo1.com" />
+		<property name="ban" value="False" />
+		<property name="userAccount" ref="userAccount1" />
+		<property name="socialProfiles">
+			<list>
+			</list>
+		</property>
+		<property name="Boxes">
+			<list>
+				<ref bean="in1" />
+				<ref bean="notification1" />
+				<ref bean="out1" />
+				<ref bean="trash1" />
+				<ref bean="spam1" />
+			</list>
+		</property>
+
+</bean>
+
+<bean id="customisation1" class="domain.Customisation">
+		<property name="negativeWords" ref="negative" />
+		<property name="positiveWords" ref="positive" />
+		<property name="spamWords" ref="spam" />
+		<property name="welcomeMessage" ref="welcome" />
+		<property name="finderDuration" value="24" />
+		<property name="resultsNumber" value="10" />
+		<property name="systemName" value="Acme Madruga" />
+		<property name="bannerURL" value="https://i.ibb.co/dGyn5JP/banner.jpg" />
+		<property name="phoneNumberCountryCode" value="+34 " />
+		<property name="messagePriorities" ref="priority" />
+		<property name="creditCardMakes" ref="ccmakes" />
+		<property name="fare" value="15.0" />
+		<property name="vatPercentage" value="21" />
+
+	</bean>
+	<util:list id="negative" value-type="java.lang.String">
+        <value>NOT</value>
+        <value>BAD</value>
+        <value>HORRIBLE</value>
+        <value>AVERAGE</value>
+        <value>DISASTER</value>
+        <value>NO</value>
+        <value>MALO</value>
+        <value>HORRIBLE</value>
+        <value>MEDIOCRE</value>
+        <value>DESASTRE</value>
+      </util:list>
+      	<util:list id="positive" value-type="java.lang.String">
+        <value>GOOD</value>
+        <value>FANTASTIC</value>
+        <value>EXCELENT</value>
+        <value>GREAT</value>
+        <value>AMAZING</value>
+        <value>TERRIFIC</value>
+        <value>BEAUTIFUL</value>
+        <value>BUENO</value>
+        <value>FANTASTICO</value>
+        <value>EXCELENTE</value>
+        <value>GENIAL</value>
+        <value>MARAVILLOSO</value>
+        <value>ESTUPENDO</value>
+        <value>BEAUTIFUL</value>
+        </util:list>
+        
+        <util:list id="ccmakes" value-type="java.lang.String">
+		<value>VISA</value>
+		<value>MCARD</value>
+		<value>AMEX</value>
+		<value>DINNERS</value>
+		<value>FLY</value>
+	</util:list>
+        
+        <util:list id="spam" value-type="java.lang.String">
+      	<value>SEX</value>
+        <value>VIAGRA</value>
+        <value>CIALIS</value>
+        <value>NIGERIA</value>
+        <value>ONE MILLION</value>
+        <value>YOU'VE BEEN SELECTED</value>
+        <value>SEXO</value>
+        <value>UN MILLON</value>
+        <value>HAS SIDO SELECCIONADO</value>
+      	</util:list>
+      	<util:list id="priority" value-type="java.lang.String">
+      		<value>LOW</value>
+      		<value>HIGH</value>
+      		<value>NEUTRAL</value>
+      	</util:list>
+      	<util:list id="welcome" value-type="java.lang.String">
+        <value>Welcome to Acme Parade! The site to organise your parades.</value>
+        <value>¡Bienvenidos a Acme Parade! Tu sitio para organizar desfiles.</value>
+      	</util:list>
+      	
+      	<bean id="position1" class="domain.Position"> 
+    <property name="positionEng" value="SECRETARY" /> 
+    <property name="positionEsp" value="SECRETARIO" /> 
+    </bean>
+    
+    <bean id="position2" class="domain.Position"> 
+    <property name="positionEng" value="PRESIDENT" /> 
+    <property name="positionEsp" value="PRESIDENTE" /> 
+    </bean>
+    
+    <bean id="position3" class="domain.Position"> 
+    <property name="positionEng" value="VICE PRESIDENT" /> 
+    <property name="positionEsp" value="VICEPRESIDENTE" /> 
+    </bean>
+    
+    <bean id="position4" class="domain.Position"> 
+    <property name="positionEng" value="TREASURE" /> 
+    <property name="positionEsp" value="TESORERO" /> 
+    </bean>
+    
+    <bean id="position5" class="domain.Position"> 
+    <property name="positionEng" value="HISTORIAN" /> 
+    <property name="positionEsp" value="HISTORIADOR" /> 
+    </bean>
+    
+    <bean id="position6" class="domain.Position"> 
+    <property name="positionEng" value="FUNDRAISER" /> 
+    <property name="positionEsp" value="PROMOTOR" /> 
+    </bean>
+    
+    <bean id="position7" class="domain.Position"> 
+    <property name="positionEng" value="OFFICER" /> 
+    <property name="positionEsp" value="VOCAL" /> 
+    </bean>
+    
+	<bean id="in1" class="domain.Box">
+
+		<property name="name" value="in box" />
+
+		<property name="predefined" value="true" />
+
+         <property name="messages">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			        <property name="descendants">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			
+	</bean>
+	
+		<bean id="notification1" class="domain.Box">
+
+		<property name="name" value="notification box" />
+
+		<property name="predefined" value="true" />
+
+         <property name="messages">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			        <property name="descendants">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			
+	</bean>
+	
+		<bean id="out1" class="domain.Box">
+
+		<property name="name" value="out box" />
+
+		<property name="predefined" value="true" />
+
+         <property name="messages">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			        <property name="descendants">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			
+	</bean>
+	
+		<bean id="trash1" class="domain.Box">
+
+		<property name="name" value="trash box" />
+
+		<property name="predefined" value="true" />
+
+         <property name="messages">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			        <property name="descendants">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			
+	</bean>
+	
+		<bean id="spam1" class="domain.Box">
+
+		<property name="name" value="spam box" />
+
+		<property name="predefined" value="true" />
+
+         <property name="messages">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			        <property name="descendants">
+		
+			<list>
+		
+			</list>
+			</property>
+			
+			
+	</bean>
+	<!-- Other domain beans come here -->	
+	
+</beans>
