@@ -24,7 +24,7 @@ import services.SegmentService;
 
 @Controller
 @RequestMapping("/parade/segment")
-public class ParadeSegmentController {
+public class ParadeSegmentController extends AbstractController {
 	
 	@Autowired
 	private SegmentService	segmentService;
