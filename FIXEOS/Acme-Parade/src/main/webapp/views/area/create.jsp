@@ -23,6 +23,7 @@
 
 		<!-- Pictures -->
 		<acme:textbox code="area.pictures" path="pictures"/>
+		<spring:message code="area.comma"></spring:message>
 		<br>
 		<br>
 

@@ -303,18 +303,22 @@ public class ParadeService {
 	}
 
 	public Parade copy(final Parade p) {
+		Brotherhood b = brotherhoodService.findByPrincipal();
 		final Parade copy = new Parade();
 
 		Assert.notNull(p);
+		
 		copy.setFinalMode(false);
 		copy.setStatus("");
 		copy.setRejectReason("");
+		
 		copy.setDepartureDate(p.getDepartureDate());
 		copy.setDescription(p.getDescription());
-		copy.setFloats(p.getFloats());
+		if(!p.getFloats().isEmpty() || p.getFloats() != null)
+			copy.setFloats(p.getFloats());
 		copy.setTicker(TickerGenerator.generateTicker());
 		copy.setTitle(p.getTitle());
-		copy.setBrotherhood(p.getBrotherhood());
+		copy.setBrotherhood(b);
 
 		return this.save(copy);
 	}

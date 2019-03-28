@@ -32,7 +32,6 @@
 					<li><a href="position/administrator/list.do"><spring:message code="master.page.administrator.position" /></a></li>
 					<li><a href="customisation/edit.do"><spring:message code="master.page.customisation" /></a></li>					
 					<li><a href="dashboard/administrator/dashboard.do"><spring:message code="master.page.dashboard"/></a></li>
-					<li><a href="position/administrator/list.do"><spring:message code="master.page.position.edit" /></a></li>
 				</ul>
 			</li>
 		</security:authorize>
