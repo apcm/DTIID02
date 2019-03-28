@@ -7,7 +7,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,6 @@ import security.LoginService;
 import security.UserAccount;
 import domain.Customisation;
 import domain.Finder;
-import domain.Member;
 import domain.Parade;
 
 @Service
@@ -78,18 +78,18 @@ public class FinderService {
 		Assert.notNull(finder);
 		final Finder res = finder;
 
-		if (finder.getId() != 0) {
-			final Member principal = this.memberService.findByPrincipal();
-			Assert.isTrue(principal.getFinder().getId() == finder.getId());
-			if (finder.getStartDate() != null && finder.getEndDate() != null)
-				Assert.isTrue(finder.getStartDate().before(finder.getEndDate()));
-			final Set<Parade> results = this.paradeService.finderResults(finder);
-			for (final Parade p : results)
-				if (p.getFinalMode() == false)
-					results.remove(p);
-			res.setParades(results);
-			res.setMoment(Calendar.getInstance().getTime());
-		}
+		//		if (finder.getId() != 0) {
+		//			final Member principal = this.memberService.findByPrincipal();
+		//			Assert.isTrue(principal.getFinder().getId() == finder.getId());
+		//			if (finder.getStartDate() != null && finder.getEndDate() != null)
+		//				Assert.isTrue(finder.getStartDate().before(finder.getEndDate()));
+		//			final Set<Parade> results = this.paradeService.finderResults(finder);
+		//			for (final Parade p : results)
+		//				if (p.getFinalMode() == false)
+		//					results.remove(p);
+		//			res.setParades(results);
+		//			res.setMoment(Calendar.getInstance().getTime());
+		//		}
 		return this.repository.save(res);
 	}
 	public Finder getFinderMember(final int id) {
@@ -136,15 +136,17 @@ public class FinderService {
 		Assert.isTrue(this.checkMember());
 		if (finder.getId() == 0)
 			res = finder;
-		else {
+		else
 			res = this.findOne(finder.getId());
-			res.setArea(finder.getArea());
-			res.setKeyword(finder.getKeyword());
-			res.setStartDate(finder.getStartDate());
-			res.setEndDate(finder.getEndDate());
+		res.setArea(finder.getArea());
+		res.setKeyword(finder.getKeyword());
+		res.setStartDate(finder.getStartDate());
+		res.setEndDate(finder.getEndDate());
 
-			this.validator.validate(res, binding);
-		}
+		this.validator.validate(res, binding);
+		if (binding.hasErrors())
+			throw new ValidationException();
+
 		return res;
 	}
 }

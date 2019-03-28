@@ -64,6 +64,7 @@ public class Customisation extends DomainEntity {
 
 	@Min(value = 1L)
 	@Max(value = 24)
+	@NotBlank
 	public Integer getFinderDuration() {
 		return this.finderDuration;
 	}
@@ -71,6 +72,7 @@ public class Customisation extends DomainEntity {
 	public void setFinderDuration(final Integer finderDuration) {
 		this.finderDuration = finderDuration;
 	}
+	@NotBlank
 	@Min(value = 1L)
 	@Max(value = 100)
 	public Integer getResultsNumber() {
@@ -89,6 +91,7 @@ public class Customisation extends DomainEntity {
 		this.systemName = systemName;
 	}
 
+	@NotBlank
 	public String getBannerURL() {
 		return this.bannerURL;
 	}
@@ -116,6 +119,7 @@ public class Customisation extends DomainEntity {
 		this.spamWords = spamWords;
 	}
 
+	@NotBlank
 	public String getPhoneNumberCountryCode() {
 		return this.phoneNumberCountryCode;
 	}
@@ -143,11 +147,12 @@ public class Customisation extends DomainEntity {
 		this.creditCardMakes = creditCardMakes;
 	}
 
+	@NotBlank
+	@Min(value = 0)
 	public Double getFare() {
 		return this.fare;
 	}
 
-	@Min(value = 0)
 	//Esto puede dar fallos porque es un Long y no un double.
 	public void setFare(final Double fare) {
 		this.fare = fare;
@@ -155,6 +160,7 @@ public class Customisation extends DomainEntity {
 
 	@Min(value = 0L)
 	@Max(value = 100)
+	@NotBlank
 	public Integer getVatPercentage() {
 		return this.vatPercentage;
 	}

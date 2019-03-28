@@ -1,7 +1,11 @@
 
 package controllers.member;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Set;
+
+import javax.validation.ValidationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +18,12 @@ import org.springframework.web.servlet.ModelAndView;
 import services.AreaService;
 import services.FinderService;
 import services.MemberService;
+import services.ParadeService;
 import controllers.AbstractController;
 import domain.Area;
 import domain.Finder;
 import domain.Member;
+import domain.Parade;
 
 @Controller
 @RequestMapping("/finder/member")
@@ -32,6 +38,9 @@ public class FinderMemberController extends AbstractController {
 
 	@Autowired
 	private AreaService		areaService;
+
+	@Autowired
+	private ParadeService	paradeService;
 
 
 	//Constructor
@@ -69,19 +78,45 @@ public class FinderMemberController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(final Finder finder, final BindingResult binding) {
+	public ModelAndView save(Finder finder, final BindingResult binding) {
 		ModelAndView res;
-		final Finder finderMod = this.finderService.reconstruct(finder, binding);
-		if (binding.hasErrors())
-			res = this.createEditModelAndView(finderMod);
-		else
-			try {
-				this.finderService.save(finderMod);
-				res = new ModelAndView("redirect:show.do");
-			} catch (final Throwable oops) {
-				res = this.createEditModelAndView(finderMod, "finder.error");
+
+		try {
+			finder = this.finderService.reconstruct(finder, binding);
+
+			if (finder.getId() != 0) {
+				final Member principal = this.memberService.findByPrincipal();
+				Assert.isTrue(principal.getFinder().getId() == finder.getId());
+				if (finder.getStartDate() != null && finder.getEndDate() != null)
+					Assert.isTrue(finder.getStartDate().before(finder.getEndDate()));
+				final Set<Parade> results = this.paradeService.finderResults(finder);
+				for (final Parade p : results)
+					if (p.getFinalMode() == false)
+						results.remove(p);
+				finder.setParades(results);
+				finder.setMoment(Calendar.getInstance().getTime());
 			}
+
+			this.finderService.save(finder);
+			res = new ModelAndView("redirect:show.do");
+		} catch (final ValidationException oops) {
+			res = this.createEditModelAndView(finder);
+		} catch (final Throwable oops) {
+			res = this.createEditModelAndView(finder, "finder.error");
+		}
 		return res;
+
+		//		final Finder finderMod = this.finderService.reconstruct(finder, binding);
+		//		if (binding.hasErrors())
+		//			res = this.createEditModelAndView(finderMod);
+		//		else
+		//			try {
+		//				this.finderService.save(finderMod);
+		//				res = new ModelAndView("redirect:show.do");
+		//			} catch (final Throwable oops) {
+		//				res = this.createEditModelAndView(finderMod, "finder.error");
+		//			}
+		//		return res;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "clear")
 	public ModelAndView clear(final Finder finder, final BindingResult binding) {
