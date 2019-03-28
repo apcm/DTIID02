@@ -31,6 +31,7 @@ public class ParadeController extends AbstractController {
 		for (final Parade p : parades)
 			if (p.getFinalMode() == true && p.getStatus().equals("ACCEPTED"))
 				paradesFinal.add(p);
+		
 
 		res = new ModelAndView("parade/list");
 		res.addObject("requestURI", "parade/list.do");

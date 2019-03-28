@@ -39,13 +39,13 @@ public class ParadeSegmentController {
 		ModelAndView result;
 		
 		Parade parade = this.paradeService.findOne(paradeId);
-		this.paradeACT = parade;
-
 		final List<Segment> segments = this.segmentService.getSegmentsByParade(parade);
 		if(segments==null){
 			return new ModelAndView("redirect:/welcome/index.do"); 
 		}
-
+		
+		this.paradeACT = parade;
+		
 		result = new ModelAndView("parade/segment/list");
 		result.addObject("segments", segments);
 		result.addObject("requestURI", "/parade/segment/list.do");
@@ -68,9 +68,13 @@ public class ParadeSegmentController {
 	public ModelAndView edit(@RequestParam final int segmentId) {
 		ModelAndView result;
 		Segment segment;
-
+	
 		segment = this.segmentService.findOne(segmentId);
 		Assert.notNull(segment);
+		
+		if(!this.paradeACT.getSegments().contains(segment)){
+			return new ModelAndView("redirect:/welcome/index.do"); 
+		}
 		if(this.paradeACT.getSegments().size()==segment.getSegmentOrder()){
 			result = this.createEditModelAndView(segment,this.paradeACT);
 		}else{
@@ -89,9 +93,14 @@ public class ParadeSegmentController {
 			result = this.createEditModelAndView(segment, this.paradeACT);
 		else
 			try {
+				if(this.segmentService.isCorrectDate(segment, this.paradeACT)){
+					this.paradeService.saveSegmentInParade(segment,this.paradeACT);
+					result = this.list(this.paradeACT.getId());
+				}else{
+					
+					result = this.createEditModelAndView(segment,this.paradeACT, "segment.commit.error");
+				}
 				
-				this.paradeService.saveSegmentInParade(segment,this.paradeACT);
-				result = this.list(this.paradeACT.getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(segment,this.paradeACT, "segment.commit.error");
 			}
