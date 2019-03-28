@@ -72,8 +72,8 @@ public class Segment extends DomainEntity {
 		this.segmentOrder = segmentOrder;
 	}
 
-	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@NotNull
 	public Date getArriveTime() {
 		return this.arriveTime;
@@ -83,8 +83,8 @@ public class Segment extends DomainEntity {
 		this.arriveTime = arriveTime;
 	}
 	
-	@Temporal(TemporalType.TIME)
-	@DateTimeFormat(pattern = "HH:mm:ss")
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@NotNull
 	public Date getStartTime() {
 		return this.startTime;
