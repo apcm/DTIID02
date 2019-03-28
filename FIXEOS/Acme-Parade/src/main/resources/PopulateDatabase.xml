@@ -69,9 +69,9 @@
 		<value>FLY</value>
 	</util:list>
 	<util:list id="welcome" value-type="java.lang.String">
-		<value>Welcome to Acme Madruga! The site to organise your parades.
+		<value>Welcome to Acme Parade! The site to organise your parades.
 		</value>
-		<value>¡Bienvenidos a Acme Madrugá! Tu sitio para organizar desfiles.
+		<value>¡Bienvenidos a Acme Parade! Tu sitio para organizar desfiles.
 		</value>
 	</util:list>
 

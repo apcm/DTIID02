@@ -54,7 +54,7 @@ public class AdministratorAdministratorController extends AbstractController {
 	public ModelAndView save(@Valid final Administrator administrator, final BindingResult binding) {
 		ModelAndView result;
 
-		try{ //name, surname, address, email, title, departure	
+		try { //name, surname, address, email, title, departure	
 			Assert.notNull(administrator.getName());
 			Assert.isTrue(administrator.getName() != "");
 			Assert.notNull(administrator.getEmail());
@@ -62,12 +62,11 @@ public class AdministratorAdministratorController extends AbstractController {
 			Assert.notNull(administrator.getAddress());
 			Assert.isTrue(administrator.getAddress() != "");
 
-		}catch(Throwable error){
+		} catch (final Throwable error) {
 			result = this.createEditModelAndView(administrator, "administrator.mandatory");
 			return result;
 		}
-		
-		
+
 		final Administrator administratorMod = this.administratorService.reconstruct(administrator, binding);
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(administrator);
@@ -78,7 +77,7 @@ public class AdministratorAdministratorController extends AbstractController {
 					Assert.isTrue(administratorMod.getEmail().matches("^[A-z0-9]+@$") || administratorMod.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@>$"), "Wrong email");
 
 				this.administratorService.save(administratorMod);
-				result = new ModelAndView("redirect:http://localhost:8080/Acme-Madruga");
+				result = new ModelAndView("redirect:../../");
 			} catch (final Throwable error) {
 				if (error.getMessage() == "Wrong email")
 					result = this.createEditModelAndView(administratorMod, "administrator.email.error");
@@ -178,7 +177,7 @@ public class AdministratorAdministratorController extends AbstractController {
 			result = this.createCreateModelAndView(administratorForm, "administrator.mandatory");
 			return result;
 		}
-		
+
 		if (!administratorForm.isConditionsAccepted())
 			result = this.createCreateModelAndView(administratorForm, "member.conditionsError");
 		else {
@@ -192,7 +191,7 @@ public class AdministratorAdministratorController extends AbstractController {
 						Assert.isTrue(administrator.getEmail().matches("^[A-z0-9]+@$") || administrator.getEmail().matches("^[A-z0-9 ]+ <[A-z0-9]+@>$"), "Wrong email");
 
 					this.administratorService.save(administrator);
-					result = new ModelAndView("redirect:/welcome/index.do");
+					result = new ModelAndView("redirect:../../");
 				} catch (final Throwable error) {
 					if (error.getMessage() == "Wrong email")
 						result = this.createCreateModelAndView(administratorForm, "administrator.email.error");

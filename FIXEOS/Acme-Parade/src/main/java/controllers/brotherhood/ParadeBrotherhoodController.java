@@ -1,3 +1,4 @@
+
 package controllers.brotherhood;
 
 import java.util.ArrayList;
@@ -29,13 +30,14 @@ import domain.Parade;
 public class ParadeBrotherhoodController extends AbstractController {
 
 	@Autowired
-	BrotherhoodService brotherhoodService;
+	BrotherhoodService	brotherhoodService;
 
 	@Autowired
-	ParadeService paradeService;
+	ParadeService		paradeService;
 
 	@Autowired
-	FloatService floatService;
+	FloatService		floatService;
+
 
 	@RequestMapping(value = "/brotherhood/list", method = RequestMethod.GET)
 	public ModelAndView list() {
@@ -43,8 +45,7 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 		final Brotherhood bro = this.brotherhoodService.findByPrincipal();
 
-		final Collection<Parade> parades = this.paradeService
-				.findByBrotherhoodId(bro.getId());
+		final Collection<Parade> parades = this.paradeService.findByBrotherhoodId(bro.getId());
 		final List<Boolean> finalModes = new ArrayList<>();
 		finalModes.add(true);
 		finalModes.add(false);
@@ -56,8 +57,10 @@ public class ParadeBrotherhoodController extends AbstractController {
 		return res;
 	}
 
+
 	@Autowired
-	Validator validator;
+	Validator	validator;
+
 
 	// @RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST,
 	// params = "save")
@@ -95,8 +98,7 @@ public class ParadeBrotherhoodController extends AbstractController {
 	// }
 
 	@RequestMapping(value = "/brotherhood/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@ModelAttribute Parade parade,
-			final BindingResult binding) {
+	public ModelAndView save(@ModelAttribute Parade parade, final BindingResult binding) {
 		ModelAndView result;
 		try {
 			parade = this.paradeService.reconstruct(parade, binding);
@@ -128,8 +130,7 @@ public class ParadeBrotherhoodController extends AbstractController {
 	public ModelAndView edit(@RequestParam final int paradeId) {
 		ModelAndView result;
 		Parade parade;
-		final Brotherhood brotherhood = this.brotherhoodService
-				.findByPrincipal();
+		final Brotherhood brotherhood = this.brotherhoodService.findByPrincipal();
 
 		parade = this.paradeService.findOne(paradeId);
 		Assert.isTrue(parade.getBrotherhood().getId() == brotherhood.getId());
@@ -162,12 +163,10 @@ public class ParadeBrotherhoodController extends AbstractController {
 
 	}
 
-	protected ModelAndView createEditModelAndView(final Parade parade,
-			final String message) {
+	protected ModelAndView createEditModelAndView(final Parade parade, final String message) {
 		ModelAndView result;
 		final Brotherhood bro = this.brotherhoodService.findByPrincipal();
-		final Collection<domain.Float> floats = this.floatService
-				.findByBrotherhoodId(bro.getId());
+		final Collection<domain.Float> floats = this.floatService.findByBrotherhoodId(bro.getId());
 
 		result = new ModelAndView("parade/edit");
 		result.addObject("floats", floats);
@@ -178,15 +177,15 @@ public class ParadeBrotherhoodController extends AbstractController {
 	}
 
 	@RequestMapping(value = "brotherhood/copy", method = RequestMethod.GET)
-	public ModelAndView copy(@RequestParam int paradeId) {
+	public ModelAndView copy(@RequestParam final int paradeId) {
 		ModelAndView result;
-		Parade parade = paradeService.findOne(paradeId);
+		final Parade parade = this.paradeService.findOne(paradeId);
 		try {
 			Assert.notNull(parade.getDescription());
 			Assert.isTrue(parade.getDescription() != "");
 			Assert.notNull(parade.getDepartureDate());
-			Assert.notNull(parade.getFloats());
-			Assert.isTrue(parade.getFloats().isEmpty() == false);
+			//Assert.notNull(parade.getFloats());
+			//Assert.isTrue(parade.getFloats().isEmpty() == false);
 			Assert.notNull(parade.getTitle());
 			Assert.isTrue(parade.getTitle() != "");
 
