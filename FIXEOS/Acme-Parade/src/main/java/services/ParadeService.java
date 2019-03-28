@@ -252,7 +252,8 @@ public class ParadeService {
 		res.setDescription(pro.getDescription());
 		res.setDepartureDate(pro.getDepartureDate());
 		//res.setBrotherhood(pro.getBrotherhood());
-		res.setStatus(pro.getStatus());
+		if (pro.getStatus() != null)
+			res.setStatus(pro.getStatus());
 
 		this.validator.validate(res, binding);
 		if (binding.hasErrors())
@@ -295,10 +296,6 @@ public class ParadeService {
 
 	public Parade saveStatus(final Parade parade) {
 
-		final String rej = "REJECTED";
-		if (parade.getId() != 0)
-			if (parade.getStatus() == rej || parade.getStatus().contains("REJECTED"))
-				Assert.isTrue(parade.getRejectReason() != "");
 		return this.paradeRepository.save(parade);
 	}
 

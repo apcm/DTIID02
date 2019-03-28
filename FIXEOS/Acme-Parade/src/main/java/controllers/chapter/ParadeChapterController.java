@@ -52,14 +52,17 @@ public class ParadeChapterController extends AbstractController {
 	public ModelAndView list() {
 		ModelAndView res;
 
-		final Collection<Parade> parades2 = this.paradeService.findParadesByChapterId();
 		final List<Boolean> finalModes = new ArrayList<>();
 		finalModes.add(true);
 		finalModes.add(false);
 		final Collection<Parade> parades = new ArrayList<Parade>();
-		for (final Parade p : parades2)
-			if (p.getFinalMode() == true)
-				parades.add(p);
+		final Chapter logChapter = this.chapterService.findByPrincipal();
+		if (logChapter.getArea() != null) {
+			final Collection<Parade> parades2 = this.paradeService.findParadesByChapterId();
+			for (final Parade p : parades2)
+				if (p.getFinalMode() == true)
+					parades.add(p);
+		}
 		res = new ModelAndView("parade/chapter/list");
 		res.addObject("parades", parades);
 		res.addObject("requestURI", "parade/chapter/list.do");
@@ -79,13 +82,22 @@ public class ParadeChapterController extends AbstractController {
 			final Parade paradeOld = this.paradeRepository.findOne(parade.getId());
 			final String subm = "SUBMITTED";
 			Assert.isTrue(paradeOld.getStatus() == "SUBMITTED" || paradeOld.getStatus() == subm || paradeOld.getStatus().contains("SUBMITTED"));
+			final String rej = "REJECTED";
+			if (parade.getId() != 0)
+				if (parade.getStatus() == rej || parade.getStatus().contains("REJECTED"))
+					Assert.isTrue(parade.getRejectReason() != "", "rejectReason");
+
 			parade = this.paradeService.reconstructChapter(parade, binding);
+
 			this.paradeService.saveStatus(parade);
 			result = new ModelAndView("redirect:list.do");
 		} catch (final ValidationException oops) {
 			result = this.createEditModelAndView(parade);
 		} catch (final Throwable oops) {
-			result = this.createEditModelAndView(parade, "parade.commit.error");
+			if (oops.getMessage() == "rejectReason")
+				result = this.createEditModelAndView(parade, "parade.error.rejectReason");
+			else
+				result = this.createEditModelAndView(parade, "parade.commit.error");
 		}
 
 		return result;
@@ -148,10 +160,7 @@ public class ParadeChapterController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Parade parade, final String message) {
 		ModelAndView result;
 
-		final Collection<Parade> parades = this.paradeService.findParadesByChapterId();
-
 		result = new ModelAndView("parade/chapter/editStatus");
-		result.addObject("parades", parades);
 		result.addObject("parade", parade);
 		result.addObject("message", message);
 

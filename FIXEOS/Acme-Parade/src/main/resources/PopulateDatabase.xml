@@ -2269,7 +2269,7 @@
 		<property name="title" value="Macarena" />
 		<property name="description" value="Procesión de la Macarena" />
 		<property name="finalMode" value="TRUE" />
-		<property name="status" value="PENDING" />
+		<property name="status" value="SUBMITTED" />
 		<property name="rejectReason" value="" />
 		<property name="floats">
 			<list>
