@@ -23,8 +23,11 @@
 		<form:hidden path="segmentOrder"/>
 		
 		<jstl:if test="${segment.segmentOrder != 1}">
+		<spring:message code ="segment.hidden.values"/>
+		<br/>
 		<form:hidden path="origLatitude"/>
 		<form:hidden path="origLongitude"/>
+		<form:hidden path="startTime" />
 		</jstl:if>
 		
 		
@@ -58,17 +61,19 @@
 		<form:errors cssClass="error" path="destLongitude" />
 		<br />	
 		
+		<jstl:if test="${segment.segmentOrder == 1}">
+		
 		<form:label path="startTime">
 			<spring:message code="segment.startTime" />:
 		</form:label>
-		<form:input path="startTime" />
+		<form:input path="startTime" placeholder="Ex: 2020-12-30 23:59:59"/>
 		<form:errors cssClass="error" path="startTime" />
 		<br />	
-		
+		</jstl:if>
 		<form:label path="arriveTime">
 			<spring:message code="segment.arriveTime" />:
 		</form:label>
-		<form:input path="arriveTime" />
+		<form:input path="arriveTime" placeholder="Ex: 2020-12-30 23:59:59"/>
 		<form:errors cssClass="error" path="arriveTime" />
 		<br />	
 			
@@ -79,6 +84,7 @@
 	<jstl:if test="${segment.id != 0}">
 	<input type ="submit" name="delete" value="<spring:message code="segment.delete"/>" />
 	</jstl:if>
+
 
 </form:form>
 

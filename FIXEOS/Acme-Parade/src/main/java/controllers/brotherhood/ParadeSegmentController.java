@@ -1,6 +1,8 @@
 
 package controllers.brotherhood;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -60,6 +62,24 @@ public class ParadeSegmentController extends AbstractController {
 
 		segment = this.segmentService.create(this.paradeACT.getId());
 
+		//Añadido del 03/07/2019: Pongo como fecha inicial del parade los finales del anterior
+		final List<Segment> segments = this.paradeACT.getSegments();
+		if (!segments.isEmpty()) {
+			final Segment last = segments.get(segments.size() - 1);
+			segment.setOrigLatitude(last.getDestLatitude());
+			segment.setOrigLongitude(last.getDestLongitude());
+
+			//Pongo la fecha del ultimo en un Calendario
+			final Calendar cal = Calendar.getInstance();
+			cal.setTime(last.getArriveTime());
+			Date tempDate = cal.getTime();
+
+			//Le añado un segundo para evitar problemas
+			cal.set(Calendar.SECOND, cal.get(Calendar.SECOND) + 1);
+			tempDate = cal.getTime();
+			segment.setStartTime(tempDate);
+
+		}
 		result = this.createEditModelAndView(segment, this.paradeACT);
 		return result;
 	}
@@ -94,7 +114,7 @@ public class ParadeSegmentController extends AbstractController {
 					this.paradeService.saveSegmentInParade(segment, this.paradeACT);
 					result = this.list(this.paradeACT.getId());
 				} else
-					result = this.createEditModelAndView(segment, this.paradeACT, "segment.commit.error");
+					result = this.createEditModelAndView(segment, this.paradeACT, "segment.date.error");
 
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(segment, this.paradeACT, "segment.commit.error");

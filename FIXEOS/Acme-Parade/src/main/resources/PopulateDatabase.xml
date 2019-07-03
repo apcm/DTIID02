@@ -2276,7 +2276,7 @@
 				<ref bean="float5" />
 			</list>
 		</property>
-		<property name="ticker" value="130111-AAGRAC" />
+		<property name="ticker" value="130111-AAGTRE" />
 		<property name="departureDate" value="10/12/2020" />
 		<property name="brotherhood" ref="brotherhood3" />
 		<property name="segments">
